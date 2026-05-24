@@ -210,3 +210,44 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - 视觉自查后重排了系统架构图和框架矩阵，修正了右侧交互拥挤和长文本截断。
 - `npm test` 通过。
 - `npm run check:plugin && npm run check:tools` 通过。
+
+## Agent4 20 秒介绍视频计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮不修改 Agent4 运行逻辑，仍需尊重安全默认值、结构约束和证据标识一致性。
+- [x] 读取 `hyperframes` skill，确认需要先定义视觉身份，再写 HTML composition，并在完成前运行 lint、validate、inspect 和渲染验证。
+- [x] 读取 README、Agent4 文档、插件入口、工具函数、schemas 和现有架构图素材。
+
+### 实现前计划
+
+- [x] 提炼当前项目的介绍叙事：Agent4 位于 Agent3 与 Agent5 之间，把根因蓝图变成经回归证明的补丁包。
+- [x] 在 `assets/video` 下创建 HyperFrames composition、`DESIGN.md` 和必要素材引用。
+- [x] 制作 20 秒横版视频，覆盖定位、插件层、契约链、安全失败关闭、Superpowers 方法论和交接结果。
+- [x] 将最终 MP4 输出到 `assets/video/agent4-intro.mp4`。
+- [x] 运行 HyperFrames lint、validate、inspect、snapshot/render，并记录验证结果。
+
+### 实现前确认
+
+本轮用户已直接要求生成视频。计划范围限定在 `assets/video` 和任务记录，不修改 Agent4 插件、schemas、工具或测试。
+
+### 视频产物
+
+- `assets/video/agent4-intro.mp4`：20 秒、1920x1080、30fps 的 Agent4 介绍视频。
+- `assets/video/index.html`：HyperFrames composition 源文件。
+- `assets/video/DESIGN.md`：视频视觉身份说明。
+- `assets/video/snapshots/contact-sheet.jpg`：关键帧检查图。
+- `assets/video/.hyperframes/anim-map/animation-map.json`：动画图谱检查结果。
+
+### 视频生成复盘
+
+最终验证：
+
+- `npx hyperframes lint .` 通过，0 error / 0 warning。
+- `npx hyperframes validate . --timeout 10000` 通过，0 error；剩余 AudioContext 提示来自无音频页面的浏览器运行时警告，不影响渲染。
+- `npx hyperframes inspect . --json --samples 9 --timeout 10000` 通过，0 layout issue。
+- `npx hyperframes snapshot . --at 1.4,4.7,8.0,11.4,14.8,18.4 --describe false` 生成关键帧，视觉自查未发现拆字、遮挡或主要文本溢出。
+- 动画图谱生成成功，转场门帘 offscreen、图像镜头裁切和最终淡出 overlap 均为预期运动设计。
+- `npx hyperframes render . --output agent4-intro.mp4 --fps 30 --quality standard --workers 1` 成功。
+- `ffprobe` 确认成片为 H.264、1920x1080、30fps、600 帧、20.000000 秒。
+- `npm test` 通过，新增视频资产未影响现有 Agent4 插件、schema 和工具测试。

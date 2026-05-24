@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>opencode-agent4 intro</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #07111d;
+      }
+
+      @font-face {
+        font-family: "Agent4 Serif";
+        src: url("fonts/Agent4Serif-subset.woff2") format("woff2");
+        font-weight: 300 900;
+      }
+
+      body {
+        color: #f4f0e6;
+        font-family: "Agent4 Serif", serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #07111d;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #07111d;
+      }
+
+      #scene1 {
+        z-index: 2;
+      }
+
+      #scene2,
+      #scene3,
+      #scene4,
+      #scene5,
+      #scene6 {
+        opacity: 0;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(rgba(34, 199, 231, 0.06) 1px, rgba(7, 17, 29, 0) 1px),
+          linear-gradient(90deg, rgba(34, 199, 231, 0.055) 1px, rgba(7, 17, 29, 0) 1px);
+        background-size: 80px 80px, 80px 80px;
+        opacity: 0.46;
+      }
+
+      .scene::after {
+        content: "";
+        position: absolute;
+        inset: -18%;
+        background:
+          radial-gradient(circle at 12% 20%, rgba(34, 199, 231, 0.2), rgba(7, 17, 29, 0) 30%),
+          radial-gradient(circle at 82% 72%, rgba(32, 214, 160, 0.15), rgba(7, 17, 29, 0) 32%),
+          radial-gradient(circle at 58% 8%, rgba(255, 157, 46, 0.1), rgba(7, 17, 29, 0) 24%);
+        opacity: 0.9;
+      }
+
+      .scene-content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding: 86px 112px 82px;
+        box-sizing: border-box;
+      }
+
+      .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 44px;
+        color: #a8d8e8;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 22px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+
+      .tick {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .tick::before {
+        content: "";
+        width: 44px;
+        height: 2px;
+        background: #22c7e7;
+        box-shadow: 0 0 22px rgba(34, 199, 231, 0.55);
+      }
+
+      .title {
+        margin: 0;
+        max-width: 1380px;
+        font-family: "Agent4 Serif", serif;
+        font-size: 92px;
+        line-height: 1.05;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: #f4f0e6;
+        word-break: keep-all;
+      }
+
+      .subtitle {
+        margin: 22px 0 0;
+        max-width: 1120px;
+        color: #a8d8e8;
+        font-size: 34px;
+        line-height: 1.45;
+        font-weight: 400;
+      }
+
+      .mono {
+        font-family: "IBM Plex Mono", monospace;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .glow-line {
+        height: 2px;
+        background: linear-gradient(90deg, #22c7e7, #20d6a0, rgba(34, 199, 231, 0));
+        box-shadow: 0 0 24px rgba(34, 199, 231, 0.42);
+        transform-origin: left center;
+      }
+
+      .label {
+        color: #a8d8e8;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 21px;
+        letter-spacing: 0.02em;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 18px;
+        border: 1px solid rgba(34, 199, 231, 0.62);
+        border-radius: 999px;
+        color: #a8d8e8;
+        background: rgba(13, 33, 56, 0.72);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 18px;
+        white-space: nowrap;
+      }
+
+      .diagram-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(34, 199, 231, 0.35);
+        border-radius: 8px;
+        background: rgba(13, 33, 56, 0.82);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+      }
+
+      .diagram-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+      }
+
+      .node {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 265px;
+        min-height: 132px;
+        padding: 24px 26px;
+        box-sizing: border-box;
+        border: 1px solid rgba(34, 199, 231, 0.62);
+        border-radius: 8px;
+        background: rgba(13, 33, 56, 0.88);
+        box-shadow: inset 0 0 0 1px rgba(34, 199, 231, 0.08), 0 0 28px rgba(34, 199, 231, 0.11);
+      }
+
+      .node strong {
+        color: #f4f0e6;
+        font-size: 32px;
+        line-height: 1.1;
+      }
+
+      .node span {
+        margin-top: 14px;
+        color: #a8d8e8;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+
+      .node.active {
+        border-color: #20d6a0;
+        background: rgba(17, 56, 67, 0.92);
+        box-shadow: 0 0 42px rgba(32, 214, 160, 0.28);
+      }
+
+      .arrow {
+        position: relative;
+        width: 140px;
+        height: 3px;
+        background: #22c7e7;
+        box-shadow: 0 0 18px rgba(34, 199, 231, 0.5);
+        transform-origin: left center;
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: -2px;
+        top: 50%;
+        width: 18px;
+        height: 18px;
+        border-right: 3px solid #22c7e7;
+        border-top: 3px solid #22c7e7;
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      .scene-one-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 500px;
+        gap: 56px;
+        align-items: center;
+      }
+
+      .hero-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 26px;
+      }
+
+      .hero-word {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 194px;
+        line-height: 0.86;
+        font-weight: 800;
+        color: #f4f0e6;
+        text-shadow: 0 0 40px rgba(34, 199, 231, 0.18);
+      }
+
+      .hero-word span {
+        color: #20d6a0;
+      }
+
+      #scene1 .title {
+        max-width: 1220px;
+        font-size: 78px;
+      }
+
+      .pipeline {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .pipeline .node {
+        min-width: 244px;
+        min-height: 116px;
+      }
+
+      .side-map {
+        height: 650px;
+      }
+
+      .side-map img {
+        transform: scale(1.18) translateX(-2%);
+      }
+
+      .scene-two-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 610px 1fr;
+        gap: 68px;
+        align-items: center;
+      }
+
+      #scene2 .title {
+        font-size: 64px;
+        max-width: 610px;
+      }
+
+      .contract-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .contract-row {
+        display: grid;
+        grid-template-columns: 325px 120px 325px;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .contract-node {
+        min-height: 128px;
+      }
+
+      .plan-note {
+        margin-top: 26px;
+        padding: 28px 32px;
+        border-left: 4px solid #ff9d2e;
+        background: rgba(255, 157, 46, 0.09);
+        color: #f4f0e6;
+        font-size: 28px;
+        line-height: 1.38;
+      }
+
+      .scene-three-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 720px 1fr;
+        gap: 48px;
+        align-items: center;
+      }
+
+      .module-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .module-card {
+        min-height: 170px;
+        padding: 28px;
+        border: 1px solid rgba(34, 199, 231, 0.42);
+        border-radius: 8px;
+        background: rgba(13, 33, 56, 0.84);
+      }
+
+      .module-card strong {
+        display: block;
+        color: #f4f0e6;
+        font-size: 30px;
+        line-height: 1.1;
+      }
+
+      .module-card span {
+        display: block;
+        margin-top: 14px;
+        color: #a8d8e8;
+        font-size: 22px;
+        line-height: 1.34;
+      }
+
+      .runtime-map {
+        height: 700px;
+      }
+
+      .runtime-map img {
+        transform: scale(1.2) translate(-7%, -1%);
+      }
+
+      .scene-four-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 680px 1fr;
+        gap: 54px;
+        align-items: center;
+      }
+
+      .terminal {
+        padding: 34px;
+        min-height: 520px;
+        border: 1px solid rgba(32, 214, 160, 0.42);
+        border-radius: 8px;
+        background: rgba(3, 12, 23, 0.88);
+        box-shadow: inset 0 0 0 1px rgba(32, 214, 160, 0.08), 0 22px 72px rgba(0, 0, 0, 0.44);
+      }
+
+      .terminal-line {
+        margin: 0 0 18px;
+        color: #a8d8e8;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 25px;
+        line-height: 1.3;
+      }
+
+      .terminal-line.plus {
+        color: #20d6a0;
+      }
+
+      .terminal-line.minus {
+        color: #e84646;
+      }
+
+      .evidence-lane {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .evidence-card {
+        padding: 28px 30px;
+        border: 1px solid rgba(34, 199, 231, 0.45);
+        border-radius: 8px;
+        background: rgba(13, 33, 56, 0.86);
+      }
+
+      .evidence-card strong {
+        display: block;
+        color: #f4f0e6;
+        font-size: 32px;
+      }
+
+      .evidence-card span {
+        display: block;
+        margin-top: 12px;
+        color: #a8d8e8;
+        font-size: 23px;
+      }
+
+      .scene-five-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        gap: 54px;
+        align-items: center;
+      }
+
+      .gate-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .gate-card {
+        min-height: 174px;
+        padding: 30px;
+        border: 1px solid rgba(255, 157, 46, 0.45);
+        border-radius: 8px;
+        background: rgba(50, 25, 8, 0.54);
+      }
+
+      .gate-card strong {
+        display: block;
+        color: #ff9d2e;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 26px;
+      }
+
+      .gate-card span {
+        display: block;
+        margin-top: 14px;
+        color: #f4f0e6;
+        font-size: 25px;
+        line-height: 1.34;
+      }
+
+      .fail-panel {
+        position: relative;
+        min-height: 560px;
+        padding: 42px;
+        border: 2px solid #e84646;
+        border-radius: 8px;
+        background: rgba(76, 18, 18, 0.55);
+        box-shadow: 0 0 54px rgba(232, 70, 70, 0.22);
+      }
+
+      .fail-panel .stamp {
+        color: #e84646;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 62px;
+        font-weight: 800;
+      }
+
+      .fail-panel p {
+        color: #f4f0e6;
+        font-size: 29px;
+        line-height: 1.38;
+      }
+
+      .scene-six-main {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 680px 1fr;
+        gap: 62px;
+        align-items: center;
+      }
+
+      .package-card {
+        min-height: 600px;
+        padding: 44px;
+        border: 1px solid rgba(32, 214, 160, 0.62);
+        border-radius: 8px;
+        background: rgba(12, 44, 47, 0.78);
+        box-shadow: 0 0 64px rgba(32, 214, 160, 0.2);
+      }
+
+      .package-card h2 {
+        margin: 0;
+        color: #f4f0e6;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 46px;
+        line-height: 1.08;
+      }
+
+      .package-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 36px;
+      }
+
+      .package-list div {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #f4f0e6;
+        font-size: 27px;
+      }
+
+      .package-list div::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #20d6a0;
+        box-shadow: 0 0 18px rgba(32, 214, 160, 0.8);
+      }
+
+      .handoff-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .agent5-card {
+        min-height: 190px;
+        padding: 34px;
+        border: 1px solid rgba(34, 199, 231, 0.56);
+        border-radius: 8px;
+        background: rgba(13, 33, 56, 0.88);
+      }
+
+      .agent5-card strong {
+        display: block;
+        font-size: 38px;
+      }
+
+      .agent5-card span {
+        display: block;
+        margin-top: 14px;
+        color: #a8d8e8;
+        font-size: 26px;
+      }
+
+      .superpowers {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 28px;
+        align-items: center;
+        padding: 28px;
+        border: 1px solid rgba(255, 157, 46, 0.42);
+        border-radius: 8px;
+        background: rgba(255, 157, 46, 0.08);
+      }
+
+      .superpowers img {
+        width: 112px;
+        height: 112px;
+        object-fit: contain;
+      }
+
+      .superpowers strong {
+        display: block;
+        color: #ff9d2e;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 28px;
+      }
+
+      .superpowers span {
+        display: block;
+        margin-top: 12px;
+        color: #f4f0e6;
+        font-size: 25px;
+        line-height: 1.35;
+      }
+
+      .transition-gate {
+        position: absolute;
+        z-index: 60;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 1080px;
+        transform: translateX(-1940px);
+        background: #22c7e7;
+        box-shadow: 0 0 120px rgba(34, 199, 231, 0.36);
+      }
+
+      .transition-gate::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(244, 240, 230, 0.22), rgba(244, 240, 230, 0) 34%),
+          repeating-linear-gradient(90deg, rgba(7, 17, 29, 0.24) 0 16px, rgba(7, 17, 29, 0) 16px 42px);
+      }
+
+      .blackout {
+        position: absolute;
+        z-index: 70;
+        inset: 0;
+        background: #07111d;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="agent4-intro"
+      data-width="1920"
+      data-height="1080"
+      data-start="0"
+      data-duration="20"
+    >
+      <section id="scene1" class="scene">
+        <div class="scene-content">
+          <div class="topline">
+            <span class="tick">YSCLAW PATCH WORKFLOW</span>
+            <span>00 / 20s</span>
+          </div>
+          <div class="scene-one-main">
+            <div class="hero-stack">
+              <div class="hero-word">AGENT<span>4</span></div>
+              <h1 class="title">把根因诊断变成可验证补丁。</h1>
+              <p class="subtitle">位于 Agent3 与 Agent5 之间，负责计划、候选补丁、回归证据和交接包。</p>
+              <div class="pipeline">
+                <div class="node">
+                  <strong>Agent3</strong>
+                  <span>RootCauseBlueprint</span>
+                </div>
+                <div class="arrow"></div>
+                <div class="node active">
+                  <strong>Agent4</strong>
+                  <span>Patch workflow</span>
+                </div>
+                <div class="arrow"></div>
+                <div class="node">
+                  <strong>Agent5</strong>
+                  <span>PR handoff</span>
+                </div>
+              </div>
+            </div>
+            <div class="diagram-card side-map" data-layout-allow-overflow>
+        <img src="imgs/agent4-system-architecture.png" alt="Agent4 system architecture" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene2" class="scene">
+        <div class="scene-content">
+          <div class="topline">
+            <span class="tick">PLAN BEFORE PATCH</span>
+            <span class="mono">/ysclaw-patch-plan</span>
+          </div>
+          <div class="scene-two-main">
+            <div>
+              <h2 class="title">先计划，后修改。</h2>
+              <p class="subtitle">规划节点只读。RootCauseBlueprint 通过结构校验后，才产出 PatchPlan。</p>
+              <div class="plan-note">构建只能基于已确认计划，且只触碰计划范围内的文件。</div>
+            </div>
+            <div class="contract-stack">
+              <div class="contract-row">
+                <div class="node contract-node">
+                  <strong>RootCauseBlueprint</strong>
+                  <span>problem · evidence · candidateFiles</span>
+                </div>
+                <div class="arrow"></div>
+                <div class="node contract-node active">
+                  <strong>PatchPlan</strong>
+                  <span>objective · changes · validationPlan</span>
+                </div>
+              </div>
+              <div class="glow-line"></div>
+              <span class="label">schemaVersion: ysclaw.patch_plan.v1</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene3" class="scene">
+        <div class="scene-content">
+          <div class="topline">
+            <span class="tick">OPENCODE PLUGIN SURFACE</span>
+            <span class="mono">.opencode/plugins/ysclaw-agent4.js</span>
+          </div>
+          <div class="scene-three-main">
+            <div class="module-grid">
+              <div class="module-card">
+                <strong>plugin</strong>
+                <span>注册 skills，注入 Agent4 与 Superpowers bootstrap。</span>
+              </div>
+              <div class="module-card">
+                <strong>skills</strong>
+                <span>规划、回归验证、已验证补丁包写作。</span>
+              </div>
+              <div class="module-card">
+                <strong>schemas</strong>
+                <span>把跨 Agent 交接对象固定为 JSON 契约。</span>
+              </div>
+              <div class="module-card">
+                <strong>tools</strong>
+                <span>确定性校验、diff 捕获、ID 链检查。</span>
+              </div>
+            </div>
+            <div class="diagram-card runtime-map" data-layout-allow-overflow>
+              <img src="imgs/opencode-plugin-runtime-flow.png" alt="OpenCode plugin runtime flow" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene4" class="scene">
+        <div class="scene-content">
+          <div class="topline">
+            <span class="tick">FACTS BEFORE CLAIMS</span>
+            <span class="mono">git diff + agent1 patch_regression</span>
+          </div>
+          <div class="scene-four-main">
+            <div class="terminal">
+              <p class="terminal-line">diff --git a/tools/ysclaw-agent4-tools.js</p>
+              <p class="terminal-line minus">- accept loose regression command</p>
+              <p class="terminal-line plus">+ assertSafeRegressionCommand(command)</p>
+              <p class="terminal-line plus">+ captureGitDiff(cwd)</p>
+              <p class="terminal-line">PatchCandidate.gitDiff = source_of_truth</p>
+              <p class="terminal-line plus">Agent1: patch_regression -> pass</p>
+            </div>
+            <div class="evidence-lane">
+              <div class="evidence-card">
+                <strong>PatchCandidate</strong>
+                <span>changedFiles 与真实 Git 差异一起打包。</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="evidence-card">
+                <strong>PatchRegressionResult</strong>
+                <span>Agent1 回归结果被归一化为结构化证据。</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="evidence-card">
+                <strong>VerifiedPatchPackage</strong>
+                <span>只有差异和证据闭环后才可生成。</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene5" class="scene">
+        <div class="scene-content">
+          <div class="topline">
+            <span class="tick">FAIL CLOSED BY DESIGN</span>
+            <span class="mono">schema · command · id-chain · permission</span>
+          </div>
+          <div class="scene-five-main">
+            <div class="gate-grid">
+              <div class="gate-card">
+                <strong>SCHEMA</strong>
+                <span>非法 RootCauseBlueprint、PatchPlan 或回归结果直接拒绝。</span>
+              </div>
+              <div class="gate-card">
+                <strong>COMMAND</strong>
+                <span>只允许白名单形式：agent1 patch_regression。</span>
+              </div>
+              <div class="gate-card">
+                <strong>ID CHAIN</strong>
+                <span>blueprintId、patchPlanId、patchCandidateId 必须逐级一致。</span>
+              </div>
+              <div class="gate-card">
+                <strong>PERMISSION</strong>
+                <span>标量 allow 不能覆盖 Agent4 的安全默认值。</span>
+              </div>
+            </div>
+            <div class="fail-panel">
+              <div class="stamp">REJECT</div>
+              <p>换行命令、串联、重定向、命令替换、证据标识不一致，全部失败关闭。</p>
+              <div class="glow-line"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene6" class="scene">
+        <div class="scene-content fade-out">
+          <div class="topline">
+            <span class="tick">VERIFIED HANDOFF</span>
+            <span class="mono">ysclaw.verified_patch_package.v1</span>
+          </div>
+          <div class="scene-six-main">
+            <div class="package-card">
+              <h2>VerifiedPatchPackage</h2>
+              <div class="package-list">
+                <div>root cause summary</div>
+                <div>confirmed patch plan</div>
+                <div>git diff as candidate fact</div>
+                <div>Agent1 regression evidence</div>
+                <div>Agent5 handoff instructions</div>
+              </div>
+            </div>
+            <div class="handoff-panel">
+              <div class="agent5-card">
+                <strong>Agent5</strong>
+                <span>基于已验证差异准备 PR 和提交材料。</span>
+              </div>
+              <div class="superpowers">
+                <img src="superpowers-small.svg" alt="Superpowers icon" />
+                <div>
+                  <strong>SUPERPOWERS</strong>
+                  <span>规划、TDD、系统化调试、代码审查和分支收尾作为方法论增强层。</span>
+                </div>
+              </div>
+              <p class="subtitle">Agent4 提供可审计的补丁交付路径。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="gate" class="transition-gate" data-layout-ignore></div>
+      <div id="blackout" class="blackout" data-layout-ignore></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true });
+      const D = 20;
+
+      tl.from("#scene1 .topline", { y: -24, opacity: 0, duration: 0.45, ease: "power3.out" }, 0.18);
+      tl.from("#scene1 .hero-word", { x: -80, opacity: 0, scale: 0.96, duration: 0.72, ease: "expo.out" }, 0.32);
+      tl.from("#scene1 .title", { y: 52, opacity: 0, duration: 0.58, ease: "power2.out" }, 0.62);
+      tl.from("#scene1 .subtitle", { x: 42, opacity: 0, duration: 0.48, ease: "sine.out" }, 0.82);
+      tl.from("#scene1 .pipeline .node", { y: 42, opacity: 0, scale: 0.96, duration: 0.46, stagger: 0.09, ease: "back.out(1.4)" }, 1.04);
+      tl.from("#scene1 .pipeline .arrow", { scaleX: 0, opacity: 0, duration: 0.42, stagger: 0.08, ease: "power4.out" }, 1.24);
+      tl.from("#scene1 .side-map", { x: 84, opacity: 0, scale: 0.96, duration: 0.76, ease: "power3.out" }, 0.74);
+      tl.to("#scene1 .side-map img", { x: 24, y: -18, duration: 2.2, ease: "sine.inOut" }, 0.9);
+
+      transitionAt(3.0, "#scene1", "#scene2", "#22c7e7");
+      tl.from("#scene2 .topline", { y: -28, opacity: 0, duration: 0.38, ease: "power4.out" }, 3.48);
+      tl.from("#scene2 .title", { x: -56, opacity: 0, duration: 0.58, ease: "expo.out" }, 3.62);
+      tl.from("#scene2 .subtitle", { y: 34, opacity: 0, duration: 0.48, ease: "power2.out" }, 3.82);
+      tl.from("#scene2 .plan-note", { scale: 0.96, opacity: 0, duration: 0.44, ease: "back.out(1.25)" }, 4.06);
+      tl.from("#scene2 .contract-node", { y: 54, opacity: 0, duration: 0.5, stagger: 0.12, ease: "power3.out" }, 3.76);
+      tl.from("#scene2 .contract-row .arrow", { scaleX: 0, opacity: 0, duration: 0.42, ease: "power4.out" }, 4.18);
+      tl.from("#scene2 .glow-line", { scaleX: 0, opacity: 0, duration: 0.52, ease: "sine.out" }, 4.38);
+      tl.from("#scene2 .label", { x: 30, opacity: 0, duration: 0.4, ease: "circ.out" }, 4.54);
+
+      transitionAt(6.2, "#scene2", "#scene3", "#20d6a0");
+      tl.from("#scene3 .topline", { y: -24, opacity: 0, duration: 0.4, ease: "power3.out" }, 6.68);
+      tl.from("#scene3 .module-card", { y: 58, opacity: 0, scale: 0.96, duration: 0.48, stagger: 0.08, ease: "back.out(1.3)" }, 6.82);
+      tl.from("#scene3 .runtime-map", { x: 82, opacity: 0, scale: 0.96, duration: 0.72, ease: "expo.out" }, 7.06);
+      tl.to("#scene3 .runtime-map img", { x: -42, y: 16, duration: 2.05, ease: "sine.inOut" }, 7.22);
+
+      transitionAt(9.6, "#scene3", "#scene4", "#22c7e7");
+      tl.from("#scene4 .topline", { y: -24, opacity: 0, duration: 0.38, ease: "power4.out" }, 10.08);
+      tl.from("#scene4 .terminal", { x: -76, opacity: 0, scale: 0.98, duration: 0.62, ease: "expo.out" }, 10.2);
+      tl.from("#scene4 .terminal-line", { x: -28, opacity: 0, duration: 0.28, stagger: 0.08, ease: "steps(1)" }, 10.52);
+      tl.from("#scene4 .evidence-card", { x: 70, opacity: 0, duration: 0.46, stagger: 0.12, ease: "power3.out" }, 10.74);
+      tl.from("#scene4 .evidence-lane .arrow", { scaleX: 0, opacity: 0, duration: 0.34, stagger: 0.12, ease: "power4.out" }, 10.94);
+
+      transitionAt(13.0, "#scene4", "#scene5", "#ff9d2e");
+      tl.from("#scene5 .topline", { y: -24, opacity: 0, duration: 0.38, ease: "power3.out" }, 13.48);
+      tl.from("#scene5 .gate-card", { y: 54, opacity: 0, rotation: -1.2, duration: 0.44, stagger: 0.08, ease: "back.out(1.2)" }, 13.62);
+      tl.from("#scene5 .fail-panel", { x: 74, opacity: 0, scale: 0.95, duration: 0.56, ease: "expo.out" }, 13.9);
+      tl.from("#scene5 .stamp", { scale: 1.2, opacity: 0, duration: 0.34, ease: "power4.out" }, 14.22);
+      tl.from("#scene5 .fail-panel p", { y: 32, opacity: 0, duration: 0.42, ease: "sine.out" }, 14.42);
+      tl.from("#scene5 .fail-panel .glow-line", { scaleX: 0, opacity: 0, duration: 0.48, ease: "circ.out" }, 14.72);
+
+      transitionAt(16.4, "#scene5", "#scene6", "#20d6a0");
+      tl.from("#scene6 .topline", { y: -24, opacity: 0, duration: 0.42, ease: "power3.out" }, 16.9);
+      tl.from("#scene6 .package-card", { x: -74, opacity: 0, scale: 0.96, duration: 0.62, ease: "expo.out" }, 17.04);
+      tl.from("#scene6 .package-list div", { x: -26, opacity: 0, duration: 0.28, stagger: 0.07, ease: "power2.out" }, 17.36);
+      tl.from("#scene6 .agent5-card", { y: 48, opacity: 0, duration: 0.48, ease: "back.out(1.25)" }, 17.28);
+      tl.from("#scene6 .superpowers", { y: 48, opacity: 0, scale: 0.96, duration: 0.48, ease: "power4.out" }, 17.62);
+      tl.from("#scene6 .subtitle", { x: 38, opacity: 0, duration: 0.4, ease: "sine.out" }, 18.04);
+      tl.to("#scene6 .fade-out", { opacity: 0, y: -16, duration: 0.48, ease: "power2.in" }, 19.38);
+      tl.to("#blackout", { opacity: 1, duration: 0.5, ease: "sine.inOut" }, 19.48);
+
+      function transitionAt(t, previous, next, color) {
+        tl.set(next, { opacity: 1, zIndex: 1 }, t);
+        tl.set(previous, { zIndex: 2 }, t);
+        tl.set("#gate", { x: -1940, backgroundColor: color }, t);
+        tl.to("#gate", { x: 0, duration: 0.28, ease: "power3.in", overwrite: "auto" }, t);
+        tl.set(previous, { opacity: 0, zIndex: 0 }, t + 0.28);
+        tl.set(next, { zIndex: 2 }, t + 0.28);
+        tl.to("#gate", { x: 1940, duration: 0.36, ease: "power3.out", overwrite: "auto" }, t + 0.3);
+        tl.set("#gate", { x: -1940 }, t + 0.69);
+      }
+
+      window.__timelines["agent4-intro"] = tl;
+    </script>
+  </body>
+</html>
