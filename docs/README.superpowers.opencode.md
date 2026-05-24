@@ -1,12 +1,12 @@
-# Superpowers for OpenCode in opencode-agent4
+# opencode-agent4 中的 Superpowers for OpenCode
 
-This repository embeds Superpowers skills into the `opencode-agent4` OpenCode plugin. You do not need to install the upstream Superpowers plugin separately when this package is already configured.
+本仓库把 Superpowers skills 嵌入到 `opencode-agent4` OpenCode 插件中。配置本包后，不需要再单独安装 upstream Superpowers 插件。
 
-The embedded Superpowers content was migrated from `/Users/zq/Desktop/ai-projs/posp/template/superpowers`; its upstream MIT license is preserved in `docs/LICENSE.superpowers`.
+嵌入内容迁移自 `/Users/zq/Desktop/ai-projs/posp/template/superpowers`；上游 MIT 许可保存在 `docs/LICENSE.superpowers`。
 
-## Installation
+## 安装
 
-Add `opencode-agent4` to the `plugin` array in your `opencode.json` (global or project-level):
+在全局或项目级 `opencode.json` 的 `plugin` 数组中加入 `opencode-agent4`：
 
 ```json
 {
@@ -14,80 +14,81 @@ Add `opencode-agent4` to the `plugin` array in your `opencode.json` (global or p
 }
 ```
 
-Restart OpenCode. The Agent4 plugin registers both Agent4 skills and the embedded Superpowers skills from the shared `skills/` directory.
+重启 OpenCode。Agent4 插件会从共享的 `skills/` 目录注册 Agent4 skills 和嵌入的 Superpowers skills。
 
-Verify by asking OpenCode to list skills and checking for `using-superpowers`, `writing-plans`, `test-driven-development`, and `systematic-debugging`.
+验证方式：让 OpenCode 列出 skills，并确认存在 `using-superpowers`、`writing-plans`、`test-driven-development` 和 `systematic-debugging`。
 
-If you also use Claude Code, Codex, or another harness outside this plugin, install Superpowers separately for that environment.
+如果你还在 Claude Code、Codex 或其他 harness 中独立使用 Superpowers，需要为对应环境单独安装。
 
-### Migrating from the old symlink-based install
+### 从旧 symlink 安装迁移
 
-If you previously installed superpowers using `git clone` and symlinks, remove the old setup:
+如果此前通过 `git clone` 和 symlink 安装过 superpowers，先清理旧设置：
 
 ```bash
-# Remove old symlinks
+# 删除旧 symlink
 rm -f ~/.config/opencode/plugins/superpowers.js
 rm -rf ~/.config/opencode/skills/superpowers
 
-# Optionally remove the cloned repo
+# 可选：删除旧 clone
 rm -rf ~/.config/opencode/superpowers
 
-# Remove skills.paths from opencode.json if you added one for superpowers
+# 如果 opencode.json 中手动添加过 superpowers 的 skills.paths，也移除它
 ```
 
-Then follow the `opencode-agent4` installation steps above.
+然后按上方 `opencode-agent4` 安装方式配置。
 
-## Usage
+## 使用
 
-### Finding Skills
+### 查找 Skills
 
-Use OpenCode's native `skill` tool to list all available skills:
+使用 OpenCode 原生 `skill` 工具列出所有可用 skills：
 
-```
+```text
 use skill tool to list skills
 ```
 
-### Loading a Skill
+### 加载 Skill
 
-```
+```text
 use skill tool to load superpowers/brainstorming
 ```
 
-### Personal Skills
+### 个人 Skills
 
-Create your own skills in `~/.config/opencode/skills/`:
+可以在 `~/.config/opencode/skills/` 创建个人 skills：
 
 ```bash
 mkdir -p ~/.config/opencode/skills/my-skill
 ```
 
-Create `~/.config/opencode/skills/my-skill/SKILL.md`:
+创建 `~/.config/opencode/skills/my-skill/SKILL.md`：
 
 ```markdown
 ---
 name: my-skill
-description: Use when [condition] - [what it does]
+description: 在 [condition] 时使用，用于 [what it does]
 ---
 
 # My Skill
 
-[Your skill content here]
+[skill content here]
 ```
 
-### Project Skills
+### 项目 Skills
 
-Create project-specific skills in `.opencode/skills/` within your project.
+项目级 skills 可放在项目内 `.opencode/skills/`。
 
-**Skill Priority:** Project skills > Personal skills > Superpowers skills
+**优先级:** Project skills > Personal skills > Superpowers skills
 
-## Updating
+## 更新
 
-This repository vendors a local copy of the Superpowers skills. To update them,
-copy the desired upstream `skills/` content into this repository and rerun
-`npm test`.
+本仓库 vendored 了一份本地 Superpowers skills。更新时，把目标 upstream `skills/` 内容复制到本仓库，然后运行：
 
-If you choose to install upstream Superpowers separately, pin a specific version
-with a branch or tag:
+```bash
+npm test
+```
+
+如果选择单独安装 upstream Superpowers，可以用 branch 或 tag 固定版本：
 
 ```json
 {
@@ -95,51 +96,47 @@ with a branch or tag:
 }
 ```
 
-## How It Works
+## 工作原理
 
-The plugin does two things:
+插件做两件事：
 
-1. **Injects bootstrap context** via the `experimental.chat.messages.transform` hook, adding Agent4 and Superpowers awareness to every conversation.
-2. **Registers the skills directory** via the `config` hook, so OpenCode discovers Agent4 and Superpowers skills without symlinks or manual config.
+1. 通过 `experimental.chat.messages.transform` 注入 bootstrap context，让每个对话都知道 Agent4 与 Superpowers。
+2. 通过 `config` hook 注册 `skills/` 目录，让 OpenCode 无需 symlink 或手动配置即可发现 Agent4 和 Superpowers skills。
 
-### Tool Mapping
+### 工具映射
 
-Skills written for Claude Code are automatically adapted for OpenCode:
+为 Claude Code 编写的 skills 在 OpenCode 中按以下方式适配：
 
-- `TodoWrite` → `todowrite`
-- `Task` with subagents → OpenCode's `@mention` system
-- `Skill` tool → OpenCode's native `skill` tool
-- File operations → Native OpenCode tools
+- `TodoWrite` -> `todowrite`
+- 带 subagents 的 `Task` -> OpenCode 的 `@mention` 或子代理机制
+- `Skill` tool -> OpenCode 原生 `skill` 工具
+- 文件操作 -> OpenCode 原生文件工具
 
-## Troubleshooting
+## 排障
 
-### Plugin not loading
+### 插件没有加载
 
-1. Check OpenCode logs: `opencode run --print-logs "hello" 2>&1 | grep -i ysclaw`
-2. Verify the plugin line in your `opencode.json` is correct
-3. Make sure you're running a recent version of OpenCode
+1. 检查 OpenCode 日志：`opencode run --print-logs "hello" 2>&1 | grep -i ysclaw`
+2. 确认 `opencode.json` 中插件路径正确。
+3. 确认使用较新的 OpenCode 版本。
 
-### Windows install issues
+### Windows 安装问题
 
-Some Windows OpenCode builds have upstream installer issues with git-backed
-plugin specs, including cache paths for `git+https` URLs and Bun not finding
-`git.exe` even when it works in a normal terminal. If OpenCode cannot install a
-git-backed plugin, use a local checkout of `opencode-agent4` and point
-`opencode.json` at that path.
+部分 Windows OpenCode 构建对 git-backed plugin specs 有上游安装问题，例如 `git+https` 缓存路径或 Bun 找不到 `git.exe`。如果 git-backed 插件无法安装，使用 `opencode-agent4` 本地 checkout，并在 `opencode.json` 中指向该路径。
 
-### Skills not found
+### 找不到 Skills
 
-1. Use OpenCode's `skill` tool to list available skills
-2. Check that the plugin is loading (see above)
-3. Each skill needs a `SKILL.md` file with valid YAML frontmatter
+1. 用 OpenCode 的 `skill` 工具列出 skills。
+2. 检查插件是否加载。
+3. 确认每个 skill 都有带合法 YAML frontmatter 的 `SKILL.md`。
 
-### Bootstrap not appearing
+### Bootstrap 没出现
 
-1. Check OpenCode version supports `experimental.chat.messages.transform` hook
-2. Restart OpenCode after config changes
+1. 确认 OpenCode 版本支持 `experimental.chat.messages.transform` hook。
+2. 配置变更后重启 OpenCode。
 
-## Getting Help
+## 获取帮助
 
-- Report issues: https://github.com/obra/superpowers/issues
-- Main documentation: https://github.com/obra/superpowers
+- Issues: https://github.com/obra/superpowers/issues
+- 上游文档: https://github.com/obra/superpowers
 - OpenCode docs: https://opencode.ai/docs/

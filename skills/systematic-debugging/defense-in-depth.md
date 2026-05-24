@@ -1,122 +1,65 @@
-# Defense-in-Depth Validation
+# 防御纵深
 
-## Overview
+## 概览
 
-When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that single check can be bypassed by different code paths, refactoring, or mocks.
+当一个坏输入能穿过多层代码并在深处造成破坏时，只在一个地方修复通常不够。需要在关键边界加防护，让同类 bug 无法再次穿透。
 
-**Core principle:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+**核心原则:** 在源头修复，并在边界上验证不变量。
 
-## Why Multiple Layers
+## 何时使用
 
-Single validation: "We fixed the bug"
-Multiple layers: "We made the bug impossible"
+- bug 由无效输入或状态穿过多层后触发。
+- 失败后果严重，例如数据丢失、写错目录、安全绕过。
+- 同一不变量被多个入口依赖。
+- 调用链中有清晰边界，例如 API、service、storage、shell command。
 
-Different layers catch different cases:
-- Entry validation catches most bugs
-- Business logic catches edge cases
-- Environment guards prevent context-specific dangers
-- Debug logging helps when other layers fail
+## 防护层类型
 
-## The Four Layers
+1. **入口校验:** 在用户输入、API 参数、配置加载处拒绝无效值。
+2. **内部不变量:** 模块边界处 assert 或显式错误。
+3. **危险操作前 guard:** 文件删除、写磁盘、网络请求、shell 命令前做最后检查。
+4. **测试:** 覆盖非法输入、边界值和防护触发。
+5. **日志或诊断:** 高风险失败要能追踪来源。
 
-### Layer 1: Entry Point Validation
-**Purpose:** Reject obviously invalid input at API boundary
+## 示例
 
-```typescript
-function createProject(name: string, workingDirectory: string) {
-  if (!workingDirectory || workingDirectory.trim() === '') {
-    throw new Error('workingDirectory cannot be empty');
-  }
-  if (!existsSync(workingDirectory)) {
-    throw new Error(`workingDirectory does not exist: ${workingDirectory}`);
-  }
-  if (!statSync(workingDirectory).isDirectory()) {
-    throw new Error(`workingDirectory is not a directory: ${workingDirectory}`);
-  }
-  // ... proceed
-}
+问题：空目录参数导致 `git init` 在源码目录运行。
+
+防护：
+
+- `Project.create()` 拒绝空路径。
+- `WorkspaceManager` 拒绝空 `projectDir`。
+- `gitInit()` 在执行前确认目录位于临时根目录。
+- 回归测试验证空路径在入口就失败。
+
+## 避免过度防御
+
+防御纵深不是到处加重复校验。只在边界和危险操作处加。每一层都应回答：
+
+- 这个边界是否能从多个路径进入？
+- 失败后果是否严重？
+- 这里是否有足够上下文给出好错误？
+- 这层防护是否能捕获不同类别的问题？
+
+## 错误信息
+
+好的错误信息应包含：
+
+- 哪个不变量失败。
+- 收到的关键值。
+- 调用方应该如何修复。
+
+示例：
+
+```text
+Invalid projectDir: expected non-empty absolute path under temp root, got "".
 ```
 
-### Layer 2: Business Logic Validation
-**Purpose:** Ensure data makes sense for this operation
+## Checklist
 
-```typescript
-function initializeWorkspace(projectDir: string, sessionId: string) {
-  if (!projectDir) {
-    throw new Error('projectDir required for workspace initialization');
-  }
-  // ... proceed
-}
-```
-
-### Layer 3: Environment Guards
-**Purpose:** Prevent dangerous operations in specific contexts
-
-```typescript
-async function gitInit(directory: string) {
-  // In tests, refuse git init outside temp directories
-  if (process.env.NODE_ENV === 'test') {
-    const normalized = normalize(resolve(directory));
-    const tmpDir = normalize(resolve(tmpdir()));
-
-    if (!normalized.startsWith(tmpDir)) {
-      throw new Error(
-        `Refusing git init outside temp dir during tests: ${directory}`
-      );
-    }
-  }
-  // ... proceed
-}
-```
-
-### Layer 4: Debug Instrumentation
-**Purpose:** Capture context for forensics
-
-```typescript
-async function gitInit(directory: string) {
-  const stack = new Error().stack;
-  logger.debug('About to git init', {
-    directory,
-    cwd: process.cwd(),
-    stack,
-  });
-  // ... proceed
-}
-```
-
-## Applying the Pattern
-
-When you find a bug:
-
-1. **Trace the data flow** - Where does bad value originate? Where used?
-2. **Map all checkpoints** - List every point data passes through
-3. **Add validation at each layer** - Entry, business, environment, debug
-4. **Test each layer** - Try to bypass layer 1, verify layer 2 catches it
-
-## Example from Session
-
-Bug: Empty `projectDir` caused `git init` in source code
-
-**Data flow:**
-1. Test setup → empty string
-2. `Project.create(name, '')`
-3. `WorkspaceManager.createWorkspace('')`
-4. `git init` runs in `process.cwd()`
-
-**Four layers added:**
-- Layer 1: `Project.create()` validates not empty/exists/writable
-- Layer 2: `WorkspaceManager` validates projectDir not empty
-- Layer 3: `WorktreeManager` refuses git init outside tmpdir in tests
-- Layer 4: Stack trace logging before git init
-
-**Result:** All 1847 tests passed, bug impossible to reproduce
-
-## Key Insight
-
-All four layers were necessary. During testing, each layer caught bugs the others missed:
-- Different code paths bypassed entry validation
-- Mocks bypassed business logic checks
-- Edge cases on different platforms needed environment guards
-- Debug logging identified structural misuse
-
-**Don't stop at one validation point.** Add checks at every layer.
+- [ ] 根因已在源头修复。
+- [ ] 高风险边界有校验。
+- [ ] 危险操作前有最后 guard。
+- [ ] 错误信息可诊断。
+- [ ] 测试覆盖非法输入和正常路径。
+- [ ] 没有无意义重复校验。

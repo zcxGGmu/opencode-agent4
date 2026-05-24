@@ -1,37 +1,36 @@
-# Spec Document Reviewer Prompt Template
+# Spec 文档审查者 Prompt 模板
 
-Use this template when dispatching a spec document reviewer subagent.
+派发 spec 文档审查子代理时使用此模板。
 
-**Purpose:** Verify the spec is complete, consistent, and ready for implementation planning.
+**目的:** 验证 spec 是否完整、一致，并准备好进入实施计划。
 
-**Dispatch after:** Spec document is written to docs/superpowers/specs/
+**派发时机:** spec 已写入 `docs/superpowers/specs/` 后。
 
-```
+```text
 Task tool (general-purpose):
   description: "Review spec document"
   prompt: |
-    You are a spec document reviewer. Verify this spec is complete and ready for planning.
+    你是 spec 文档审查者。请验证这份 spec 是否完整，并准备好进入 planning。
 
     **Spec to review:** [SPEC_FILE_PATH]
 
     ## What to Check
 
     | Category | What to Look For |
-    |----------|------------------|
-    | Completeness | TODOs, placeholders, "TBD", incomplete sections |
-    | Consistency | Internal contradictions, conflicting requirements |
-    | Clarity | Requirements ambiguous enough to cause someone to build the wrong thing |
-    | Scope | Focused enough for a single plan — not covering multiple independent subsystems |
-    | YAGNI | Unrequested features, over-engineering |
+    |---|---|
+    | Completeness | TODO、placeholder、TBD、未完成章节 |
+    | Consistency | 内部矛盾、冲突需求 |
+    | Clarity | 需求是否模糊到会让人构建错误内容 |
+    | Scope | 是否足够聚焦，能进入单个计划，而不是多个独立子系统 |
+    | YAGNI | 未请求功能、过度工程 |
 
     ## Calibration
 
-    **Only flag issues that would cause real problems during implementation planning.**
-    A missing section, a contradiction, or a requirement so ambiguous it could be
-    interpreted two different ways — those are issues. Minor wording improvements,
-    stylistic preferences, and "sections less detailed than others" are not.
+    只标记会在实施计划中造成真实问题的内容。
+    缺失章节、矛盾、或可被解释成两种含义的需求是问题。
+    轻微措辞、风格偏好、某些章节不够详细但不阻塞 planning，不算问题。
 
-    Approve unless there are serious gaps that would lead to a flawed plan.
+    除非有会导致错误计划的严重缺口，否则批准。
 
     ## Output Format
 
@@ -40,10 +39,10 @@ Task tool (general-purpose):
     **Status:** Approved | Issues Found
 
     **Issues (if any):**
-    - [Section X]: [specific issue] - [why it matters for planning]
+    - [Section X]: [具体问题] - [为什么会影响 planning]
 
     **Recommendations (advisory, do not block approval):**
-    - [suggestions for improvement]
+    - [改进建议]
 ```
 
-**Reviewer returns:** Status, Issues (if any), Recommendations
+**Reviewer 返回:** Status、Issues（如有）、Recommendations。

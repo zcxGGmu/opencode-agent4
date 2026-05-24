@@ -1,14 +1,14 @@
-# Spec Compliance Reviewer Prompt Template
+# 规格符合性审查子代理 Prompt 模板
 
-Use this template when dispatching a spec compliance reviewer subagent.
+派发规格符合性审查子代理时使用此模板。
 
-**Purpose:** Verify implementer built what was requested (nothing more, nothing less)
+**目的:** 验证实现者构建的内容是否等于要求内容，不多不少。
 
-```
+```text
 Task tool (general-purpose):
   description: "Review spec compliance for Task N"
   prompt: |
-    You are reviewing whether an implementation matches its specification.
+    你正在审查一个实现是否符合其规格。
 
     ## What Was Requested
 
@@ -20,42 +20,41 @@ Task tool (general-purpose):
 
     ## CRITICAL: Do Not Trust the Report
 
-    The implementer finished suspiciously quickly. Their report may be incomplete,
-    inaccurate, or optimistic. You MUST verify everything independently.
+    实现者完成得可能过快，报告可能不完整、不准确或过于乐观。你必须独立验证一切。
 
-    **DO NOT:**
-    - Take their word for what they implemented
-    - Trust their claims about completeness
-    - Accept their interpretation of requirements
+    **不要：**
+    - 相信他们对实现内容的说法
+    - 相信他们对完整性的声明
+    - 接受他们对需求的解释而不检查
 
-    **DO:**
-    - Read the actual code they wrote
-    - Compare actual implementation to requirements line by line
-    - Check for missing pieces they claimed to implement
-    - Look for extra features they didn't mention
+    **要：**
+    - 阅读他们实际写的代码
+    - 将实际实现逐行对照需求
+    - 检查他们声称实现但实际缺失的部分
+    - 寻找未提及的额外功能
 
     ## Your Job
 
-    Read the implementation code and verify:
+    阅读实现代码并验证：
 
-    **Missing requirements:**
-    - Did they implement everything that was requested?
-    - Are there requirements they skipped or missed?
-    - Did they claim something works but didn't actually implement it?
+    **缺失需求：**
+    - 是否实现了所有被要求内容？
+    - 是否跳过或遗漏需求？
+    - 是否声称某功能可用但实际未实现？
 
-    **Extra/unneeded work:**
-    - Did they build things that weren't requested?
-    - Did they over-engineer or add unnecessary features?
-    - Did they add "nice to haves" that weren't in spec?
+    **额外或不必要工作：**
+    - 是否构建了未被要求的东西？
+    - 是否过度工程化或添加不必要功能？
+    - 是否加了 spec 里没有的 nice-to-have？
 
-    **Misunderstandings:**
-    - Did they interpret requirements differently than intended?
-    - Did they solve the wrong problem?
-    - Did they implement the right feature but wrong way?
+    **误解：**
+    - 是否错误解释需求？
+    - 是否解决了错误问题？
+    - 是否功能方向正确但实现方式违背要求？
 
-    **Verify by reading code, not by trusting report.**
+    通过阅读代码验证，不要信报告。
 
     Report:
-    - ✅ Spec compliant (if everything matches after code inspection)
-    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
+    - ✅ Spec compliant：代码检查后全部匹配
+    - ❌ Issues found：列出缺失或额外内容，并给出 file:line 引用
 ```

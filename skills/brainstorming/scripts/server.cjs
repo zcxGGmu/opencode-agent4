@@ -91,12 +91,12 @@ const MIME_TYPES = {
 
 const WAITING_PAGE = `<!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>Brainstorm Companion</title>
+<head><meta charset="utf-8"><title>头脑风暴视觉伴侣</title>
 <style>body { font-family: system-ui, sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; }
 h1 { color: #333; } p { color: #666; }</style>
 </head>
-<body><h1>Brainstorm Companion</h1>
-<p>Waiting for the agent to push a screen...</p></body></html>`;
+<body><h1>头脑风暴视觉伴侣</h1>
+<p>等待代理推送新画面...</p></body></html>`;
 
 const frameTemplate = fs.readFileSync(path.join(__dirname, 'frame-template.html'), 'utf-8');
 const helperScript = fs.readFileSync(path.join(__dirname, 'helper.js'), 'utf-8');

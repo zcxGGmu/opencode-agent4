@@ -1,14 +1,13 @@
-# Academic Test: Systematic Debugging Skill
+# 学术式测试提示
 
-You have access to the systematic debugging skill at skills/debugging/systematic-debugging
+用于提醒：测试不是证明“代码看起来合理”，而是用可重复实验验证行为。
 
-Read the skill and answer these questions based SOLELY on what the skill says:
+## 最低要求
 
-1. What are the four phases of systematic debugging?
-2. What must you do BEFORE attempting any fix?
-3. In Phase 3, what should you do if your first hypothesis doesn't work?
-4. What does the skill say about fixing multiple things at once?
-5. What should you do if you don't fully understand the issue?
-6. Is it ever acceptable to skip the process for simple bugs?
+- 明确假设。
+- 明确输入。
+- 明确预期输出或副作用。
+- 运行并记录结果。
+- 失败时解释失败信息与假设的关系。
 
-Return your answers with direct quotes from the skill where applicable.
+没有这些内容，测试只是仪式。

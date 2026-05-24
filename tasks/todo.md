@@ -251,3 +251,46 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - `npx hyperframes render . --output agent4-intro.mp4 --fps 30 --quality standard --workers 1` 成功。
 - `ffprobe` 确认成片为 H.264、1920x1080、30fps、600 帧、20.000000 秒。
 - `npm test` 通过，新增视频资产未影响现有 Agent4 插件、schema 和工具测试。
+
+## Superpowers 中文化计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮不修改命令白名单、安全权限、schema 标识一致性或补丁包验证逻辑。
+- [x] 确认当前工作区只剩未跟踪的 `.DS_Store` 和 `assets/design.pptx`，本轮不会纳入中文化改动。
+- [x] 确认 Superpowers 迁入内容集中在 `skills/`、`docs/README.superpowers.opencode.md` 和少量 assets/license。
+
+### 中文化边界
+
+- [x] 翻译 Superpowers skill 的 `description` 和正文说明。
+- [x] 翻译迁入的 prompt、reference、反模式、测试说明和 OpenCode 文档。
+- [x] 保留机器契约不翻译：目录名、`name:`、代码标识符、命令名、hook 名、工具名、脚本内容、JSON 字段名、OpenCode/Agent4/Superpowers 等专有名词。
+- [x] 不修改 Agent4 既有 schema、tools、命令权限和安全默认值。
+- [x] 扫描残余英文，确认剩余内容是代码、文件名、示例命令、专有名词或必要引文。
+- [x] 运行 `npm test`、插件/工具 `node --check`、相关 `.mjs` 语法检查。
+
+### 实现前确认
+
+用户已确认“按照建议进行中文化”。
+
+### 中文化复盘
+
+本轮已将迁入的 Superpowers 可见文档中文化：
+
+- 14 个 Superpowers `SKILL.md` 的 `description` 与正文已改为中文。
+- `brainstorming` 视觉伴侣文档、spec/plan/code review/subagent prompt 模板已中文化。
+- `using-superpowers/references` 中 Codex、Copilot CLI、Gemini CLI 工具映射已中文化。
+- `systematic-debugging`、`test-driven-development`、`writing-skills` 的辅助说明和反模式文档已中文化。
+- `docs/README.superpowers.opencode.md` 和浏览器 companion 的用户可见提示已中文化。
+
+保留英文范围：
+
+- 目录名、文件名、`name:`、工具名、hook 名、代码标识符、命令、JSON 字段名。
+- OpenCode、Codex、Superpowers、Agent4、TDD、PR、git、worktree 等专有名词或契约词。
+- prompt 模板中的机器输出标签，例如 `DONE`、`BLOCKED`、`BASE_SHA`、`HEAD_SHA`。
+
+最终验证：
+
+- `npm test` 通过。
+- `.opencode/plugins/ysclaw-agent4.js`、`tools/ysclaw-agent4-tools.js`、所有项目 `.mjs` 测试、`skills/brainstorming/scripts/helper.js`、`skills/brainstorming/scripts/server.cjs`、`skills/writing-skills/render-graphs.js` 的 `node --check` 通过。
+- Superpowers `SKILL.md` 的 `description` 扫描通过，剩余英文均为保留契约词。
