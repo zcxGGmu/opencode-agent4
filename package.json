@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "main": ".opencode/plugins/ysclaw-agent4.js",
-  "description": "源生 Claw Agent4 OpenCode 扩展包，用于补丁计划、候选补丁交接、回归验证和已验证补丁包输出。",
+  "description": "源生 Claw Agent4 OpenCode 扩展包，集成 Superpowers 方法论 skills，用于补丁计划、候选补丁交接、回归验证和已验证补丁包输出。",
   "license": "MIT",
   "scripts": {
     "test": "bash tests/opencode/run-tests.sh",
@@ -13,6 +13,11 @@
   "keywords": [
     "opencode",
     "agent4",
+    "superpowers",
+    "skills",
+    "planning",
+    "tdd",
+    "debugging",
     "补丁计划",
     "回归测试",
     "ysclaw"

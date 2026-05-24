@@ -5,9 +5,11 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '../..');
 const skillsDir = path.join(packageRoot, 'skills');
-const bootstrapSkillPath = path.join(skillsDir, 'using-ysclaw-agent4', 'SKILL.md');
+const agent4BootstrapSkillPath = path.join(skillsDir, 'using-ysclaw-agent4', 'SKILL.md');
+const superpowersBootstrapSkillPath = path.join(skillsDir, 'using-superpowers', 'SKILL.md');
 
-let bootstrapCache = undefined;
+let agent4BootstrapCache = undefined;
+let superpowersBootstrapCache = undefined;
 
 export const YSClawAgent4Plugin = async () => {
   return {
@@ -36,37 +38,46 @@ export const YSClawAgent4Plugin = async () => {
     },
 
     'experimental.chat.messages.transform': async (_input, output) => {
-      const bootstrap = getBootstrapContent();
-      if (!bootstrap || !output.messages?.length) return;
+      if (!output.messages?.length) return;
 
       const firstUser = output.messages.find((message) => message.info?.role === 'user');
       if (!firstUser?.parts?.length) return;
 
-      const alreadyInjected = firstUser.parts.some(
-        (part) => part.type === 'text' && part.text.includes('YSCLAW_AGENT4_BOOTSTRAP')
-      );
-      if (alreadyInjected) return;
+      const hasAgent4Bootstrap = hasBootstrapMarker(firstUser, 'YSCLAW_AGENT4_BOOTSTRAP');
+      const hasSuperpowersBootstrap = hasBootstrapMarker(firstUser, 'SUPERPOWERS_BOOTSTRAP');
+      if (hasAgent4Bootstrap && hasSuperpowersBootstrap) return;
+
+      const bootstrapParts = [];
+      if (!hasAgent4Bootstrap) {
+        const agent4Bootstrap = getAgent4BootstrapContent();
+        if (agent4Bootstrap) bootstrapParts.push(agent4Bootstrap);
+      }
+      if (!hasSuperpowersBootstrap) {
+        const superpowersBootstrap = getSuperpowersBootstrapContent();
+        if (superpowersBootstrap) bootstrapParts.push(superpowersBootstrap);
+      }
+      if (!bootstrapParts.length) return;
 
       const ref = firstUser.parts[0];
-      firstUser.parts.unshift({ ...ref, type: 'text', text: bootstrap });
+      firstUser.parts.unshift({ ...ref, type: 'text', text: bootstrapParts.join('\n\n') });
     }
   };
 };
 
 export default YSClawAgent4Plugin;
 
-function getBootstrapContent() {
-  if (bootstrapCache !== undefined) return bootstrapCache;
+function getAgent4BootstrapContent() {
+  if (agent4BootstrapCache !== undefined) return agent4BootstrapCache;
 
-  if (!fs.existsSync(bootstrapSkillPath)) {
-    bootstrapCache = null;
-    return bootstrapCache;
+  if (!fs.existsSync(agent4BootstrapSkillPath)) {
+    agent4BootstrapCache = null;
+    return agent4BootstrapCache;
   }
 
-  const fullContent = fs.readFileSync(bootstrapSkillPath, 'utf8');
+  const fullContent = fs.readFileSync(agent4BootstrapSkillPath, 'utf8');
   const content = stripFrontmatter(fullContent);
 
-  bootstrapCache = `<YSCLAW_AGENT4_BOOTSTRAP>
+  agent4BootstrapCache = `<YSCLAW_AGENT4_BOOTSTRAP>
 源生 Claw Agent4 扩展包已安装。
 
 ${content}
@@ -77,12 +88,51 @@ OpenCode 工具映射：
 - 保持 RootCauseBlueprint、PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage 的结构约束边界。
 </YSCLAW_AGENT4_BOOTSTRAP>`;
 
-  return bootstrapCache;
+  return agent4BootstrapCache;
+}
+
+function getSuperpowersBootstrapContent() {
+  if (superpowersBootstrapCache !== undefined) return superpowersBootstrapCache;
+
+  if (!fs.existsSync(superpowersBootstrapSkillPath)) {
+    superpowersBootstrapCache = null;
+    return superpowersBootstrapCache;
+  }
+
+  const fullContent = fs.readFileSync(superpowersBootstrapSkillPath, 'utf8');
+  const content = stripFrontmatter(fullContent);
+  const toolMapping = [
+    'OpenCode 工具映射：',
+    '- `TodoWrite` -> `todowrite`',
+    '- Claude Code `Task` 子代理 -> OpenCode 的子代理或 @mention 机制',
+    '- Claude Code `Skill` -> OpenCode 原生 skill 工具',
+    '- `Read`、`Write`、`Edit`、`Bash` -> OpenCode 原生文件和命令工具',
+    '',
+    '安装后的 Superpowers skills 与 Agent4 skills 位于同一个 skills 目录；优先遵守用户、AGENTS.md 和 Agent4 结构化交接约束。'
+  ].join('\n');
+
+  superpowersBootstrapCache = `<SUPERPOWERS_BOOTSTRAP>
+Superpowers 方法论 skills 已安装。
+
+重要：using-superpowers skill 内容已随本启动指引加载，不要再次加载 using-superpowers。
+
+${content}
+
+${toolMapping}
+</SUPERPOWERS_BOOTSTRAP>`;
+
+  return superpowersBootstrapCache;
 }
 
 function stripFrontmatter(content) {
   const match = content.match(/^---\n[\s\S]*?\n---\n([\s\S]*)$/);
   return match ? match[1].trim() : content.trim();
+}
+
+function hasBootstrapMarker(message, marker) {
+  return message.parts.some(
+    (part) => part.type === 'text' && part.text.includes(marker)
+  );
 }
 
 function defaultAgentConfig() {

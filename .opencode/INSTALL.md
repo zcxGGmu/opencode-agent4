@@ -29,6 +29,13 @@
 - `ysclaw-patch-plan-writer`
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
+- `using-superpowers`
+- `writing-plans`
+- `test-driven-development`
+- `systematic-debugging`
+- `verification-before-completion`
+
+Superpowers 的 OpenCode 说明见 `docs/README.superpowers.opencode.md`。本包已将这些 skills 合并到同一个 `skills/` 目录，不需要额外配置 symlink。
 
 运行本地检查：
 

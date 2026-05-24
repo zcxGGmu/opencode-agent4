@@ -28,11 +28,31 @@ for skill in \
   ysclaw-root-cause-blueprint-reader \
   ysclaw-patch-plan-writer \
   ysclaw-regression-verifier \
-  ysclaw-verified-patch-package-writer
+  ysclaw-verified-patch-package-writer \
+  using-superpowers \
+  brainstorming \
+  dispatching-parallel-agents \
+  executing-plans \
+  writing-plans \
+  writing-skills \
+  test-driven-development \
+  systematic-debugging \
+  subagent-driven-development \
+  using-git-worktrees \
+  verification-before-completion \
+  requesting-code-review \
+  receiving-code-review \
+  finishing-a-development-branch
 do
   test -f "$REPO_ROOT/skills/$skill/SKILL.md"
   grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"
 done
+
+echo "检查 Superpowers 迁移资源..."
+test -f "$REPO_ROOT/assets/superpowers-app-icon.png"
+test -f "$REPO_ROOT/assets/superpowers-small.svg"
+test -f "$REPO_ROOT/docs/LICENSE.superpowers"
+test -f "$REPO_ROOT/docs/README.superpowers.opencode.md"
 
 echo "检查结构约束文件..."
 for schema in \

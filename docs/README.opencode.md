@@ -4,8 +4,9 @@
 
 - `package.json` 通过 `main` 指向 `.opencode/plugins/ysclaw-agent4.js`。
 - 插件通过 `config.skills.paths` 注册顶层 `skills/` 目录。
-- 插件将缓存后的 Agent4 启动指引注入第一条用户消息。
+- 插件将缓存后的 Agent4 与 Superpowers 启动指引注入第一条用户消息。
 - 如果宿主配置尚未定义，插件会补齐 Agent4 智能体和命令默认配置。
+- Superpowers 方法论 skills 已合并到顶层 `skills/`，不需要额外 symlink。
 
 ## 安装
 
@@ -36,6 +37,17 @@ OpenCode 应能发现这些技能：
 - `ysclaw-patch-plan-writer`
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
+- `using-superpowers`
+- `brainstorming`
+- `writing-plans`
+- `test-driven-development`
+- `systematic-debugging`
+- `verification-before-completion`
+- `requesting-code-review`
+- `receiving-code-review`
+- `finishing-a-development-branch`
+
+完整 Superpowers OpenCode 说明见 `docs/README.superpowers.opencode.md`。
 
 ## 命令
 

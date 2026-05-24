@@ -1,13 +1,18 @@
 {
   "name": "ysclaw-agent4",
   "version": "0.1.0",
-  "description": "源生 Claw Agent4 扩展包，用于基于根因蓝图的补丁计划、回归验证和 VerifiedPatchPackage 交接。",
+  "description": "源生 Claw Agent4 扩展包，集成 Superpowers 方法论 skills，用于基于根因蓝图的补丁计划、回归验证和 VerifiedPatchPackage 交接。",
   "author": {
     "name": "YuanshengClaw"
   },
   "license": "MIT",
   "keywords": [
     "agent4",
+    "superpowers",
+    "skills",
+    "planning",
+    "tdd",
+    "debugging",
     "patch-plan",
     "verified-patch-package",
     "opencode",
@@ -16,8 +21,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "源生 Claw Agent4",
-    "shortDescription": "基于根因蓝图的补丁计划与已验证补丁包工作流",
-    "longDescription": "使用 Agent4 读取 RootCauseBlueprint 根因蓝图，产出 PatchPlan 补丁计划，协调 OpenCode 构建候选补丁，归一化 Agent1 回归结果，并将 VerifiedPatchPackage 已验证补丁包交接给 Agent5。",
+    "shortDescription": "Agent4 补丁工作流与 Superpowers 方法论 skills",
+    "longDescription": "使用 Agent4 读取 RootCauseBlueprint 根因蓝图，产出 PatchPlan 补丁计划，协调 OpenCode 构建候选补丁，归一化 Agent1 回归结果，并将 VerifiedPatchPackage 已验证补丁包交接给 Agent5；同时内置 Superpowers 的规划、TDD、系统化调试、代码审查和分支收尾 skills。",
     "developerName": "源生 Claw",
     "category": "Coding",
     "capabilities": [
@@ -30,6 +35,8 @@
       "构建并验证候选补丁，准备交给 Agent5。"
     ],
     "brandColor": "#2563EB",
+    "composerIcon": "./assets/superpowers-small.svg",
+    "logo": "./assets/superpowers-app-icon.png",
     "screenshots": []
   }
 }

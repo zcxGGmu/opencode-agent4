@@ -28,6 +28,11 @@ const config = {
 
 await plugin.config(config);
 
+assert.equal(config.skills.paths.length, 1);
+assert.ok(config.skills.paths[0].replaceAll('\\', '/').endsWith('/skills'));
+await plugin.config(config);
+assert.equal(config.skills.paths.length, 1);
+
 const agent = config.agent['ysclaw-agent4-patch'];
 assert.equal(agent.prompt, '从 markdown 加载的既有提示词。');
 assert.equal(agent.permission.read, 'allow');

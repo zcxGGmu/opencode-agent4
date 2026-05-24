@@ -2,6 +2,10 @@
 
 `opencode-agent4` 是源生 Claw 一阶段中的 Agent4 OpenCode 扩展包。它负责把 Agent3 的根因诊断结果转化为可验证的候选补丁，并把补丁差异和回归测试证据打包成 `VerifiedPatchPackage` 交给 Agent5。
 
+本包同时迁入了 Superpowers 方法论 skills，提供规划、TDD、系统化调试、代码审查、并行协作和分支收尾工作流。Superpowers 与 Agent4 的 skills 共用同一个 `skills/` 目录，由现有 OpenCode 插件入口统一注册。
+
+Superpowers 内容来源于 `/Users/zq/Desktop/ai-projs/posp/template/superpowers`，上游许可见 [docs/LICENSE.superpowers](/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/LICENSE.superpowers)。
+
 ## 整体定位
 
 Agent4 位于 Agent3 和 Agent5 之间：
@@ -70,6 +74,7 @@ Agent5 拉取请求 / 提交材料生成
 - `.opencode/agents/ysclaw-agent4-patch.md`：Agent4 的角色说明和安全边界。
 - `.opencode/commands/*.md`：开发者使用的命令入口说明。
 - `skills/*/SKILL.md`：可组合的 Agent4 动作技能。
+- `skills/using-superpowers` 等：迁入的 Superpowers 方法论 skills。
 - `schemas/*.schema.json`：Agent3、Agent4、Agent1、Agent5 之间的结构化契约。
 - `tools/ysclaw-agent4-tools.js`：本地确定性工具，用于结构约束校验、计划生成、差异打包和已验证补丁包生成。
 - `tests/`：插件加载、配置合并、启动指引缓存、结构约束和工具行为测试。
@@ -105,6 +110,15 @@ Agent5 拉取请求 / 提交材料生成
 - `ysclaw-patch-plan-writer`
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
+- `using-superpowers`
+- `brainstorming`
+- `writing-plans`
+- `test-driven-development`
+- `systematic-debugging`
+- `verification-before-completion`
+- `requesting-code-review`
+- `receiving-code-review`
+- `finishing-a-development-branch`
 
 默认智能体 id：
 

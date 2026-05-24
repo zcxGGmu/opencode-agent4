@@ -126,3 +126,53 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - `.opencode/plugins/ysclaw-agent4.js` 和 `tools/ysclaw-agent4-tools.js` 的 `node --check` 通过。
 - `tests/opencode/test-bootstrap-caching.mjs`、`tests/opencode/test-plugin-config.mjs`、`tests/schemas/validate-schemas.mjs`、`tests/tools/test-agent4-tools.mjs` 的 `node --check` 通过。
 - 剩余英文关键词扫描未发现需要继续翻译的用户可见描述。
+
+## Superpowers 迁移计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮需要保留 Agent4 权限合并防护，不能用 Superpowers 接入覆盖安全默认值。
+- [x] 对比目标仓库结构：目标已有 `.codex-plugin/plugin.json`、`.opencode/plugins/ysclaw-agent4.js`、`.opencode/agents`、`.opencode/commands` 和 Agent4 内置 `skills`。
+- [x] 对比来源结构：`/Users/zq/Desktop/ai-projs/posp/template/superpowers` 包含 OpenCode 插件入口、Codex 元数据、Superpowers skills、assets、docs 和测试。
+
+### 设计判断
+
+不整仓覆盖，不替换 Agent4 插件入口。采用“合并迁移”：
+
+- 将 Superpowers 的 `skills/*` 复制进目标顶层 `skills/`，与现有 Agent4 skills 共存。
+- 在现有 `.opencode/plugins/ysclaw-agent4.js` 中增加 Superpowers bootstrap 注入，但保留 Agent4 bootstrap、Agent4 agent/command 注册和权限合并逻辑。
+- 使用不同 bootstrap 标记，避免 Agent4 与 Superpowers 重复注入或互相误判。
+- 保留 `package.json` 的 Agent4 主入口，不把目标包改名为 `superpowers`。
+- 仅迁移运行所需的 Superpowers 文档/assets/test 片段；不复制来源 `.git`、Claude/Cursor/Gemini 插件元数据或与 OpenCode 无关的测试套件。
+
+### 实现范围
+
+- [x] 复制 Superpowers skill 目录到目标 `skills/`。
+- [x] 更新 `.opencode/plugins/ysclaw-agent4.js`，新增 `using-superpowers` bootstrap 缓存与 OpenCode 工具映射。
+- [x] 更新 `.codex-plugin/plugin.json` 和 `package.json` 描述/关键词，说明 Agent4 包内同时提供 Superpowers 方法论 skills。
+- [x] 添加或调整 OpenCode 测试，验证 Superpowers skills 被注册、bootstrap 会注入且不会重复注入。
+- [x] 运行 `npm test`、`node --check .opencode/plugins/ysclaw-agent4.js`，并抽查迁移 skill frontmatter。
+
+### 实现前确认
+
+用户已通过“ok”确认开始迁移。
+
+### 迁移复盘
+
+本轮已完成合并迁移：Superpowers 的 14 个 skills 已进入目标 `skills/`，Agent4 的 5 个 skills 保持不变。插件入口仍为 `.opencode/plugins/ysclaw-agent4.js`，它现在会注册同一个 `skills/` 目录，并在首条用户消息中分别注入 `YSCLAW_AGENT4_BOOTSTRAP` 和 `SUPERPOWERS_BOOTSTRAP`。Agent4 的 agent/command 默认配置和权限合并逻辑未被替换。
+
+新增资源和说明：
+
+- `assets/superpowers-app-icon.png`
+- `assets/superpowers-small.svg`
+- `docs/LICENSE.superpowers`
+- `docs/README.superpowers.opencode.md`
+- README、OpenCode 安装说明和 Codex 插件元数据已补充 Superpowers 集成说明。
+
+最终验证：
+
+- `npm test` 通过。
+- `.opencode/plugins/ysclaw-agent4.js` 和 `tools/ysclaw-agent4-tools.js` 的 `node --check` 通过。
+- `tests/opencode/test-bootstrap-caching.mjs`、`tests/opencode/test-plugin-config.mjs`、`tests/schemas/validate-schemas.mjs`、`tests/tools/test-agent4-tools.mjs` 的 `node --check` 通过。
+- `package.json` 和 `.codex-plugin/plugin.json` JSON 解析通过。
+- 测试确认 Superpowers skills 已存在、skills 路径不会重复注册、Agent4 与 Superpowers 两个 bootstrap 均只读取一次且重复 transform 不会重复注入。
