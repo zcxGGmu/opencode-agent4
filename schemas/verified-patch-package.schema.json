@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerifiedPatchPackage",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "createdAt",
+    "blueprintId",
+    "patchPlanId",
+    "patchCandidateId",
+    "rootCauseSummary",
+    "patchSummary",
+    "blueprint",
+    "patchPlan",
+    "patchCandidate",
+    "regressionResult",
+    "verification",
+    "handoff"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "ysclaw.verified_patch_package.v1"
+    },
+    "packageId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blueprintId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "patchPlanId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "patchCandidateId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rootCauseSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "patchSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "blueprint": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "blueprintId"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ysclaw.root_cause_blueprint.v1"
+        },
+        "blueprintId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "patchPlan": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "patchPlanId",
+        "blueprintId"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ysclaw.patch_plan.v1"
+        },
+        "patchPlanId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blueprintId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "patchCandidate": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "patchCandidateId",
+        "patchPlanId",
+        "gitDiff"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ysclaw.patch_candidate.v1"
+        },
+        "patchCandidateId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patchPlanId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "gitDiff": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "regressionResult": {
+      "type": "object",
+      "required": [
+        "schemaVersion",
+        "regressionId",
+        "patchCandidateId",
+        "status",
+        "command"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "ysclaw.patch_regression_result.v1"
+        },
+        "regressionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patchCandidateId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "error"
+          ]
+        },
+        "command": {
+          "type": "string",
+          "pattern": "^agent1[ \\t]+patch_regression(?:[ \\t]+[A-Za-z0-9_./:=,\\-]+)*$"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "status",
+        "verifiedAt",
+        "commands",
+        "artifacts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "verified",
+            "failed"
+          ]
+        },
+        "verifiedAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "required": [
+        "targetAgent",
+        "instructions"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "targetAgent": {
+          "const": "agent5"
+        },
+        "instructions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

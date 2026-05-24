@@ -1,0 +1,35 @@
+{
+  "name": "ysclaw-agent4",
+  "version": "0.1.0",
+  "description": "YuanshengClaw Agent4 extension pack for blueprint-driven patch planning, regression verification, and VerifiedPatchPackage handoff.",
+  "author": {
+    "name": "YuanshengClaw"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agent4",
+    "patch-plan",
+    "verified-patch-package",
+    "opencode",
+    "regression"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "YuanshengClaw Agent4",
+    "shortDescription": "Blueprint-driven patch planning and verified patch package workflow",
+    "longDescription": "Use Agent4 to read RootCauseBlueprint inputs, produce PatchPlan outputs, coordinate OpenCode Build patch candidates, normalize Agent1 regression results, and hand off VerifiedPatchPackage artifacts to Agent5.",
+    "developerName": "YuanshengClaw",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Create a PatchPlan from this RootCauseBlueprint.",
+      "Build and verify a patch candidate for Agent5 handoff."
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

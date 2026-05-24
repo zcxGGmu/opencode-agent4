@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "bp-riscv-matmul-cache-001",
+  "source": {
+    "agent": "agent3",
+    "createdAt": "2026-05-24T03:00:00Z",
+    "software": "demo-matmul",
+    "testcaseIds": ["matmul-1024"]
+  },
+  "problem": {
+    "summary": "Matrix multiplication regressed on RISC-V perf testcase.",
+    "evidence": [
+      "Agent1 testcase matmul-1024 shows 18% slower runtime.",
+      "perfdata hotspot moves into inner loop address calculation."
+    ]
+  },
+  "rootCause": {
+    "summary": "Inner loop repeatedly recomputes row offsets and misses a simple strength reduction.",
+    "candidateFiles": ["src/matmul.c"],
+    "performanceFactors": ["address recomputation", "loop invariant work"]
+  },
+  "constraints": {
+    "riskLevel": "medium",
+    "mustPreserve": ["numeric output", "public API"]
+  },
+  "validation": {
+    "requiredTests": ["matmul-1024", "unit-matmul"],
+    "regressionCommand": "agent1 patch_regression --case matmul-1024"
+  }
+}

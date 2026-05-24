@@ -1,0 +1,20 @@
+{
+  "name": "ysclaw-agent4",
+  "version": "0.1.0",
+  "type": "module",
+  "main": ".opencode/plugins/ysclaw-agent4.js",
+  "description": "YuanshengClaw Agent4 OpenCode extension pack for patch planning, patch generation handoff, regression verification, and verified package output.",
+  "license": "MIT",
+  "scripts": {
+    "test": "bash tests/opencode/run-tests.sh",
+    "check:plugin": "node --check .opencode/plugins/ysclaw-agent4.js",
+    "check:tools": "node --check tools/ysclaw-agent4-tools.js"
+  },
+  "keywords": [
+    "opencode",
+    "agent4",
+    "patch-planning",
+    "regression-testing",
+    "ysclaw"
+  ]
+}

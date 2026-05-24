@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "ysclaw.patch_regression_result.v1",
+  "regressionId": "reg-matmul-001",
+  "patchCandidateId": "pc-bp-riscv-matmul-cache-001",
+  "status": "pass",
+  "command": "agent1 patch_regression --case matmul-1024",
+  "tests": [
+    {
+      "name": "matmul-1024",
+      "status": "pass",
+      "durationMs": 1240,
+      "output": "runtime improved by 12%"
+    }
+  ],
+  "artifacts": ["reports/matmul-1024.json"],
+  "summary": "Regression passed and target testcase improved."
+}

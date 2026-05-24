@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PatchRegressionResult",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "regressionId",
+    "patchCandidateId",
+    "status",
+    "command",
+    "tests",
+    "artifacts",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "ysclaw.patch_regression_result.v1"
+    },
+    "regressionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "patchCandidateId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail",
+        "error"
+      ]
+    },
+    "command": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^agent1[ \\t]+patch_regression(?:[ \\t]+[A-Za-z0-9_./:=,\\-]+)*$"
+    },
+    "tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "pass",
+              "fail",
+              "error"
+            ]
+          },
+          "durationMs": {
+            "type": "number"
+          },
+          "output": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}
