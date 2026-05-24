@@ -176,3 +176,37 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - `tests/opencode/test-bootstrap-caching.mjs`、`tests/opencode/test-plugin-config.mjs`、`tests/schemas/validate-schemas.mjs`、`tests/tools/test-agent4-tools.mjs` 的 `node --check` 通过。
 - `package.json` 和 `.codex-plugin/plugin.json` JSON 解析通过。
 - 测试确认 Superpowers skills 已存在、skills 路径不会重复注册、Agent4 与 Superpowers 两个 bootstrap 均只读取一次且重复 transform 不会重复注入。
+
+## 项目架构图谱生成计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮需要避免用表层文件名拼图，必须从 Agent4 的真实数据契约、安全约束、OpenCode 插件链路和测试验证中抽取结构。
+- [x] 读取 `fireworks-tech-graph` 技能说明，确认需要生成 SVG 并导出 PNG，且每张图都要做 XML 与渲染验证。
+
+### 实现前计划
+
+- [x] 并行分析项目高层架构、OpenCode 插件入口、schemas/tools 数据链路、skills/docs/tests 框架。
+- [x] 提炼至少 4 组不同类型与风格的图：架构图、数据流图、流程图/状态图、框架/矩阵图。
+- [x] 将所有 SVG 与 PNG 输出到 `assets/imgs/`，命名清晰且可追溯。
+- [x] 使用 XML 解析和 PNG 导出验证全部 SVG。
+- [x] 视觉自查 PNG，修正箭头穿透、文字溢出或图例遮挡问题。
+- [x] 在本节末尾记录最终产物与验证结果。
+
+### 图谱产物
+
+- `assets/imgs/agent4-system-architecture.svg` / `.png`：Flat Icon 风格系统架构图，展示 Agent3、Agent4 插件包、Agent1 回归和 Agent5 交接。
+- `assets/imgs/opencode-plugin-runtime-flow.svg` / `.png`：Dark Terminal 风格插件运行时流程图，区分 `config` 注册和 `chat.messages.transform` bootstrap 注入。
+- `assets/imgs/agent4-contract-data-flow.svg` / `.png`：Blueprint 风格数据契约流图，突出五类对象、ID 链一致性和失败关闭。
+- `assets/imgs/agent4-patch-state-machine.svg` / `.png`：OpenAI Clean 风格状态机，展示从蓝图接收到 Agent5 交接的门槛和失败分支。
+- `assets/imgs/skills-verification-framework-matrix.svg` / `.png`：Notion Clean 风格框架矩阵，映射插件层、Skill 层、Schema 层、工具层、回归证据层和交接层的验证信号。
+
+### 图谱生成复盘
+
+最终验证：
+
+- 5 个 SVG 使用 `xml.etree.ElementTree` 解析通过。
+- 5 个 PNG 使用临时目录安装的 `@resvg/resvg-js` 导出成功，尺寸均为 2x 高分辨率且非空。
+- 视觉自查后重排了系统架构图和框架矩阵，修正了右侧交互拥挤和长文本截断。
+- `npm test` 通过。
+- `npm run check:plugin && npm run check:tools` 通过。

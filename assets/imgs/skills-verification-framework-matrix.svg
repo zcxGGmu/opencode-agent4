@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 860" width="1320" height="860">
+<style>
+  text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+</style>
+<defs>
+  <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+  </marker>
+</defs>
+<rect width="1320" height="860" fill="#ffffff"/>
+<text x="56" y="44" text-anchor="start" fill="#111827" font-size="24" font-weight="700">Skills / 契约 / 验证框架矩阵</text>
+<text x="56" y="72" text-anchor="start" fill="#6b7280" font-size="13">从入口文档到测试套件的可追溯质量框架</text>
+<rect x="56" y="112" width="1185" height="574" rx="6" ry="6" fill="#ffffff" stroke="#e5e7eb"/>
+<rect x="56" y="112" width="185" height="58" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="148" text-anchor="start" fill="#6b7280" font-size="12" font-weight="600" letter-spacing="0.06em">层级</text>
+<rect x="241" y="112" width="260" height="58" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="148" text-anchor="start" fill="#6b7280" font-size="12" font-weight="600" letter-spacing="0.06em">入口 / 对象</text>
+<rect x="501" y="112" width="410" height="58" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="148" text-anchor="start" fill="#6b7280" font-size="12" font-weight="600" letter-spacing="0.06em">职责</text>
+<rect x="911" y="112" width="330" height="58" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="148" text-anchor="start" fill="#6b7280" font-size="12" font-weight="600" letter-spacing="0.06em">验证信号</text>
+<rect x="56" y="170" width="185" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="204" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">OpenCode 插件层</tspan>
+</text>
+<rect x="241" y="170" width="260" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="196" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">.opencode/plugins</tspan>
+  <tspan x="257" dy="20">package.json main</tspan>
+</text>
+<rect x="501" y="170" width="410" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="204" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">注册 skills 路径；合并 agent/command；注入 bootstrap</tspan>
+</text>
+<rect x="911" y="170" width="330" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="196" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">test-plugin-loading</tspan>
+  <tspan x="927" dy="20">test-plugin-config</tspan>
+</text>
+<rect x="56" y="256" width="185" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="290" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">Skill 层</tspan>
+</text>
+<rect x="241" y="256" width="260" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="282" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">Agent4 skills</tspan>
+  <tspan x="257" dy="20">Superpowers skills</tspan>
+</text>
+<rect x="501" y="256" width="410" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="290" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">蓝图读取、计划、回归、打包；规划/TDD/审查方法论</tspan>
+</text>
+<rect x="911" y="256" width="330" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="282" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">SKILL.md frontmatter</tspan>
+  <tspan x="927" dy="20">bootstrap caching</tspan>
+</text>
+<rect x="56" y="342" width="185" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="376" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">Schema 契约层</tspan>
+</text>
+<rect x="241" y="342" width="260" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="376" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">5 个 JSON schemas</tspan>
+</text>
+<rect x="501" y="342" width="410" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="368" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">限定 Agent3/4/1/5 的结构边界</tspan>
+  <tspan x="517" dy="20">约束 schemaVersion、required 和枚举值</tspan>
+</text>
+<rect x="911" y="342" width="330" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="368" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">validate-schemas</tspan>
+  <tspan x="927" dy="20">validate CLI</tspan>
+</text>
+<rect x="56" y="428" width="185" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="462" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">Tool 层</tspan>
+</text>
+<rect x="241" y="428" width="260" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="462" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">ysclaw-agent4-tools.js</tspan>
+</text>
+<rect x="501" y="428" width="410" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="454" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">plan / candidate / normalize / package</tspan>
+  <tspan x="517" dy="20">提供确定性实现和失败关闭</tspan>
+</text>
+<rect x="911" y="428" width="330" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="454" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">test-agent4-tools</tspan>
+  <tspan x="927" dy="20">node --check</tspan>
+</text>
+<rect x="56" y="514" width="185" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="548" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">回归证据层</tspan>
+</text>
+<rect x="241" y="514" width="260" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="548" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">Agent1 patch_regression</tspan>
+</text>
+<rect x="501" y="514" width="410" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="548" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">只接受白名单命令；拒绝换行、串联和注入风险</tspan>
+</text>
+<rect x="911" y="514" width="330" height="86" fill="#ffffff" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="540" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">unsafe command tests</tspan>
+  <tspan x="927" dy="20">status pass/fail/error</tspan>
+</text>
+<rect x="56" y="600" width="185" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="72" y="634" text-anchor="start" fill="#111827" font-size="14" font-weight="600">
+  <tspan x="72" dy="0">交接层</tspan>
+</text>
+<rect x="241" y="600" width="260" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="257" y="634" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="257" dy="0">VerifiedPatchPackage</tspan>
+</text>
+<rect x="501" y="600" width="410" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="517" y="626" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="517" dy="0">嵌入四个上游对象；检查 ID 链一致</tspan>
+  <tspan x="517" dy="20">blueprintId / patchPlanId / patchCandidateId</tspan>
+</text>
+<rect x="911" y="600" width="330" height="86" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+<text x="927" y="626" text-anchor="start" fill="#374151" font-size="13">
+  <tspan x="927" dy="0">ID mismatch tests</tspan>
+  <tspan x="927" dy="20">verification.status</tspan>
+</text>
+<path d="M 1276,150 L 1276,620 L 1229,620" fill="none" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arrow-blue)" stroke-dasharray="4,3"/>
+<text x="1280" y="390" text-anchor="middle" fill="#6b7280" font-size="12">traceability</text>
+<rect x="56" y="718" width="1185" height="104" rx="6" ry="6" fill="#f9fafb" stroke="#e5e7eb"/>
+<text x="76" y="748" text-anchor="start" fill="#6b7280" font-size="12" font-weight="600" letter-spacing="0.06em">Skills 分组</text>
+<text x="76" y="780" text-anchor="start" fill="#111827" font-size="13">Agent4：using-ysclaw-agent4 / blueprint-reader / patch-plan-writer / regression-verifier / verified-package-writer</text>
+<text x="76" y="802" text-anchor="start" fill="#111827" font-size="13">Superpowers：brainstorming / writing-plans / TDD / debugging / verification / code review / worktrees / branch finish / writing-skills</text>
+</svg>

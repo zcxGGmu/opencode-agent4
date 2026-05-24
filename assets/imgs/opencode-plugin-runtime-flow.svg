@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" width="1200" height="820">
+<style>
+  text { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', 'Microsoft YaHei', 'SimHei', monospace; }
+</style>
+<defs>
+  <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#0f0f1a"/>
+    <stop offset="100%" stop-color="#1a1a2e"/>
+  </linearGradient>
+  <marker id="arrow-purple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#a855f7"/>
+  </marker>
+  <marker id="arrow-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#3b82f6"/>
+  </marker>
+  <marker id="arrow-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#10b981"/>
+  </marker>
+  <marker id="arrow-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#f97316"/>
+  </marker>
+  <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
+  </marker>
+</defs>
+<rect width="1200" height="820" fill="url(#bg-grad)"/>
+<text x="600" y="44" text-anchor="middle" fill="#e2e8f0" font-size="22" font-weight="700" font-family="'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', 'Microsoft YaHei', 'SimHei', monospace">OpenCode 插件运行时流程</text>
+<text x="600" y="70" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', 'Microsoft YaHei', 'SimHei', monospace">config hook 负责注册，chat transform 负责注入 bootstrap</text>
+<rect x="48" y="96" width="1104" height="650" rx="10" ry="10" fill="#0b1120" stroke="#334155" stroke-width="1.5"/>
+<rect x="48" y="96" width="1104" height="34" rx="10" ry="10" fill="#111827" stroke="#334155" stroke-width="1.5"/>
+<circle cx="72" cy="113" r="6" fill="#ef4444"/>
+<circle cx="94" cy="113" r="6" fill="#f59e0b"/>
+<circle cx="116" cy="113" r="6" fill="#10b981"/>
+<text x="600" y="118" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', 'Microsoft YaHei', 'SimHei', monospace">ysclaw-agent4.js</text>
+<line x1="175" y1="190" x2="292" y2="190" stroke="#3b82f6" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+<rect x="197.0" y="164" width="78" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="236" y="178" text-anchor="middle" fill="#94a3b8" font-size="11">plugin[]</text>
+<line x1="450" y1="190" x2="560" y2="190" stroke="#3b82f6" stroke-width="1.8" marker-end="url(#arrow-blue)"/>
+<rect x="477.0" y="164" width="58" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="506" y="178" text-anchor="middle" fill="#94a3b8" font-size="11">main</text>
+<path d="M 690,220 L 690,268 L 380,268 L 380,306" fill="none" stroke="#a855f7" stroke-width="1.8" marker-end="url(#arrow-purple)"/>
+<path d="M 690,220 L 690,268 L 820,268 L 820,306" fill="none" stroke="#f97316" stroke-width="1.8" marker-end="url(#arrow-orange)"/>
+<rect x="647.0" y="243" width="86" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="690" y="257" text-anchor="middle" fill="#94a3b8" font-size="11">two hooks</text>
+<path d="M 380,394 L 380,430 L 190,430 L 190,458" fill="none" stroke="#a855f7" stroke-width="1.6" marker-end="url(#arrow-purple)"/>
+<rect x="142.0" y="406" width="96" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="190" y="420" text-anchor="middle" fill="#a855f7" font-size="11">skills path</text>
+<path d="M 380,394 L 380,430 L 380,430 L 380,458" fill="none" stroke="#a855f7" stroke-width="1.6" marker-end="url(#arrow-purple)"/>
+<rect x="332.0" y="406" width="96" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="380" y="420" text-anchor="middle" fill="#a855f7" font-size="11">agent</text>
+<path d="M 380,394 L 380,430 L 570,430 L 570,458" fill="none" stroke="#a855f7" stroke-width="1.6" marker-end="url(#arrow-purple)"/>
+<rect x="522.0" y="406" width="96" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="570" y="420" text-anchor="middle" fill="#a855f7" font-size="11">commands</text>
+<path d="M 820,394 L 820,430 L 750,430 L 750,458" fill="none" stroke="#f97316" stroke-width="1.6" marker-end="url(#arrow-orange)"/>
+<rect x="694.0" y="406" width="112" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="750" y="420" text-anchor="middle" fill="#f97316" font-size="11">marker check</text>
+<path d="M 820,394 L 820,430 L 930,430 L 930,458" fill="none" stroke="#f97316" stroke-width="1.6" marker-end="url(#arrow-orange)"/>
+<rect x="874.0" y="406" width="112" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="930" y="420" text-anchor="middle" fill="#f97316" font-size="11">inject blocks</text>
+<path d="M 570,530 L 570,596 L 690,596 L 690,628" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#arrow-green)"/>
+<path d="M 930,530 L 930,596 L 690,596 L 690,628" fill="none" stroke="#10b981" stroke-width="1.8" marker-end="url(#arrow-green)" stroke-dasharray="5,3"/>
+<rect x="626.0" y="572" width="128" height="20" rx="4" ry="4" fill="#0b1120" opacity="1"/>
+<text x="690" y="586" text-anchor="middle" fill="#10b981" font-size="11">增强会话上下文</text>
+<rect x="72" y="155" width="126" height="70" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="135.0" y="186.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">opencode.json</text>
+<text x="135.0" y="207.0" text-anchor="middle" fill="#94a3b8" font-size="12">plugin[]</text>
+<rect x="292" y="155" width="158" height="70" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="371.0" y="186.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">package.json</text>
+<text x="371.0" y="207.0" text-anchor="middle" fill="#94a3b8" font-size="12">main</text>
+<rect x="560" y="155" width="260" height="70" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+<text x="690.0" y="186.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">YSClawAgent4Plugin()</text>
+<text x="690.0" y="207.0" text-anchor="middle" fill="#94a3b8" font-size="12">returns config + transform hooks</text>
+<rect x="270" y="316" width="220" height="78" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+<text x="380.0" y="351.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">config(config)</text>
+<text x="380.0" y="372.0" text-anchor="middle" fill="#94a3b8" font-size="12">注册 skills / agent / command</text>
+<rect x="700" y="316" width="240" height="78" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.5"/>
+<text x="820.0" y="351.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">chat.messages.transform</text>
+<text x="820.0" y="372.0" text-anchor="middle" fill="#94a3b8" font-size="12">首条 user message 注入</text>
+<rect x="100" y="458" width="180" height="72" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+<text x="190.0" y="490.0" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">config.skills.paths</text>
+<text x="190.0" y="511.0" text-anchor="middle" fill="#94a3b8" font-size="12">+ /skills 去重</text>
+<rect x="300" y="458" width="160" height="72" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+<text x="380.0" y="490.0" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">agent config</text>
+<text x="380.0" y="511.0" text-anchor="middle" fill="#94a3b8" font-size="12">权限安全合并</text>
+<rect x="500" y="458" width="160" height="72" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
+<text x="580.0" y="490.0" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">commands</text>
+<text x="580.0" y="511.0" text-anchor="middle" fill="#94a3b8" font-size="12">plan / build</text>
+<rect x="680" y="458" width="150" height="72" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.5"/>
+<text x="755.0" y="490.0" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">marker check</text>
+<text x="755.0" y="511.0" text-anchor="middle" fill="#94a3b8" font-size="12">防重复注入</text>
+<rect x="860" y="458" width="170" height="72" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.5"/>
+<text x="945.0" y="490.0" text-anchor="middle" fill="#e2e8f0" font-size="12" font-weight="600">bootstrap blocks</text>
+<text x="945.0" y="511.0" text-anchor="middle" fill="#94a3b8" font-size="12">Agent4 + Superpowers</text>
+<rect x="570" y="628" width="240" height="78" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+<text x="690.0" y="663.0" text-anchor="middle" fill="#e2e8f0" font-size="13" font-weight="600">ysclaw-agent4-patch</text>
+<text x="690.0" y="684.0" text-anchor="middle" fill="#94a3b8" font-size="12">/patch-plan + /build-patch</text>
+<rect x="70" y="760" width="1060" height="34" rx="6" ry="6" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+<text x="600" y="782" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', 'Microsoft YaHei', 'SimHei', monospace">约束：标量 permission=allow 不覆盖安全默认值；bootstrap 内容进程内缓存；已有 command.agent 可覆盖默认 agent</text>
+</svg>
