@@ -1,33 +1,33 @@
 ---
 name: ysclaw-patch-plan-writer
-description: Use when creating a PatchPlan from a validated RootCauseBlueprint; this skill must not edit code.
+description: 从已校验的 RootCauseBlueprint 创建 PatchPlan 时使用；此技能不得修改代码。
 ---
 
-# PatchPlan Writer
+# PatchPlan 编写器
 
-Create a schema-valid `PatchPlan` without modifying repository code.
+在不修改仓库代码的前提下创建符合结构约束的 `PatchPlan`。
 
-## Inputs
+## 输入
 
-- Valid `RootCauseBlueprint`.
-- Optional historical optimization notes from the shared experience center.
+- 合法的 `RootCauseBlueprint`。
+- 可选的共享经验中心历史优化记录。
 
-## Procedure
+## 流程
 
-1. Confirm the blueprint is valid.
-2. Create a plan with one focused change item per candidate file.
-3. State the smallest intended change, the risk, and the exact validation commands.
-   Validation commands must use the whitelisted `agent1 patch_regression` form only.
-4. Validate the output:
+1. 确认根因蓝图合法。
+2. 为每个候选文件创建一个聚焦的变更项。
+3. 说明最小预期修改、风险和精确验证命令。
+   验证命令只能使用白名单形式 `agent1 patch_regression`。
+4. 校验输出：
 
    ```bash
    node tools/ysclaw-agent4-tools.js validate patch-plan path/to/patch-plan.json
    ```
 
-## Output Contract
+## 输出契约
 
-Return a JSON object matching `schemas/patch-plan.schema.json`.
+返回匹配 `schemas/patch-plan.schema.json` 的 JSON 对象。
 
-Do not include implementation diff in the plan. The diff belongs to `PatchCandidate`.
+不要在计划中包含实现差异。差异属于 `PatchCandidate`。
 
-Do not invent fallback files such as `UNKNOWN`; if the blueprint is incomplete, reject it and ask for a corrected Agent3 output.
+不要虚构 `UNKNOWN` 等兜底文件；如果根因蓝图不完整，应拒绝并要求修正 Agent3 输出。

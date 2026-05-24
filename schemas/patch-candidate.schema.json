@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "PatchCandidate",
+  "title": "候选补丁",
   "type": "object",
   "required": [
     "schemaVersion",

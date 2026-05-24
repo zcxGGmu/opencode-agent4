@@ -15,7 +15,7 @@ tests=(
 )
 
 for test_path in "${tests[@]}"; do
-  echo "Running: $test_path"
+  echo "运行：$test_path"
   if [[ "$test_path" == *.mjs ]]; then
     node "$test_path"
   else
@@ -23,4 +23,4 @@ for test_path in "${tests[@]}"; do
   fi
 done
 
-echo "All Agent4 tests passed."
+echo "所有 Agent4 测试通过。"

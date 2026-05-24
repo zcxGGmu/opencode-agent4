@@ -23,7 +23,7 @@ assert.equal(validateBySchemaName('patch-plan', plan, join(root, 'schemas')).val
 
 assert.throws(
   () => createPatchPlanFromBlueprint({ ...blueprint, rootCause: { ...blueprint.rootCause, candidateFiles: [] } }),
-  /root-cause-blueprint validation failed/
+  /root-cause-blueprint 校验失败/
 );
 assert.throws(
   () => createPatchPlanFromBlueprint({
@@ -33,7 +33,7 @@ assert.throws(
       regressionCommand: 'agent1 patch_regression --case matmul-1024; rm -rf /'
     }
   }),
-  /Unsafe regression command/
+  /不安全的回归命令/
 );
 assert.throws(
   () => createPatchPlanFromBlueprint({
@@ -43,7 +43,7 @@ assert.throws(
       regressionCommand: 'agent1 patch_regression\nrm -rf /'
     }
   }),
-  /Unsafe regression command/
+  /不安全的回归命令/
 );
 
 const diff = [
@@ -62,7 +62,7 @@ assert.deepEqual(candidate.changedFiles, ['src/matmul.c']);
 assert.equal(validateBySchemaName('patch-candidate', candidate, join(root, 'schemas')).valid, true);
 assert.throws(
   () => createPatchCandidateFromDiff(plan, ''),
-  /patch-candidate validation failed/
+  /patch-candidate 校验失败/
 );
 
 const normalized = normalizeRegressionResult({
@@ -100,7 +100,7 @@ assert.throws(
       patchCandidateId: 'pc-stale-result-id'
     },
   }),
-  /RegressionResult patchCandidateId does not match/
+  /RegressionResult patchCandidateId 与 PatchCandidate 不一致/
 );
 
 assert.throws(
@@ -110,7 +110,7 @@ assert.throws(
     patchCandidate: candidate,
     regressionResult: regression,
   }),
-  /root-cause-blueprint validation failed/
+  /root-cause-blueprint 校验失败/
 );
 assert.throws(
   () => createVerifiedPatchPackage({
@@ -119,7 +119,7 @@ assert.throws(
     patchCandidate: candidate,
     regressionResult: regression,
   }),
-  /PatchPlan blueprintId does not match/
+  /PatchPlan blueprintId 与 blueprint 不一致/
 );
 assert.throws(
   () => createVerifiedPatchPackage({
@@ -128,7 +128,7 @@ assert.throws(
     patchCandidate: { ...candidate, patchPlanId: 'pp-other' },
     regressionResult: regression,
   }),
-  /PatchCandidate patchPlanId does not match/
+  /PatchCandidate patchPlanId 与 PatchPlan 不一致/
 );
 
-console.log('Agent4 tool tests passed.');
+console.log('Agent4 工具测试通过。');

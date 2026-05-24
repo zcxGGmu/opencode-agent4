@@ -1,37 +1,37 @@
 ---
 name: ysclaw-regression-verifier
-description: Use after a PatchCandidate exists to run or normalize Agent1 patch_regression evidence.
+description: 在 PatchCandidate 已存在后，用于运行或归一化 Agent1 patch_regression 证据。
 ---
 
-# Regression Verifier
+# 回归验证器
 
-Use this skill after code has changed and a `PatchCandidate` exists.
+在代码已变更且 `PatchCandidate` 已存在后使用此 skill。
 
-## Inputs
+## 输入
 
 - `PatchPlan`
 - `PatchCandidate`
-- Agent1 `patch_regression` command or raw result
+- Agent1 `patch_regression` 命令或原始结果
 
-## Procedure
+## 流程
 
-1. Prefer running the exact command in `patchPlan.validationPlan.commands`.
-   The command must match the Agent4 whitelist: `agent1 patch_regression` followed only by simple argument tokens.
-2. If Agent1 is unavailable, ingest a saved Agent1 result and record that source explicitly in the summary.
-3. Normalize the result:
+1. 优先运行 `patchPlan.validationPlan.commands` 中的精确命令。
+   命令必须匹配 Agent4 白名单：`agent1 patch_regression` 后只能跟简单参数令牌。
+2. 如果 Agent1 不可用，则导入已保存的 Agent1 结果，并在摘要中明确记录来源。
+3. 归一化结果：
 
    ```bash
    node tools/ysclaw-agent4-tools.js normalize-regression agent1-result.json patch-regression-result.json
    ```
 
-4. Validate:
+4. 校验：
 
    ```bash
    node tools/ysclaw-agent4-tools.js validate patch-regression-result patch-regression-result.json
    ```
 
-## Output
+## 输出
 
-Return a `PatchRegressionResult` object. A failed or errored regression must not be hidden; Agent4 can still package it, but verification status will be `failed`.
+返回 `PatchRegressionResult` 对象。失败或错误的回归结果不能被隐藏；Agent4 仍可打包它，但验证状态必须是失败。
 
-Reject shell metacharacters, command chaining, redirects, command substitutions, or any command that does not start with `agent1 patch_regression`.
+拒绝命令行元字符、命令串联、重定向、命令替换，以及任何不是以 `agent1 patch_regression` 开头的命令。

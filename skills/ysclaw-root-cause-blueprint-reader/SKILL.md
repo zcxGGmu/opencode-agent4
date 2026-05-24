@@ -1,44 +1,44 @@
 ---
 name: ysclaw-root-cause-blueprint-reader
-description: Use when reading or validating an Agent3 RootCauseBlueprint before Agent4 planning.
+description: 在 Agent4 规划前读取或校验 Agent3 RootCauseBlueprint 时使用。
 ---
 
-# RootCauseBlueprint Reader
+# RootCauseBlueprint 读取器
 
-Use this skill before patch planning.
+在补丁规划前使用此 skill。
 
-## Inputs
+## 输入
 
-- A JSON object or file path for `RootCauseBlueprint`.
-- Schema: `schemas/root-cause-blueprint.schema.json`.
+- `RootCauseBlueprint` JSON 对象或文件路径。
+- 结构约束：`schemas/root-cause-blueprint.schema.json`。
 
-## Procedure
+## 流程
 
-1. Validate the JSON:
+1. 校验 JSON：
 
    ```bash
    node tools/ysclaw-agent4-tools.js validate root-cause-blueprint path/to/blueprint.json
    ```
 
-2. Extract:
+2. 提取：
    - `blueprintId`
-   - problem summary and evidence
-   - root cause summary
-   - candidate files
-   - risk level and preservation constraints
-   - required tests and Agent1 regression command
+   - 问题摘要和证据
+   - 根因摘要
+   - 候选文件
+   - 风险等级和保持不变的约束
+   - 必需测试和 Agent1 回归命令
 
-3. Reject or ask for clarification if the blueprint lacks candidate files, root cause evidence, or validation requirements.
+3. 如果根因蓝图缺少候选文件、根因证据或验证要求，则拒绝处理或要求补充说明。
 
-## Output
+## 输出
 
-Provide a concise normalized reading:
+提供简洁的归一化解读：
 
 ```json
 {
   "blueprintId": "bp-example",
   "candidateFiles": ["src/example.c"],
-  "rootCauseSummary": "Loop invariant work is repeated in a hot path.",
+  "rootCauseSummary": "热点路径中重复执行循环不变量工作。",
   "riskLevel": "medium",
   "requiredTests": ["case-1"],
   "regressionCommand": "agent1 patch_regression --case case-1"

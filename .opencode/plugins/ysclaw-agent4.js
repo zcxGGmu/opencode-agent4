@@ -67,14 +67,14 @@ function getBootstrapContent() {
   const content = stripFrontmatter(fullContent);
 
   bootstrapCache = `<YSCLAW_AGENT4_BOOTSTRAP>
-YuanshengClaw Agent4 extension pack is installed.
+源生 Claw Agent4 扩展包已安装。
 
 ${content}
 
-OpenCode tool mapping:
-- Use native skill loading for bundled Agent4 skills.
-- Use bash/node to call tools/ysclaw-agent4-tools.js when deterministic schema or package operations are needed.
-- Keep RootCauseBlueprint, PatchPlan, PatchCandidate, PatchRegressionResult, and VerifiedPatchPackage schema boundaries intact.
+OpenCode 工具映射：
+- 使用原生技能加载能力加载 Agent4 内置技能。
+- 需要确定性的结构约束或补丁包操作时，使用 bash/node 调用 tools/ysclaw-agent4-tools.js。
+- 保持 RootCauseBlueprint、PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage 的结构约束边界。
 </YSCLAW_AGENT4_BOOTSTRAP>`;
 
   return bootstrapCache;
@@ -87,14 +87,14 @@ function stripFrontmatter(content) {
 
 function defaultAgentConfig() {
   return {
-    description: 'YuanshengClaw Agent4: plan-first patch production and regression verification.',
+    description: '源生 Claw Agent4：计划优先的补丁生产与回归验证。',
     mode: 'primary',
     color: 'info',
     prompt: [
-      'You are YuanshengClaw Agent4.',
-      'Your job is to convert RootCauseBlueprint inputs into PatchPlan outputs, coordinate patch candidates, require regression evidence, and emit VerifiedPatchPackage artifacts for Agent5.',
-      'Always separate plan generation from code modification. /ysclaw-patch-plan must not edit code. /ysclaw-build-patch may edit code only after a PatchPlan is confirmed.',
-      'Prefer the bundled ysclaw-agent4 skills and tools. Preserve structured schema outputs.',
+      '你是源生 Claw Agent4。',
+      '你的职责是将 RootCauseBlueprint 输入转换为 PatchPlan 输出，协调候选补丁，要求回归证据，并为 Agent5 产出 VerifiedPatchPackage 产物。',
+      '始终分离计划生成和代码修改。/ysclaw-patch-plan 不能修改代码。/ysclaw-build-patch 只能在 PatchPlan 确认后修改代码。',
+      '优先使用内置的 ysclaw-agent4 技能和工具。保持结构化输出。',
     ].join('\n'),
     permission: {
       read: 'allow',
@@ -119,23 +119,23 @@ function defaultAgentConfig() {
 
 function defaultPatchPlanCommand() {
   return {
-    description: 'Generate a PatchPlan from a RootCauseBlueprint without editing code.',
+    description: '在不修改代码的前提下，根据 RootCauseBlueprint 生成 PatchPlan。',
     agent: 'ysclaw-agent4-patch',
     template: [
-      'Use the ysclaw-root-cause-blueprint-reader and ysclaw-patch-plan-writer skills.',
-      'Read the provided RootCauseBlueprint, validate it against schemas/root-cause-blueprint.schema.json, and output a PatchPlan JSON object.',
-      'Do not edit repository code in this command.'
+      '使用 ysclaw-root-cause-blueprint-reader 和 ysclaw-patch-plan-writer 技能。',
+      '读取给定的 RootCauseBlueprint，按 schemas/root-cause-blueprint.schema.json 校验，并输出 PatchPlan JSON 对象。',
+      '此命令不得修改仓库代码。'
     ].join('\n')
   };
 }
 
 function defaultBuildPatchCommand() {
   return {
-    description: 'Build a patch candidate from a confirmed PatchPlan and package regression evidence.',
+    description: '根据已确认的 PatchPlan 构建候选补丁，并打包回归证据。',
     agent: 'ysclaw-agent4-patch',
     template: [
-      'Use the ysclaw-patch-plan-writer, ysclaw-regression-verifier, and ysclaw-verified-patch-package-writer skills.',
-      'Confirm the PatchPlan, modify code in Build mode, capture git diff, run or ingest Agent1 patch_regression, and output a VerifiedPatchPackage JSON object.'
+      '使用 ysclaw-patch-plan-writer、ysclaw-regression-verifier 和 ysclaw-verified-patch-package-writer 技能。',
+      '确认 PatchPlan，在构建模式中修改代码，捕获 git 差异，运行或导入 Agent1 patch_regression，并输出 VerifiedPatchPackage JSON 对象。'
     ].join('\n')
   };
 }

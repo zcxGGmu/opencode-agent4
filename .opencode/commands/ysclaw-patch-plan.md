@@ -1,18 +1,18 @@
 # /ysclaw-patch-plan
 
-Generate a `PatchPlan` from a validated Agent3 `RootCauseBlueprint`.
+根据已校验的 Agent3 `RootCauseBlueprint` 生成 `PatchPlan`。
 
-## Contract
+## 契约
 
-- Read-only.
-- Validate `RootCauseBlueprint`.
-- Use `ysclaw-root-cause-blueprint-reader`.
-- Use `ysclaw-patch-plan-writer`.
-- Output JSON matching `schemas/patch-plan.schema.json`.
-- Do not edit code and do not produce a git diff.
+- 只读。
+- 校验 `RootCauseBlueprint`。
+- 使用 `ysclaw-root-cause-blueprint-reader`。
+- 使用 `ysclaw-patch-plan-writer`。
+- 输出匹配 `schemas/patch-plan.schema.json` 的 JSON。
+- 不修改代码，也不生成 git 差异。
 
-## Suggested Prompt
+## 推荐提示词
 
 ```text
-Read this RootCauseBlueprint, validate it, and produce a schema-valid PatchPlan. Do not edit code.
+读取这个 RootCauseBlueprint，校验它，并生成符合结构约束的 PatchPlan。不要修改代码。
 ```

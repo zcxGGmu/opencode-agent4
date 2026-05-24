@@ -1,18 +1,18 @@
 # /ysclaw-build-patch
 
-Build a patch candidate from a confirmed `PatchPlan`, run or ingest Agent1 regression evidence, and produce `VerifiedPatchPackage`.
+根据已确认的 `PatchPlan` 构建候选补丁，运行或导入 Agent1 回归证据，并生成 `VerifiedPatchPackage`。
 
-## Contract
+## 契约
 
-- Confirm the `PatchPlan` first.
-- Modify code only for the planned root-cause fix.
-- Capture `git diff` into `PatchCandidate`.
-- Run or ingest Agent1 `patch_regression`.
-- Normalize regression output to `PatchRegressionResult`.
-- Output JSON matching `schemas/verified-patch-package.schema.json`.
+- 先确认 `PatchPlan`。
+- 只为计划中的根因修复修改代码。
+- 捕获 Git 差异（`git diff` 输出），写入 `PatchCandidate`。
+- 运行或导入 Agent1 `patch_regression`。
+- 将回归输出归一化为 `PatchRegressionResult`。
+- 输出匹配 `schemas/verified-patch-package.schema.json` 的 JSON。
 
-## Suggested Prompt
+## 推荐提示词
 
 ```text
-Use this confirmed PatchPlan to build the minimal patch, capture the diff, run Agent1 patch_regression, and produce VerifiedPatchPackage for Agent5.
+使用这个已确认的 PatchPlan 构建最小补丁，捕获差异，运行 Agent1 patch_regression，并为 Agent5 生成 VerifiedPatchPackage。
 ```

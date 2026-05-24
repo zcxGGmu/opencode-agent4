@@ -9,9 +9,9 @@
       "name": "matmul-1024",
       "status": "pass",
       "durationMs": 1240,
-      "output": "runtime improved by 12%"
+      "output": "运行时间改善 12%"
     }
   ],
   "artifacts": ["reports/matmul-1024.json"],
-  "summary": "Regression passed and target testcase improved."
+  "summary": "回归通过，目标测试用例已改善。"
 }

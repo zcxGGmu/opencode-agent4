@@ -1,55 +1,55 @@
-# Agent4 Design
+# Agent4 设计
 
-Agent4 implements the middle stage of the YuanshengClaw first-phase workflow.
+Agent4 实现源生 Claw 一阶段工作流的中间环节。
 
-## Position In The Pipeline
+## 流水线位置
 
 ```text
-Agent3 diagnosis
+Agent3 根因诊断
   RootCauseBlueprint
       |
       v
-Agent4 patch workflow
+Agent4 补丁工作流
   PatchPlan
   PatchCandidate
   PatchRegressionResult
   VerifiedPatchPackage
       |
       v
-Agent5 submission workflow
+Agent5 提交流程
 ```
 
-## Design Principles
+## 设计原则
 
-1. Diagnosis and code modification are separated.
-2. Patch planning is read-only.
-3. Code changes require a confirmed plan.
-4. Git diff is the patch candidate source of truth.
-5. Regression evidence is part of the handoff, not an afterthought.
-6. Schema-valid JSON is the contract between agents.
-7. Regression commands are fail-closed and limited to `agent1 patch_regression`.
+1. 诊断和代码修改分离。
+2. 补丁计划阶段只读。
+3. 代码修改必须基于已确认的计划。
+4. Git 差异是候选补丁的事实来源。
+5. 回归证据是交接的一部分，不是事后补充。
+6. 合法 JSON 结构约束是 Agent 之间的契约。
+7. 回归命令失败关闭，并限制为 `agent1 patch_regression`。
 
-## Main Commands
+## 主要命令
 
 `/ysclaw-patch-plan`:
 
-- input: `RootCauseBlueprint`
-- output: `PatchPlan`
-- behavior: read-only
+- 输入：`RootCauseBlueprint`
+- 输出：`PatchPlan`
+- 行为：只读
 
 `/ysclaw-build-patch`:
 
-- input: confirmed `PatchPlan`
-- output: `VerifiedPatchPackage`
-- behavior: build patch, capture diff, run or ingest regression, package evidence
+- 输入：已确认的 `PatchPlan`
+- 输出：`VerifiedPatchPackage`
+- 行为：构建补丁、捕获差异、运行或导入回归结果、打包证据
 
-## Completion Criteria
+## 完成标准
 
-Agent4 work is complete only when:
+只有满足以下条件，Agent4 工作才算完成：
 
-- `RootCauseBlueprint` validates.
-- `PatchPlan` validates.
-- `PatchCandidate` contains the actual git diff.
-- `PatchRegressionResult` reflects Agent1 regression evidence.
-- `VerifiedPatchPackage` validates and is ready for Agent5.
-- embedded blueprint, plan, candidate, and regression ids are consistent.
+- `RootCauseBlueprint` 校验通过。
+- `PatchPlan` 校验通过。
+- `PatchCandidate` 包含真实 git 差异。
+- `PatchRegressionResult` 反映 Agent1 回归证据。
+- `VerifiedPatchPackage` 校验通过，可以交给 Agent5。
+- 嵌入的根因蓝图、计划、候选补丁和回归标识一致。

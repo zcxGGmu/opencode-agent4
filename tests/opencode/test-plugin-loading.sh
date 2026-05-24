@@ -4,25 +4,25 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 PLUGIN_FILE="$REPO_ROOT/.opencode/plugins/ysclaw-agent4.js"
 
-echo "Checking package metadata..."
+echo "检查包元数据..."
 test -f "$REPO_ROOT/package.json"
-node -e "const p=require('./package.json'); if (p.type !== 'module') throw new Error('package type must be module'); if (p.main !== '.opencode/plugins/ysclaw-agent4.js') throw new Error('unexpected package main');"
+node -e "const p=require('./package.json'); if (p.type !== 'module') throw new Error('包 type 必须是 module'); if (p.main !== '.opencode/plugins/ysclaw-agent4.js') throw new Error('包 main 不符合预期');"
 
-echo "Checking Codex plugin metadata..."
+echo "检查 Codex 插件元数据..."
 test -f "$REPO_ROOT/.codex-plugin/plugin.json"
-node -e "const p=require('./.codex-plugin/plugin.json'); if (p.name !== 'ysclaw-agent4') throw new Error('unexpected plugin name'); if (p.skills !== './skills/') throw new Error('skills path must be ./skills/');"
+node -e "const p=require('./.codex-plugin/plugin.json'); if (p.name !== 'ysclaw-agent4') throw new Error('插件名称不符合预期'); if (p.skills !== './skills/') throw new Error('技能目录必须是 ./skills/');"
 
-echo "Checking OpenCode plugin syntax..."
+echo "检查 OpenCode 插件语法..."
 test -f "$PLUGIN_FILE"
 node --check "$PLUGIN_FILE"
 
-echo "Checking Agent4 package files..."
+echo "检查 Agent4 包文件..."
 test -f "$REPO_ROOT/.opencode/INSTALL.md"
 test -f "$REPO_ROOT/.opencode/agents/ysclaw-agent4-patch.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-patch-plan.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-build-patch.md"
 
-echo "Checking bundled skills..."
+echo "检查内置技能..."
 for skill in \
   using-ysclaw-agent4 \
   ysclaw-root-cause-blueprint-reader \
@@ -34,7 +34,7 @@ do
   grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"
 done
 
-echo "Checking schemas..."
+echo "检查结构约束文件..."
 for schema in \
   root-cause-blueprint \
   patch-plan \
@@ -45,4 +45,4 @@ do
   test -f "$REPO_ROOT/schemas/$schema.schema.json"
 done
 
-echo "Plugin loading checks passed."
+echo "插件加载检查通过。"

@@ -1,8 +1,8 @@
-# Installing YuanshengClaw Agent4 For OpenCode
+# 为 OpenCode 安装源生 Claw Agent4
 
-Add this package to the `plugin` array in your global or project `opencode.json`.
+在全局或项目级 `opencode.json` 的 `plugin` 数组中加入本包。
 
-For a local checkout:
+本地检出示例：
 
 ```json
 {
@@ -10,7 +10,7 @@ For a local checkout:
 }
 ```
 
-For a git-backed install, replace the path with your repository URL:
+如果使用基于 Git 的安装，将路径替换为仓库 URL：
 
 ```json
 {
@@ -18,11 +18,11 @@ For a git-backed install, replace the path with your repository URL:
 }
 ```
 
-Restart OpenCode after updating config.
+更新配置后重启 OpenCode。
 
-## Verify
+## 验证
 
-Ask OpenCode to list skills and confirm the following names appear:
+让 OpenCode 列出技能，并确认以下名称存在：
 
 - `using-ysclaw-agent4`
 - `ysclaw-root-cause-blueprint-reader`
@@ -30,7 +30,7 @@ Ask OpenCode to list skills and confirm the following names appear:
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
 
-Run local checks:
+运行本地检查：
 
 ```bash
 npm test

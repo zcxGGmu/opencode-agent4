@@ -8,20 +8,20 @@
     "testcaseIds": ["matmul-1024"]
   },
   "problem": {
-    "summary": "Matrix multiplication regressed on RISC-V perf testcase.",
+    "summary": "矩阵乘法在 RISC-V 性能测试用例上出现回退。",
     "evidence": [
-      "Agent1 testcase matmul-1024 shows 18% slower runtime.",
-      "perfdata hotspot moves into inner loop address calculation."
+      "Agent1 测试用例 matmul-1024 显示运行时间变慢 18%。",
+      "性能数据热点转移到内层循环地址计算。"
     ]
   },
   "rootCause": {
-    "summary": "Inner loop repeatedly recomputes row offsets and misses a simple strength reduction.",
+    "summary": "内层循环重复计算行偏移，缺少简单的强度削减。",
     "candidateFiles": ["src/matmul.c"],
-    "performanceFactors": ["address recomputation", "loop invariant work"]
+    "performanceFactors": ["地址重复计算", "循环不变量工作"]
   },
   "constraints": {
     "riskLevel": "medium",
-    "mustPreserve": ["numeric output", "public API"]
+    "mustPreserve": ["数值输出", "公共 API"]
   },
   "validation": {
     "requiredTests": ["matmul-1024", "unit-matmul"],

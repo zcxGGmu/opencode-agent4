@@ -43,7 +43,7 @@ const invalidPackage = {
 };
 const invalidResult = validateBySchemaName('verified-patch-package', invalidPackage, join(root, 'schemas'));
 if (invalidResult.valid) {
-  throw new Error('verified-patch-package schema accepted empty embedded artifacts');
+  throw new Error('verified-patch-package 结构约束接受了空的嵌入产物');
 }
 
 const newlineCommandBlueprint = {
@@ -55,14 +55,14 @@ const newlineCommandBlueprint = {
 };
 const newlineCommandResult = validateBySchemaName('root-cause-blueprint', newlineCommandBlueprint, join(root, 'schemas'));
 if (newlineCommandResult.valid) {
-  throw new Error('root-cause-blueprint schema accepted newline command injection');
+  throw new Error('root-cause-blueprint 结构约束接受了换行命令注入');
 }
 
-console.log('Schema validation tests passed.');
+console.log('结构约束校验测试通过。');
 
 function assertValid(schemaName, value) {
   const result = validateBySchemaName(schemaName, value, join(root, 'schemas'));
   if (!result.valid) {
-    throw new Error(`${schemaName} validation failed:\n${result.errors.join('\n')}`);
+    throw new Error(`${schemaName} 校验失败：\n${result.errors.join('\n')}`);
   }
 }

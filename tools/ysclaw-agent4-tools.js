@@ -53,11 +53,11 @@ export function createPatchPlanFromBlueprint(blueprint, options = {}) {
     changes: candidateFiles.map((filePath) => ({
       filePath,
       action: 'modify',
-      rationale: blueprint.rootCause?.summary || 'Address the diagnosed root cause.',
+      rationale: blueprint.rootCause?.summary || '解决已诊断的根因。',
       instructions: [
-        'Inspect the file before editing.',
-        'Make the smallest behavior-preserving performance fix that addresses the RootCauseBlueprint.',
-        'Avoid unrelated refactors and formatting churn.'
+        '编辑前先检查文件。',
+        '做出最小的、保持行为不变的性能修复，以解决 RootCauseBlueprint 指出的根因。',
+        '避免无关重构和格式噪音。'
       ],
       risk: blueprint.constraints?.riskLevel || 'medium'
     })),
@@ -66,7 +66,7 @@ export function createPatchPlanFromBlueprint(blueprint, options = {}) {
       commands: validationCommands,
       requiredTests: blueprint.validation?.requiredTests || []
     },
-    expectedDiffSummary: `Patch candidate should address blueprint ${blueprint.blueprintId} with focused changes in ${candidateFiles.join(', ')}.`
+    expectedDiffSummary: `候选补丁应通过聚焦修改 ${candidateFiles.join(', ')} 来解决 blueprint ${blueprint.blueprintId}。`
   };
   assertSchemaValid('patch-plan', plan);
   return plan;
@@ -97,7 +97,7 @@ export function createPatchCandidateFromDiff(patchPlan, diff, options = {}) {
     createdAt: generatedAt,
     changedFiles,
     gitDiff: diff,
-    buildModeInvocation: options.buildModeInvocation || 'OpenCode Build mode',
+    buildModeInvocation: options.buildModeInvocation || 'OpenCode 构建模式',
     notes: options.notes || []
   };
   assertSchemaValid('patch-candidate', candidate);
@@ -143,14 +143,14 @@ export function createVerifiedPatchPackage({
   assertSchemaValid('patch-plan', patchPlan);
   assertSchemaValid('patch-candidate', patchCandidate);
   if (patchPlan.blueprintId !== blueprint.blueprintId) {
-    throw new Error(`PatchPlan blueprintId does not match blueprint: ${patchPlan.blueprintId} !== ${blueprint.blueprintId}`);
+    throw new Error(`PatchPlan blueprintId 与 blueprint 不一致：${patchPlan.blueprintId} !== ${blueprint.blueprintId}`);
   }
   if (patchCandidate.patchPlanId !== patchPlan.patchPlanId) {
-    throw new Error(`PatchCandidate patchPlanId does not match PatchPlan: ${patchCandidate.patchPlanId} !== ${patchPlan.patchPlanId}`);
+    throw new Error(`PatchCandidate patchPlanId 与 PatchPlan 不一致：${patchCandidate.patchPlanId} !== ${patchPlan.patchPlanId}`);
   }
   assertSchemaValid('patch-regression-result', regressionResult);
   if (regressionResult.patchCandidateId !== patchCandidate.patchCandidateId) {
-    throw new Error(`RegressionResult patchCandidateId does not match PatchCandidate: ${regressionResult.patchCandidateId} !== ${patchCandidate.patchCandidateId}`);
+    throw new Error(`RegressionResult patchCandidateId 与 PatchCandidate 不一致：${regressionResult.patchCandidateId} !== ${patchCandidate.patchCandidateId}`);
   }
 
   const timestamp = generatedAt || new Date().toISOString();
@@ -179,9 +179,9 @@ export function createVerifiedPatchPackage({
     handoff: {
       targetAgent: 'agent5',
       instructions: [
-        'Use the git diff and regression evidence as the source of truth.',
-        'Prepare PR and commit material without changing the verified patch content.',
-        'Preserve the RootCauseBlueprint and regression evidence in the submission notes.'
+        '以 Git 差异和回归证据作为事实来源。',
+        '在不改变已验证补丁内容的前提下准备拉取请求和提交材料。',
+        '在提交说明中保留 RootCauseBlueprint 和回归证据。'
       ]
     }
   };
@@ -192,13 +192,13 @@ export function createVerifiedPatchPackage({
 export function assertSchemaValid(schemaName, value, schemaDir = defaultSchemaDir) {
   const result = validateBySchemaName(schemaName, value, schemaDir);
   if (!result.valid) {
-    throw new Error(`${schemaName} validation failed:\n${result.errors.join('\n')}`);
+    throw new Error(`${schemaName} 校验失败：\n${result.errors.join('\n')}`);
   }
 }
 
 export function assertSafeRegressionCommand(command) {
   if (/[\r\n]/.test(String(command)) || !SAFE_REGRESSION_COMMAND_PATTERN.test(String(command))) {
-    throw new Error(`Unsafe regression command: ${command}`);
+    throw new Error(`不安全的回归命令：${command}`);
   }
 }
 
@@ -206,32 +206,32 @@ function validateNode(schema, value, pathLabel, errors) {
   if (!schema || typeof schema !== 'object') return;
 
   if (schema.const !== undefined && value !== schema.const) {
-    errors.push(`${pathLabel}: expected const ${JSON.stringify(schema.const)}, got ${JSON.stringify(value)}`);
+    errors.push(`${pathLabel}: 期望常量 ${JSON.stringify(schema.const)}，实际为 ${JSON.stringify(value)}`);
     return;
   }
 
   if (schema.enum && !schema.enum.includes(value)) {
-    errors.push(`${pathLabel}: expected one of ${schema.enum.join(', ')}, got ${JSON.stringify(value)}`);
+    errors.push(`${pathLabel}: 期望值属于 ${schema.enum.join(', ')}，实际为 ${JSON.stringify(value)}`);
     return;
   }
 
   if (schema.type && !matchesType(value, schema.type)) {
-    errors.push(`${pathLabel}: expected type ${formatType(schema.type)}, got ${actualType(value)}`);
+    errors.push(`${pathLabel}: 期望类型 ${formatType(schema.type)}，实际为 ${actualType(value)}`);
     return;
   }
 
   if (schema.type === 'string' && typeof value === 'string') {
     if (schema.minLength !== undefined && value.length < schema.minLength) {
-      errors.push(`${pathLabel}: expected minLength ${schema.minLength}`);
+      errors.push(`${pathLabel}: 期望最小长度 ${schema.minLength}`);
     }
     if (schema.pattern && !(new RegExp(schema.pattern).test(value))) {
-      errors.push(`${pathLabel}: expected pattern ${schema.pattern}`);
+      errors.push(`${pathLabel}: 期望匹配模式 ${schema.pattern}`);
     }
   }
 
   if (schema.type === 'array' && Array.isArray(value)) {
     if (schema.minItems !== undefined && value.length < schema.minItems) {
-      errors.push(`${pathLabel}: expected at least ${schema.minItems} items`);
+      errors.push(`${pathLabel}: 期望至少 ${schema.minItems} 项`);
     }
     if (schema.items) {
       value.forEach((item, index) => validateNode(schema.items, item, `${pathLabel}[${index}]`, errors));
@@ -242,7 +242,7 @@ function validateNode(schema, value, pathLabel, errors) {
     const required = schema.required || [];
     for (const key of required) {
       if (!(key in value)) {
-        errors.push(`${pathLabel}.${key}: missing required property`);
+        errors.push(`${pathLabel}.${key}: 缺少必需属性`);
       }
     }
 
@@ -251,7 +251,7 @@ function validateNode(schema, value, pathLabel, errors) {
       if (properties[key]) {
         validateNode(properties[key], propertyValue, `${pathLabel}.${key}`, errors);
       } else if (schema.additionalProperties === false) {
-        errors.push(`${pathLabel}.${key}: additional property is not allowed`);
+        errors.push(`${pathLabel}.${key}: 不允许额外属性`);
       }
     }
   }
@@ -267,14 +267,24 @@ function matchesType(value, type) {
 }
 
 function actualType(value) {
-  if (Array.isArray(value)) return 'array';
-  if (value === null) return 'null';
-  if (Number.isInteger(value)) return 'integer';
-  return typeof value;
+  if (Array.isArray(value)) return '数组';
+  if (value === null) return '空值';
+  if (Number.isInteger(value)) return '整数';
+  return formatType(typeof value);
 }
 
 function formatType(type) {
-  return Array.isArray(type) ? type.join('|') : type;
+  if (Array.isArray(type)) return type.map(formatType).join('|');
+  const labels = {
+    array: '数组',
+    object: '对象',
+    integer: '整数',
+    null: '空值',
+    string: '字符串',
+    number: '数字',
+    boolean: '布尔值'
+  };
+  return labels[type] || type;
 }
 
 function stableId(prefix, value) {
@@ -294,7 +304,7 @@ function normalizeStatus(status) {
 
 function normalizeTestResult(test) {
   return {
-    name: String(test.name || 'unnamed-test'),
+    name: String(test.name || '未命名测试'),
     status: normalizeStatus(test.status),
     ...(Number.isFinite(test.durationMs) ? { durationMs: test.durationMs } : {}),
     ...(test.output ? { output: String(test.output) } : {})
@@ -302,14 +312,14 @@ function normalizeTestResult(test) {
 }
 
 function summarizeRegressionStatus(status) {
-  if (status === 'pass') return 'Regression passed.';
-  if (status === 'fail') return 'Regression failed.';
-  return 'Regression errored.';
+  if (status === 'pass') return '回归通过。';
+  if (status === 'fail') return '回归失败。';
+  return '回归执行出错。';
 }
 
 function formatRegressionCommandForTest(testcase) {
   if (!SAFE_COMMAND_TOKEN_PATTERN.test(String(testcase))) {
-    throw new Error(`Unsafe regression testcase token: ${testcase}`);
+    throw new Error(`不安全的回归测试用例令牌：${testcase}`);
   }
   return `agent1 patch_regression --case ${testcase}`;
 }
@@ -370,7 +380,7 @@ async function main(argv) {
     return;
   }
 
-  throw new Error(`Unknown command: ${command}`);
+  throw new Error(`未知命令：${command}`);
 }
 
 async function writeJsonOutput(outputPath, value) {
@@ -385,12 +395,12 @@ async function writeJsonOutput(outputPath, value) {
 function printHelp() {
   console.log(`ysclaw-agent4-tools
 
-Commands:
-  validate SCHEMA_NAME JSON_PATH
-  plan BLUEPRINT_JSON [OUTPUT_JSON|-]
-  candidate PATCH_PLAN_JSON DIFF_PATH [OUTPUT_JSON|-]
-  normalize-regression REGRESSION_JSON [OUTPUT_JSON|-]
-  package BLUEPRINT_JSON PATCH_PLAN_JSON PATCH_CANDIDATE_JSON REGRESSION_JSON [OUTPUT_JSON|-]
+命令：
+  validate 结构约束名 JSON路径
+  plan 根因蓝图JSON [输出JSON|-]
+  candidate 补丁计划JSON 差异路径 [输出JSON|-]
+  normalize-regression 回归JSON [输出JSON|-]
+  package 根因蓝图JSON 补丁计划JSON 候选补丁JSON 回归JSON [输出JSON|-]
 `);
 }
 

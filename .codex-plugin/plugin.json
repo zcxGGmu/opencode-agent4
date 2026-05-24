@@ -1,7 +1,7 @@
 {
   "name": "ysclaw-agent4",
   "version": "0.1.0",
-  "description": "YuanshengClaw Agent4 extension pack for blueprint-driven patch planning, regression verification, and VerifiedPatchPackage handoff.",
+  "description": "源生 Claw Agent4 扩展包，用于基于根因蓝图的补丁计划、回归验证和 VerifiedPatchPackage 交接。",
   "author": {
     "name": "YuanshengClaw"
   },
@@ -15,10 +15,10 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "YuanshengClaw Agent4",
-    "shortDescription": "Blueprint-driven patch planning and verified patch package workflow",
-    "longDescription": "Use Agent4 to read RootCauseBlueprint inputs, produce PatchPlan outputs, coordinate OpenCode Build patch candidates, normalize Agent1 regression results, and hand off VerifiedPatchPackage artifacts to Agent5.",
-    "developerName": "YuanshengClaw",
+    "displayName": "源生 Claw Agent4",
+    "shortDescription": "基于根因蓝图的补丁计划与已验证补丁包工作流",
+    "longDescription": "使用 Agent4 读取 RootCauseBlueprint 根因蓝图，产出 PatchPlan 补丁计划，协调 OpenCode 构建候选补丁，归一化 Agent1 回归结果，并将 VerifiedPatchPackage 已验证补丁包交接给 Agent5。",
+    "developerName": "源生 Claw",
     "category": "Coding",
     "capabilities": [
       "Interactive",
@@ -26,8 +26,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Create a PatchPlan from this RootCauseBlueprint.",
-      "Build and verify a patch candidate for Agent5 handoff."
+      "根据这个 RootCauseBlueprint 创建 PatchPlan。",
+      "构建并验证候选补丁，准备交给 Agent5。"
     ],
     "brandColor": "#2563EB",
     "screenshots": []

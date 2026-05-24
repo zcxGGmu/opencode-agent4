@@ -1,21 +1,21 @@
-# Agent1 Patch Regression Integration
+# Agent1 回归测试对接
 
-Agent4 expects Agent1 regression evidence before handoff to Agent5.
+Agent4 在交接给 Agent5 前，需要 Agent1 回归证据。
 
-## Expected Command
+## 预期命令
 
-The preferred command comes from `patchPlan.validationPlan.commands`.
-Agent4 only accepts commands beginning with `agent1 patch_regression` followed by simple argument tokens.
+首选命令来自 `patchPlan.validationPlan.commands`。
+Agent4 只接受以 `agent1 patch_regression` 开头、后接简单参数令牌的命令。
 
-Example:
+示例：
 
 ```bash
 agent1 patch_regression --case matmul-1024
 ```
 
-## Expected Result Shape
+## 预期结果形状
 
-Agent4 accepts a raw Agent1 result that can be normalized into:
+Agent4 接受可归一化为以下结构的 Agent1 原始结果：
 
 ```json
 {
@@ -29,24 +29,24 @@ Agent4 accepts a raw Agent1 result that can be normalized into:
       "name": "matmul-1024",
       "status": "pass",
       "durationMs": 1240,
-      "output": "runtime improved by 12%"
+      "output": "运行时间改善 12%"
     }
   ],
   "artifacts": ["reports/matmul-1024.json"],
-  "summary": "Regression passed and target testcase improved."
+  "summary": "回归通过，目标测试用例已改善。"
 }
 ```
 
-## Normalize
+## 归一化
 
 ```bash
 node tools/ysclaw-agent4-tools.js normalize-regression agent1-result.json patch-regression-result.json
 ```
 
-Commands containing shell metacharacters such as `;`, `&&`, `|`, `>`, `$()`, or backticks are rejected before packaging.
+包含命令行元字符的命令会在打包前被拒绝，例如 `;`、`&&`、`|`、`>`、`$()` 或反引号。
 
-## Verification Semantics
+## 验证语义
 
-- `status: pass` produces `verification.status: verified`.
-- `status: fail` or `status: error` produces `verification.status: failed`.
-- Failed packages may still be useful for debugging, but Agent5 should not submit them as verified fixes.
+- `status: pass` 会产生 `verification.status: verified`。
+- `status: fail` 或 `status: error` 会产生 `verification.status: failed`。
+- 失败的补丁包仍可能对调试有用，但 Agent5 不应把它作为已验证修复提交。

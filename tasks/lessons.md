@@ -1,8 +1,8 @@
-# Lessons
+# 经验教训
 
-## 2026-05-24 Agent4 Safety Review
+## 2026-05-24 Agent4 安全审查
 
-- Do not use `\s` in command allowlist regexes. It matches newlines. Use `[ \t]` and explicitly reject `\r`/`\n`.
-- Do not silently rewrite upstream evidence ids when packaging verification artifacts. Validate the evidence first, then fail if ids do not match.
-- Do not let scalar permission config such as `"allow"` replace Agent4 safety defaults. Convert scalar permissions into the default object policy or reject them.
-- For handoff packages, validate every embedded upstream artifact and enforce cross-object id consistency before emitting the package.
+- 命令白名单正则不要使用 `\s`，因为它会匹配换行。应使用 `[ \t]` 并显式拒绝 `\r`/`\n`。
+- 打包验证产物时，不要静默改写上游证据标识。必须先验证证据，标识不匹配时直接失败。
+- 不要让 `"allow"` 这类标量权限配置替换 Agent4 安全默认值。应转换为默认对象策略或直接拒绝。
+- 对交接补丁包，输出前必须校验每个嵌入的上游产物，并强制跨对象标识一致。

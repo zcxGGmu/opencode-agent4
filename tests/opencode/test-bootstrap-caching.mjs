@@ -4,7 +4,7 @@ import { pathToFileURL } from 'url';
 const [, , pluginPath] = process.argv;
 
 if (!pluginPath) {
-  console.error('Usage: node test-bootstrap-caching.mjs PLUGIN_PATH');
+  console.error('用法：node test-bootstrap-caching.mjs 插件路径');
   process.exit(2);
 }
 
@@ -30,34 +30,34 @@ const plugin = await pluginFactory({ client: {}, directory: '.', worktree: '.' }
 const transform = plugin['experimental.chat.messages.transform'];
 
 if (typeof transform !== 'function') {
-  throw new Error('plugin must expose experimental.chat.messages.transform');
+  throw new Error('插件必须暴露 experimental.chat.messages.transform');
 }
 
-const firstOutput = makeOutput('first message');
+const firstOutput = makeOutput('第一条消息');
 await transform({}, firstOutput);
 const first = { existsCount, readCount, bootstrapParts: countBootstrapParts(firstOutput) };
 
-const secondOutput = makeOutput('second message');
+const secondOutput = makeOutput('第二条消息');
 await transform({}, secondOutput);
 const second = { existsCount, readCount, bootstrapParts: countBootstrapParts(secondOutput) };
 
-const duplicateOutput = makeOutput('third message');
+const duplicateOutput = makeOutput('第三条消息');
 await transform({}, duplicateOutput);
 await transform({}, duplicateOutput);
 const duplicateParts = countBootstrapParts(duplicateOutput);
 
 const failures = [];
-if (first.bootstrapParts !== 1) failures.push(`expected first transform to inject one bootstrap, got ${first.bootstrapParts}`);
-if (second.bootstrapParts !== 1) failures.push(`expected second transform to inject one bootstrap, got ${second.bootstrapParts}`);
-if (duplicateParts !== 1) failures.push(`expected duplicate transform to keep one bootstrap, got ${duplicateParts}`);
-if (first.existsCount !== 1) failures.push(`expected first transform to check bootstrap once, got ${first.existsCount}`);
-if (first.readCount !== 1) failures.push(`expected first transform to read bootstrap once, got ${first.readCount}`);
-if (second.existsCount !== first.existsCount) failures.push('expected cached second transform to skip exists checks');
-if (second.readCount !== first.readCount) failures.push('expected cached second transform to skip reads');
+if (first.bootstrapParts !== 1) failures.push(`期望第一次 transform 注入一个启动指引，实际为 ${first.bootstrapParts}`);
+if (second.bootstrapParts !== 1) failures.push(`期望第二次 transform 注入一个启动指引，实际为 ${second.bootstrapParts}`);
+if (duplicateParts !== 1) failures.push(`期望重复 transform 保留一个启动指引，实际为 ${duplicateParts}`);
+if (first.existsCount !== 1) failures.push(`期望第一次 transform 检查启动指引一次，实际为 ${first.existsCount}`);
+if (first.readCount !== 1) failures.push(`期望第一次 transform 读取启动指引一次，实际为 ${first.readCount}`);
+if (second.existsCount !== first.existsCount) failures.push('期望缓存后的第二次 transform 跳过 exists 检查');
+if (second.readCount !== first.readCount) failures.push('期望缓存后的第二次 transform 跳过读取');
 
 if (failures.length > 0) {
   console.error(JSON.stringify({ first, second, duplicateParts }, null, 2));
-  for (const failure of failures) console.error(`FAIL: ${failure}`);
+  for (const failure of failures) console.error(`失败：${failure}`);
   process.exit(1);
 }
 

@@ -1,15 +1,15 @@
-# YuanshengClaw Agent4 For OpenCode
+# 面向 OpenCode 的源生 Claw Agent4
 
-This package follows the current OpenCode plugin pattern used by the `superpowers` reference project:
+本包参考 `superpowers` 的当前 OpenCode 插件模式：
 
-- `package.json` points `main` to `.opencode/plugins/ysclaw-agent4.js`.
-- The plugin registers the top-level `skills/` directory through `config.skills.paths`.
-- The plugin injects cached Agent4 bootstrap guidance into the first user message.
-- The plugin adds default Agent4 agent and command config if the host config has not already defined them.
+- `package.json` 通过 `main` 指向 `.opencode/plugins/ysclaw-agent4.js`。
+- 插件通过 `config.skills.paths` 注册顶层 `skills/` 目录。
+- 插件将缓存后的 Agent4 启动指引注入第一条用户消息。
+- 如果宿主配置尚未定义，插件会补齐 Agent4 智能体和命令默认配置。
 
-## Installation
+## 安装
 
-Local checkout:
+本地检出：
 
 ```json
 {
@@ -17,7 +17,7 @@ Local checkout:
 }
 ```
 
-Git-backed install:
+基于 Git 的安装：
 
 ```json
 {
@@ -25,11 +25,11 @@ Git-backed install:
 }
 ```
 
-Restart OpenCode after changing `opencode.json`.
+修改 `opencode.json` 后重启 OpenCode。
 
-## Skills
+## 技能
 
-OpenCode should discover these skills:
+OpenCode 应能发现这些技能：
 
 - `using-ysclaw-agent4`
 - `ysclaw-root-cause-blueprint-reader`
@@ -37,30 +37,30 @@ OpenCode should discover these skills:
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
 
-## Commands
+## 命令
 
-The plugin registers command templates for:
+插件会注册以下命令模板：
 
-- `ysclaw-patch-plan`: validate a RootCauseBlueprint and produce PatchPlan without editing code.
-- `ysclaw-build-patch`: build a patch from a confirmed PatchPlan, collect regression evidence, and produce VerifiedPatchPackage.
+- `ysclaw-patch-plan`：校验 RootCauseBlueprint，在不修改代码的前提下生成 PatchPlan。
+- `ysclaw-build-patch`：根据已确认的 PatchPlan 构建补丁，收集回归证据，并生成 VerifiedPatchPackage。
 
-Markdown command descriptions are also stored in `.opencode/commands/`.
+Markdown 形式的命令说明也保存在 `.opencode/commands/`。
 
-## Agent
+## 智能体配置
 
-The default agent id is `ysclaw-agent4-patch`. It is configured as a primary agent with restricted permissions:
+默认智能体 id 是 `ysclaw-agent4-patch`。它被配置为带受限权限的主智能体：
 
-- read/list/grep/glob allowed
-- edits require ask
-- `git` and `node` allowed
-- `npm`, `agent1`, task delegation, and external directories require ask
-- web fetch/search denied by default
+- 允许读取、列出、搜索和通配匹配。
+- 编辑需要询问。
+- 允许 `git` 和 `node`。
+- `npm`、`agent1`、任务委派和外部目录访问需要询问。
+- 默认禁止网页获取和搜索。
 
-## Troubleshooting
+## 排障
 
-If skills are missing:
+如果技能缺失：
 
-1. Confirm the plugin path in `opencode.json`.
-2. Restart OpenCode.
-3. Run `npm test` in this repository.
-4. Check OpenCode logs for plugin loading errors.
+1. 确认 `opencode.json` 中的插件路径。
+2. 重启 OpenCode。
+3. 在本仓库运行 `npm test`。
+4. 检查 OpenCode 日志中的插件加载错误。
