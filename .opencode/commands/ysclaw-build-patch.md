@@ -2,6 +2,8 @@
 
 根据已确认的 `PatchPlan` 构建候选补丁，运行或导入 Agent1 回归证据，并生成 `VerifiedPatchPackage`。
 
+这是 `/comet` 生命周期内的结构化产物能力节点。单独调用只用于开发/诊断候选补丁和补丁包能力，不代表 Agent4 生命周期已完成。
+
 ## 契约
 
 - 先确认 `PatchPlan`。

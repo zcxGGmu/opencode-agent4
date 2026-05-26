@@ -10,6 +10,7 @@ tests=(
   "tests/opencode/test-plugin-loading.sh"
   "tests/opencode/test-plugin-config.mjs"
   "tests/opencode/test-bootstrap-caching.sh"
+  "tests/comet/run-tests.sh"
   "tests/schemas/validate-schemas.mjs"
   "tests/tools/test-agent4-tools.mjs"
 )

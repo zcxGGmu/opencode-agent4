@@ -48,6 +48,34 @@ do
   grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"
 done
 
+echo "检查 Comet 工作流技能..."
+for skill in \
+  comet \
+  comet-open \
+  comet-design \
+  comet-build \
+  comet-verify \
+  comet-archive \
+  comet-hotfix \
+  comet-tweak
+do
+  test -f "$REPO_ROOT/skills/$skill/SKILL.md"
+  grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"
+done
+
+echo "检查 Comet 工作流脚本..."
+for script in \
+  comet-state.sh \
+  comet-guard.sh \
+  comet-handoff.sh \
+  comet-archive.sh \
+  comet-yaml-validate.sh
+do
+  test -f "$REPO_ROOT/skills/comet/scripts/$script"
+  bash -n "$REPO_ROOT/skills/comet/scripts/$script"
+done
+test -f "$REPO_ROOT/skills/comet/reference/dirty-worktree.md"
+
 echo "检查 Superpowers 迁移资源..."
 test -f "$REPO_ROOT/assets/superpowers-app-icon.png"
 test -f "$REPO_ROOT/assets/superpowers-small.svg"

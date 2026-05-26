@@ -1,13 +1,15 @@
 {
   "name": "ysclaw-agent4",
   "version": "0.1.0",
-  "description": "源生 Claw Agent4 扩展包，集成 Superpowers 方法论 skills，用于基于根因蓝图的补丁计划、回归验证和 VerifiedPatchPackage 交接。",
+  "description": "源生 Claw Agent4 扩展包，以 /comet 作为核心研发工作流入口，集成 Comet 与 Superpowers skills，并提供结构化补丁产物能力。",
   "author": {
     "name": "YuanshengClaw"
   },
   "license": "MIT",
   "keywords": [
     "agent4",
+    "comet",
+    "openspec",
     "superpowers",
     "skills",
     "planning",
@@ -21,8 +23,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "源生 Claw Agent4",
-    "shortDescription": "Agent4 补丁工作流与 Superpowers 方法论 skills",
-    "longDescription": "使用 Agent4 读取 RootCauseBlueprint 根因蓝图，产出 PatchPlan 补丁计划，协调 OpenCode 构建候选补丁，归一化 Agent1 回归结果，并将 VerifiedPatchPackage 已验证补丁包交接给 Agent5；同时内置 Superpowers 的规划、TDD、系统化调试、代码审查和分支收尾 skills。",
+    "shortDescription": "以 /comet 驱动 Agent4 完整研发工作流",
+    "longDescription": "使用 /comet 作为 Agent4 主入口，按 OpenSpec + Superpowers 编排从 RootCauseBlueprint 到 PatchPlan、PatchCandidate、PatchRegressionResult、VerifiedPatchPackage 的完整研发生命周期，并将已验证补丁包交接给 Agent5；/ysclaw-patch-plan 与 /ysclaw-build-patch 是生命周期内的结构化产物能力节点。",
     "developerName": "源生 Claw",
     "category": "Coding",
     "capabilities": [
@@ -31,8 +33,8 @@
       "Write"
     ],
     "defaultPrompt": [
-      "根据这个 RootCauseBlueprint 创建 PatchPlan。",
-      "构建并验证候选补丁，准备交给 Agent5。"
+      "/comet 根据这个 RootCauseBlueprint 完成 Agent4 补丁研发、验证和交接。",
+      "/comet 继续当前 Agent4 研发工作流。"
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/superpowers-small.svg",

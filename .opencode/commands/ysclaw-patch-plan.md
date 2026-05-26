@@ -2,6 +2,8 @@
 
 根据已校验的 Agent3 `RootCauseBlueprint` 生成 `PatchPlan`。
 
+这是 `/comet` 生命周期内的结构化产物能力节点。单独调用只用于开发/诊断 `PatchPlan` 能力，不代表 Agent4 生命周期已完成。
+
 ## 契约
 
 - 只读。

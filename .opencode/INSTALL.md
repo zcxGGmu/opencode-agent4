@@ -30,12 +30,31 @@
 - `ysclaw-regression-verifier`
 - `ysclaw-verified-patch-package-writer`
 - `using-superpowers`
+- `brainstorming`
+- `dispatching-parallel-agents`
+- `executing-plans`
 - `writing-plans`
+- `writing-skills`
+- `subagent-driven-development`
+- `using-git-worktrees`
 - `test-driven-development`
 - `systematic-debugging`
 - `verification-before-completion`
+- `requesting-code-review`
+- `receiving-code-review`
+- `finishing-a-development-branch`
+- `comet`
+- `comet-open`
+- `comet-design`
+- `comet-build`
+- `comet-verify`
+- `comet-archive`
+- `comet-hotfix`
+- `comet-tweak`
 
 Superpowers 的 OpenCode 说明见 `docs/README.superpowers.opencode.md`。本包已将这些 skills 合并到同一个 `skills/` 目录，不需要额外配置 symlink。
+
+Comet 的 OpenCode 说明见 `docs/README.comet.opencode.md`。`/comet` 是 `opencode-agent4` 的核心工作流入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点。Comet 依赖外部 OpenSpec CLI 和 OpenSpec skills；本包只注册 Comet workflow skills 和确定性脚本，不自动安装 OpenSpec。
 
 运行本地检查：
 

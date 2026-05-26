@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "type": "module",
   "main": ".opencode/plugins/ysclaw-agent4.js",
-  "description": "源生 Claw Agent4 OpenCode 扩展包，集成 Superpowers 方法论 skills，用于补丁计划、候选补丁交接、回归验证和已验证补丁包输出。",
+  "description": "源生 Claw Agent4 OpenCode 扩展包，以 /comet 驱动 Agent4 完整研发生命周期，并提供结构化补丁产物能力。",
   "license": "MIT",
   "scripts": {
     "test": "bash tests/opencode/run-tests.sh",
+    "test:comet": "bash tests/comet/run-tests.sh",
     "check:plugin": "node --check .opencode/plugins/ysclaw-agent4.js",
-    "check:tools": "node --check tools/ysclaw-agent4-tools.js"
+    "check:tools": "node --check tools/ysclaw-agent4-tools.js",
+    "check:comet": "node --check tests/comet/test-comet-assets.mjs"
   },
   "keywords": [
     "opencode",
     "agent4",
+    "comet",
+    "openspec",
     "superpowers",
     "skills",
     "planning",
