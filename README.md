@@ -2,7 +2,7 @@
 
 `opencode-agent4` 是源生 Claw 一阶段中的 Agent4 OpenCode 扩展包。它负责把 Agent3 的根因诊断结果转化为可验证的候选补丁，并把补丁差异和回归测试证据打包成 `VerifiedPatchPackage` 交给 Agent5。
 
-本包同时迁入了 Comet 与 Superpowers 方法论 skills。`/comet` 是 `opencode-agent4` 的核心工作流入口，用 OpenSpec + Superpowers 驱动 Agent4 的完整研发生命周期；Superpowers 提供规划、TDD、系统化调试、代码审查、并行协作和分支收尾工作流。Comet、Superpowers 与 Agent4 的 skills 共用同一个 `skills/` 目录，由现有 OpenCode 插件入口统一注册。
+本包同时迁入了 Comet、OpenSpec 与 Superpowers 方法论 skills。`/comet` 是 `opencode-agent4` 的核心工作流入口，用 OpenSpec + Superpowers 驱动 Agent4 的完整研发生命周期；Superpowers 提供规划、TDD、系统化调试、代码审查、并行协作和分支收尾工作流。Comet、OpenSpec、Superpowers 与 Agent4 的 skills 共用同一个 `skills/` 目录，由现有 OpenCode 插件入口统一注册。
 
 当前开发状态见 [docs/DEVELOPMENT_STATUS.md](/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/DEVELOPMENT_STATUS.md)。
 
@@ -79,6 +79,7 @@ Agent5 拉取请求 / 提交材料生成
 - `.opencode/commands/*.md`：开发者使用的命令入口说明。
 - `skills/*/SKILL.md`：可组合的 Agent4 动作技能。
 - `skills/comet` 和 `skills/comet-*`：Comet 的 OpenSpec + Superpowers 研发工作流 skills 和阶段脚本。
+- `skills/openspec-*`：随包提供的 OpenSpec OpenCode 兼容 skills。
 - `skills/using-superpowers` 等：迁入的 Superpowers 方法论 skills。
 - `schemas/*.schema.json`：Agent3、Agent4、Agent1、Agent5 之间的结构化契约。
 - `tools/ysclaw-agent4-tools.js`：本地确定性工具，用于结构约束校验、计划生成、差异打包和已验证补丁包生成。
@@ -95,6 +96,14 @@ Agent5 拉取请求 / 提交材料生成
 ```
 
 然后重启 OpenCode。
+
+OpenSpec CLI 作为运行时依赖随本包安装，包名为 `@fission-ai/openspec`。如果使用本地源码路径且 OpenCode 找不到 `openspec`，在本仓库运行：
+
+```bash
+npm install
+```
+
+然后重启 OpenCode。OpenSpec CLI 要求 Node `>=20.19.0`。
 
 如果将来发布到 Git 仓库，可改成基于 Git 的安装：
 
@@ -132,6 +141,12 @@ Agent5 拉取请求 / 提交材料生成
 - `comet-archive`
 - `comet-hotfix`
 - `comet-tweak`
+- `openspec-explore`
+- `openspec-propose`
+- `openspec-new-change`
+- `openspec-apply-change`
+- `openspec-verify-change`
+- `openspec-archive-change`
 
 默认智能体 id：
 

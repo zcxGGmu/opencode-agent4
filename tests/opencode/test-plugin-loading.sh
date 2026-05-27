@@ -7,6 +7,11 @@ PLUGIN_FILE="$REPO_ROOT/.opencode/plugins/ysclaw-agent4.js"
 echo "检查包元数据..."
 test -f "$REPO_ROOT/package.json"
 node -e "const p=require('./package.json'); if (p.type !== 'module') throw new Error('包 type 必须是 module'); if (p.main !== '.opencode/plugins/ysclaw-agent4.js') throw new Error('包 main 不符合预期');"
+node -e "const p=require('./package.json'); if (p.dependencies?.['@fission-ai/openspec'] !== '1.3.1') throw new Error('必须声明 OpenSpec CLI 运行时依赖');"
+
+echo "检查 OpenCode 本地依赖声明..."
+test -f "$REPO_ROOT/.opencode/package.json"
+node -e "const p=require('./.opencode/package.json'); if (p.dependencies?.['@fission-ai/openspec'] !== '1.3.1') throw new Error('.opencode/package.json 必须声明 OpenSpec CLI 依赖');"
 
 echo "检查 Codex 插件元数据..."
 test -f "$REPO_ROOT/.codex-plugin/plugin.json"
@@ -58,6 +63,19 @@ for skill in \
   comet-archive \
   comet-hotfix \
   comet-tweak
+do
+  test -f "$REPO_ROOT/skills/$skill/SKILL.md"
+  grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"
+done
+
+echo "检查内置 OpenSpec 技能..."
+for skill in \
+  openspec-explore \
+  openspec-propose \
+  openspec-new-change \
+  openspec-apply-change \
+  openspec-verify-change \
+  openspec-archive-change
 do
   test -f "$REPO_ROOT/skills/$skill/SKILL.md"
   grep -q "^name: $skill$" "$REPO_ROOT/skills/$skill/SKILL.md"

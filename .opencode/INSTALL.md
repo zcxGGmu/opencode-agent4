@@ -51,10 +51,16 @@
 - `comet-archive`
 - `comet-hotfix`
 - `comet-tweak`
+- `openspec-explore`
+- `openspec-propose`
+- `openspec-new-change`
+- `openspec-apply-change`
+- `openspec-verify-change`
+- `openspec-archive-change`
 
 Superpowers 的 OpenCode 说明见 `docs/README.superpowers.opencode.md`。本包已将这些 skills 合并到同一个 `skills/` 目录，不需要额外配置 symlink。
 
-Comet 的 OpenCode 说明见 `docs/README.comet.opencode.md`。`/comet` 是 `opencode-agent4` 的核心工作流入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点。Comet 依赖外部 OpenSpec CLI 和 OpenSpec skills；本包只注册 Comet workflow skills 和确定性脚本，不自动安装 OpenSpec。
+Comet 的 OpenCode 说明见 `docs/README.comet.opencode.md`。`/comet` 是 `opencode-agent4` 的核心工作流入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点。OpenSpec CLI 和 OpenSpec skills 随本包安装；如果使用本地源码路径且 OpenCode 找不到 `openspec`，在本仓库运行 `npm install` 后重启 OpenCode。
 
 运行本地检查：
 

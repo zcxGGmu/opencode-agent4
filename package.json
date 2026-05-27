@@ -5,6 +5,9 @@
   "main": ".opencode/plugins/ysclaw-agent4.js",
   "description": "源生 Claw Agent4 OpenCode 扩展包，以 /comet 驱动 Agent4 完整研发生命周期，并提供结构化补丁产物能力。",
   "license": "MIT",
+  "dependencies": {
+    "@fission-ai/openspec": "1.3.1"
+  },
   "scripts": {
     "test": "bash tests/opencode/run-tests.sh",
     "test:comet": "bash tests/comet/run-tests.sh",

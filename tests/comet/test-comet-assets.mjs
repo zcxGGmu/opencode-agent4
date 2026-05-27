@@ -24,6 +24,14 @@ const cometScripts = [
   'comet-archive.sh',
   'comet-yaml-validate.sh',
 ];
+const openspecSkills = [
+  'openspec-explore',
+  'openspec-propose',
+  'openspec-new-change',
+  'openspec-apply-change',
+  'openspec-verify-change',
+  'openspec-archive-change',
+];
 
 for (const skill of cometSkills) {
   const skillPath = path.join(repoRoot, 'skills', skill, 'SKILL.md');
@@ -31,9 +39,17 @@ for (const skill of cometSkills) {
   assert.match(fs.readFileSync(skillPath, 'utf8'), new RegExp(`^name: ${skill}$`, 'm'));
 }
 
+for (const skill of openspecSkills) {
+  const skillPath = path.join(repoRoot, 'skills', skill, 'SKILL.md');
+  assert.ok(fs.existsSync(skillPath), `缺少 OpenSpec skill: ${skill}`);
+  assert.match(fs.readFileSync(skillPath, 'utf8'), new RegExp(`^name: ${skill}$`, 'm'));
+}
+
 assert.match(readSkill('comet'), /RootCauseBlueprint[\s\S]*PatchPlan[\s\S]*PatchCandidate[\s\S]*PatchRegressionResult[\s\S]*VerifiedPatchPackage/);
+assert.match(readSkill('comet'), /OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装/);
 assert.match(readSkill('comet-build'), /RootCauseBlueprint[\s\S]*PatchPlan[\s\S]*PatchCandidate/);
 assert.match(readSkill('comet-verify'), /PatchRegressionResult/);
+assert.match(readSkill('comet-verify'), /openspec-verify-change/);
 assert.match(readSkill('comet-archive'), /VerifiedPatchPackage[\s\S]*Agent5/);
 assert.match(readSkill('comet-hotfix'), /不表示绕过 Agent4 产物链/);
 assert.match(readSkill('comet-tweak'), /不表示绕过 Agent4 产物链/);

@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@fission-ai/openspec": "1.3.1"
+  }
+}

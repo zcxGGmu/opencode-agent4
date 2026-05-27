@@ -39,11 +39,23 @@ RootCauseBlueprint
 - `/comet` 是安装后的主入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内的结构化产物能力节点。
 - 开发恢复细节保存在 `docs/DEVELOPMENT_STATUS.md` 和 `tasks/todo.md`，不作为用户使用路径。
 
-## 前置依赖
+## OpenSpec 依赖
 
 Comet 的 open、verify、archive 阶段依赖 OpenSpec CLI 和 OpenSpec skills，例如 `openspec-explore`、`openspec-new-change`、`openspec-propose` 和 `openspec-verify-change`。
 
-本插件只 vendored Comet skills 和脚本，不自动安装 OpenSpec。缺少 OpenSpec 时，Comet workflow 应停止并提示安装，不要用普通对话伪造 OpenSpec 产物。
+这些依赖现在随 `opencode-agent4` 一起安装：`package.json` 声明 `@fission-ai/openspec`，插件会把本包的 `node_modules/.bin` 注入 OpenCode shell PATH，并在共享 `skills/` 目录中注册 OpenSpec 兼容 skills。缺少 OpenSpec 时，Comet workflow 应停止并提示检查安装完整性，不要用普通对话伪造 OpenSpec 产物。
+
+本地源码路径安装后如果找不到 `openspec`，在插件仓库运行：
+
+```bash
+npm install
+```
+
+然后重启 OpenCode。新项目第一次使用 OpenSpec 时仍需要初始化项目结构：
+
+```bash
+openspec init --tools opencode --force .
+```
 
 Superpowers skills 已经随本插件迁入同一个 `skills/` 目录，因此 `comet-design`、`comet-build` 和 `comet-verify` 可以调用本地 Superpowers skills。
 
@@ -59,6 +71,12 @@ Superpowers skills 已经随本插件迁入同一个 `skills/` 目录，因此 `
 - `comet-archive`
 - `comet-hotfix`
 - `comet-tweak`
+- `openspec-explore`
+- `openspec-propose`
+- `openspec-new-change`
+- `openspec-apply-change`
+- `openspec-verify-change`
+- `openspec-archive-change`
 
 Comet 脚本位于：
 

@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const packageRoot = path.resolve(__dirname, '../..');
 const skillsDir = path.join(packageRoot, 'skills');
+const packageBinDir = path.join(packageRoot, 'node_modules', '.bin');
+const opencodePackageBinDir = path.join(packageRoot, '.opencode', 'node_modules', '.bin');
 const agent4BootstrapSkillPath = path.join(skillsDir, 'using-ysclaw-agent4', 'SKILL.md');
 const superpowersBootstrapSkillPath = path.join(skillsDir, 'using-superpowers', 'SKILL.md');
 const cometBootstrapSkillPath = path.join(skillsDir, 'comet', 'SKILL.md');
@@ -54,6 +56,14 @@ export const YSClawAgent4Plugin = async () => {
           config.command[commandName]
         );
       }
+    },
+
+    'shell.env': async (_input, output) => {
+      output.env = output.env || {};
+      output.env.PATH = prependPathEntries(
+        output.env.PATH || process.env.PATH || '',
+        [packageBinDir, opencodePackageBinDir]
+      );
     },
 
     'experimental.chat.messages.transform': async (_input, output) => {
@@ -166,7 +176,8 @@ function getCometBootstrapContent() {
     'OpenCode 工具映射：',
     '- 使用 OpenCode 原生技能加载 `comet` 和 `comet-*` skills。',
     '- Comet 脚本位于 `skills/comet/scripts/`，从仓库根目录运行时可由 `find . -path */comet/scripts/...` 找到。',
-    '- OpenSpec CLI 和 OpenSpec skills 是外部前置能力；本插件不会自动安装它们。',
+    '- OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装；插件会把本包的 `node_modules/.bin` 加入 OpenCode shell PATH。',
+    '- 如果本地源码路径安装后找不到 `openspec`，在 `opencode-agent4` 仓库运行 `npm install`，然后重启 OpenCode。',
     '- `/comet` 是 Agent4 的核心研发工作流入口，负责编排从需求打开、设计、计划、构建、验证到归档和交接的完整生命周期。',
     '- `/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内可调用的补丁产物能力节点，用于约束 PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage。',
     '',
@@ -278,9 +289,31 @@ function defaultCometCommand(commandName, description) {
       '这是 Agent4 的 Comet / OpenSpec + Superpowers 核心研发工作流入口，负责驱动完整生命周期。',
       '在 build、verify、archive 阶段保持 Agent4 产物链：RootCauseBlueprint、PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage。',
       '`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是该生命周期内的结构化产物能力节点，不是与 `/comet` 平级竞争的主流程。',
-      'OpenSpec CLI 和 OpenSpec skills 若不可用，应停止并提示安装，不要用普通对话伪造 OpenSpec 产物。'
+      'OpenSpec CLI 和 OpenSpec skills 随插件安装；若不可用，应停止并提示执行 npm install / 重启 OpenCode，不要用普通对话伪造 OpenSpec 产物。'
     ].join('\n')
   };
+}
+
+function prependPathEntries(currentPath, entries) {
+  const existingEntries = currentPath ? currentPath.split(path.delimiter).filter(Boolean) : [];
+  const prependedEntries = [];
+  const prepended = new Set();
+
+  for (const entry of entries) {
+    const normalized = normalizePathForComparison(entry);
+    if (prepended.has(normalized)) continue;
+    prependedEntries.push(entry);
+    prepended.add(normalized);
+  }
+
+  const remainingEntries = existingEntries.filter(
+    (entry) => !prepended.has(normalizePathForComparison(entry))
+  );
+  return [...prependedEntries, ...remainingEntries].join(path.delimiter);
+}
+
+function normalizePathForComparison(entry) {
+  return path.resolve(entry);
 }
 
 function mergeAgentConfig(defaultConfig, existingConfig = {}) {

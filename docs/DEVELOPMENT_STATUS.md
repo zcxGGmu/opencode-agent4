@@ -51,6 +51,10 @@ Comet 第一阶段迁入已完成，`/comet` 也已重定位为 `opencode-agent4
   - `skills/comet/scripts/comet-archive.sh`
   - `skills/comet/scripts/comet-yaml-validate.sh`
 - OpenCode 插件入口已注册 `/comet*` 命令，并注入 `COMET_BOOTSTRAP`，带缓存和去重。
+- OpenSpec CLI / OpenSpec skills 已改为随包安装：
+  - `package.json` 和 `.opencode/package.json` 声明 `@fission-ai/openspec@1.3.1`。
+  - `.opencode/plugins/ysclaw-agent4.js` 通过 `shell.env` 注入本包 `node_modules/.bin` 和 `.opencode/node_modules/.bin`。
+  - `skills/openspec-*` 已提供 OpenSpec 兼容 skills，包括 `openspec-new-change` 和 `openspec-verify-change`。
 - Comet 第一轮安全修复已完成：
   - `.comet.yaml` 受管路径拒绝绝对路径、`..` 和 symlink 逃逸。
   - `comet-guard.sh` 默认不自动执行配置命令，除非显式设置 `COMET_ALLOW_CONFIGURED_COMMANDS=1`。
@@ -135,7 +139,6 @@ bash tests/opencode/test-bootstrap-caching.sh
 - 资产 manifest：统一列出 skills、schemas、commands、tools 和文档，由测试读取校验完整性。
 - Agent4 -> Agent5 确定性交接 sidecar：为 blueprint、plan、diff、regression result 生成 hash 索引，防止证据漂移。
 - `VerifiedPatchPackage` 归档目录：`artifacts/agent4/archive/YYYY-MM-DD-<id>/`。
-- OpenSpec CLI / OpenSpec skills 仍是外部前置依赖；本包只注册 Comet workflow skills 和确定性脚本，不自动安装。
 
 ## 下次启动检查清单
 

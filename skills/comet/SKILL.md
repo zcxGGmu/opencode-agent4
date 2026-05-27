@@ -12,6 +12,8 @@ OpenSpec 负责 WHAT  — 大纲、提案、spec 生命周期、归档
 Superpowers 负责 HOW — 技术设计、计划、执行、收尾
 ```
 
+OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装。插件会把本包的 `node_modules/.bin` 注入 OpenCode shell PATH；如本地源码路径安装后找不到 `openspec`，在插件仓库运行 `npm install` 并重启 OpenCode。
+
 **核心原则：brainstorming 必不可跳过。每次变更都必须经过深度设计（hotfix 和 tweak preset 除外）。**
 
 在 `opencode-agent4` 中，`/comet` 是 Agent4 的主入口，不是旁路流程。它负责编排 Agent4 的完整研发生命周期，并在对应阶段约束结构化产物链：
@@ -102,8 +104,8 @@ agent 做决策只需读本节，参考附录按需查阅。
 
 | 场景 | 处理方式 |
 |------|---------|
-| `openspec list --json` 失败 | 检查 openspec 是否已安装，提示 `openspec init` |
-| 子 skill 不可用 | 停止流程，提示安装或启用对应 skill |
+| `openspec list --json` 失败 | 检查本插件依赖是否安装；本地源码路径安装时运行 `npm install` 并重启 OpenCode，然后执行 `openspec init --tools opencode --force .` |
+| 子 skill 不可用 | 停止流程，提示检查 `opencode-agent4` 插件完整性和 OpenCode skills 注册 |
 | `.comet.yaml` 格式异常或缺失 | 以文件状态为准，用 `bash $COMET_STATE set` 修正后继续 |
 | 构建/测试失败 | 返回 build 阶段修复，不进入 verify |
 | change 目录结构不完整 | 按 `comet-open` 产物要求补齐 |

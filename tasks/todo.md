@@ -529,6 +529,60 @@ git status --short
 - `npm run check:tools` 通过。
 - `npm run check:comet` 通过。
 
+## OpenSpec 依赖内置安装计划
+
+### 本轮目标
+
+让用户安装 `opencode-agent4` 后即可使用 `/comet`，不再额外手动安装 OpenSpec CLI 或 OpenSpec OpenCode skills。改动要保持 Agent4 的安全默认值和 `/comet` 核心流程定位。
+
+### 已确认上下文
+
+- [x] 复习 `tasks/lessons.md`，确认 `/comet` 是 Agent4 核心研发工作流入口，`/ysclaw-*` 是生命周期内结构化产物能力节点。
+- [x] 检查当前安装文档和 bootstrap，确认它们仍声明 OpenSpec CLI / skills 是外部前置依赖。
+- [x] 查询当前 OpenSpec npm 包元数据：`@fission-ai/openspec@1.3.1` 提供 `openspec` bin，要求 Node `>=20.19.0`。
+- [x] 在临时目录验证 `openspec init --tools opencode --force`，确认当前 OpenSpec 生成 4 个 OpenCode skills：`openspec-explore`、`openspec-propose`、`openspec-apply-change`、`openspec-archive-change`。
+- [x] 发现 Comet 现有文本还引用兼容名称 `openspec-new-change` 和 `openspec-verify-change`，需要在本插件内补齐兼容层或同步命名，否则安装后仍会断链。
+- [x] 运行 `git status --short`，确认存在与本需求无关的 `assets/imgs/*` 删除和 `assets/imgs/v0/` 新增；本轮不触碰这些文件。
+
+### 设计决策
+
+- [x] 使用 package 依赖承载 OpenSpec CLI：在 `package.json` 的 `dependencies` 中加入固定范围的 `@fission-ai/openspec`，让 npm / git-backed OpenCode 插件安装时同时安装 CLI。
+- [x] 不在插件加载时静默执行全局安装、`npm install -g` 或网络安装，避免运行时副作用；插件只暴露已安装的本地 CLI。
+- [x] 在插件 `shell.env` 中为 OpenCode shell 环境追加本包可解析到的 `node_modules/.bin` 路径，使 Comet 脚本中的 `openspec` 命令优先命中插件随包依赖。
+- [x] 将 OpenSpec OpenCode skills 随 `opencode-agent4` 一起注册：纳入 OpenSpec 兼容 skills，并补齐 Comet 需要的 `openspec-new-change`、`openspec-verify-change` 兼容 skills。
+- [x] 文档改为“OpenSpec 依赖随插件安装”，同时保留本地 checkout 排障说明：如果直接从源码路径使用且依赖未安装，运行插件仓库的 `npm install` 后重启 OpenCode。
+
+### 实现计划
+
+- [x] 更新 `package.json`：加入 `@fission-ai/openspec` 运行时依赖，并通过测试检查依赖声明。
+- [x] 修改 `.opencode/plugins/ysclaw-agent4.js`：注册 OpenSpec skills、更新 bootstrap 文案、追加 `openspec` 本地 bin 路径到 shell PATH，且不覆盖用户已有配置。
+- [x] 新增 `skills/openspec-*`：覆盖 `openspec-explore`、`openspec-propose`、`openspec-apply-change`、`openspec-archive-change`、`openspec-new-change`、`openspec-verify-change`。
+- [x] 同步 `skills/comet*` 文案中对 OpenSpec skills 的引用，明确兼容层名称和当前 OpenSpec CLI 命令。
+- [x] 更新 README、`.opencode/INSTALL.md`、`docs/README.opencode.md`、`docs/README.comet.opencode.md`、`docs/DEVELOPMENT_STATUS.md`，删除“不会自动安装 OpenSpec”的旧结论。
+- [x] 扩展测试：检查 OpenSpec 依赖、OpenSpec skills、bootstrap 文案、PATH 合并行为、命令模板不再提示缺失外部 OpenSpec skills。
+
+### 验证计划
+
+- [x] 等价安装检查：`npm exec --package @fission-ai/openspec@1.3.1 -- openspec --version` 输出 `1.3.1`。
+- [x] `npm test`
+- [x] `npm run test:comet`
+- [x] `npm run check:plugin`
+- [x] `npm run check:tools`
+- [x] `npm run check:comet`
+- [x] 针对性运行新增 OpenSpec 依赖测试：`node tests/opencode/test-plugin-config.mjs`、`bash tests/opencode/test-plugin-loading.sh`、`node tests/comet/test-comet-assets.mjs`。
+
+### 实现前确认
+
+用户已确认“ok”，本轮已开始并完成实现。
+
+### 本轮复盘
+
+- `@fission-ai/openspec@1.3.1` 已加入根 `package.json` 和 `.opencode/package.json`，覆盖 npm / git-backed 插件安装和本地 OpenCode 配置依赖场景。
+- 插件新增 `shell.env` hook，将根 `node_modules/.bin` 和 `.opencode/node_modules/.bin` 前置到 PATH；若这些路径已在 PATH 中，会移动到最前并去重，保留用户其他 PATH 顺序。
+- 新增 6 个 `openspec-*` skills，包含 Comet 需要的 `openspec-new-change` 和 `openspec-verify-change` 兼容入口。
+- README、OpenCode 安装说明、Comet 文档、Codex 插件元数据和开发状态文档已从“外部前置依赖”更新为“随包安装”。
+- 本轮未触碰既有无关图片资产改动；`assets/imgs/*` 删除与 `assets/imgs/v0/` 新增仍属于进入本轮前已存在的工作区状态。
+
 ## Comet 交付与版本控制收尾计划
 
 ### 本轮目标

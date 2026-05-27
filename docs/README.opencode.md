@@ -6,6 +6,7 @@
 - 插件通过 `config.skills.paths` 注册顶层 `skills/` 目录。
 - 插件将缓存后的 Agent4、Comet 与 Superpowers 启动指引注入第一条用户消息。
 - 如果宿主配置尚未定义，插件会补齐 Agent4 智能体和命令默认配置。
+- 插件通过 `shell.env` 把本包的 `node_modules/.bin` 注入 OpenCode shell PATH，使随包安装的 `openspec` CLI 可直接调用。
 - Superpowers 方法论 skills 已合并到顶层 `skills/`，不需要额外 symlink。
 
 ## 安装
@@ -27,6 +28,14 @@
 ```
 
 修改 `opencode.json` 后重启 OpenCode。
+
+OpenSpec CLI 由本包的 `@fission-ai/openspec` 运行时依赖提供。使用本地源码路径时，如果 OpenCode 找不到 `openspec`，在插件仓库运行：
+
+```bash
+npm install
+```
+
+然后重启 OpenCode。OpenSpec CLI 要求 Node `>=20.19.0`。
 
 ## 技能
 
@@ -59,6 +68,12 @@ OpenCode 应能发现这些技能：
 - `comet-archive`
 - `comet-hotfix`
 - `comet-tweak`
+- `openspec-explore`
+- `openspec-propose`
+- `openspec-new-change`
+- `openspec-apply-change`
+- `openspec-verify-change`
+- `openspec-archive-change`
 
 完整 Superpowers OpenCode 说明见 `docs/README.superpowers.opencode.md`。
 
