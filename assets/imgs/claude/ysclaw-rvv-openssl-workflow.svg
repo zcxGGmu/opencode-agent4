@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 860" width="1280" height="860" role="img">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-claude" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#5a5a5a"/>
+    </marker>
+    <filter id="shadow-soft" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="860" fill="#f8f6f3"/>
+  <text x="640" y="42" text-anchor="middle" fill="#1a1a1a" font-size="24" font-weight="700">/ysclaw-agent4 使用 RVV 优化 OpenSSL 性能</text>
+<text x="640" y="68" text-anchor="middle" fill="#6a6a6a" font-size="14">自然语言目标可开启设计；build 前必须取得 Agent3 RootCauseBlueprint 并通过门禁</text>
+<path d="M 225 160 L 280 160" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="211" y="130" width="82" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="252" y="145" text-anchor="middle" fill="#5a5a5a" font-size="12.5">命令入口</text>
+  </g>
+<path d="M 500 160 L 555 160" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="499" y="130" width="56" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="527" y="145" text-anchor="middle" fill="#5a5a5a" font-size="12.5">open</text>
+  </g>
+<path d="M 775 160 L 830 160" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="768" y="130" width="68" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="802" y="145" text-anchor="middle" fill="#5a5a5a" font-size="12.5">design</text>
+  </g>
+<path d="M 1050 160 L 1105 160" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1047" y="130" width="60" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1077" y="145" text-anchor="middle" fill="#5a5a5a" font-size="12.5">plan</text>
+  </g>
+<path d="M 415 295 L 415 360" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="374" y="315" width="142" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="445" y="330" text-anchor="middle" fill="#5a5a5a" font-size="12.5">RootCauseBlueprint</text>
+  </g>
+<path d="M 690 295 L 690 360" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="679" y="315" width="82" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="720" y="330" text-anchor="middle" fill="#5a5a5a" font-size="12.5">PatchPlan</text>
+  </g>
+<path d="M 965 295 L 965 360" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="938" y="315" width="120" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="998" y="330" text-anchor="middle" fill="#5a5a5a" font-size="12.5">PatchCandidate</text>
+  </g>
+<path d="M 690 490 L 690 560" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="639" y="511" width="170" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="724" y="526" text-anchor="middle" fill="#5a5a5a" font-size="12.5">agent1 patch_regression</text>
+  </g>
+<path d="M 965 490 L 965 560" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="940" y="511" width="120" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1000" y="526" text-anchor="middle" fill="#5a5a5a" font-size="12.5">性能/回归证据</text>
+  </g>
+<path d="M 590 605 L 640 605" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="575" y="575" width="80" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="615" y="590" text-anchor="middle" fill="#5a5a5a" font-size="12.5">归一化</text>
+  </g>
+<path d="M 865 605 L 915 605" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="858" y="575" width="64" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="890" y="590" text-anchor="middle" fill="#5a5a5a" font-size="12.5">打包</text>
+  </g>
+<path d="M 1140 605 L 1190 605" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1133" y="575" width="64" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1165" y="590" text-anchor="middle" fill="#5a5a5a" font-size="12.5">交接</text>
+  </g>
+<path d="M 965 655 L 965 725 L 690 725 L 690 655" fill="none" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="755" y="699" width="146" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="828" y="714" text-anchor="middle" fill="#5a5a5a" font-size="12.5">测试失败 → 回 build</text>
+  </g>
+<path d="M 415 490 L 415 725 L 160 725 L 160 655" fill="none" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="201" y="699" width="174" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+	    <text x="288" y="714" text-anchor="middle" fill="#5a5a5a" font-size="12.5">缺 Agent3 蓝图 → 停止</text>
+  </g>
+<path d="M 1050 210 L 1140 260 L 1140 360" fill="none" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1070" y="270" width="120" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1130" y="285" text-anchor="middle" fill="#5a5a5a" font-size="12.5">候选文件边界</text>
+  </g>
+<g>
+    <rect x="55" y="112" width="170" height="96" rx="12" ry="12" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="140" y="142" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">用户目标</text>
+    <text x="140" y="165" text-anchor="middle" fill="#6a6a6a" font-size="13">/ysclaw-agent4</text>
+<text x="140" y="184" text-anchor="middle" fill="#6a6a6a" font-size="13">使用 RVV 优化</text>
+<text x="140" y="203" text-anchor="middle" fill="#6a6a6a" font-size="13">OpenSSL 性能</text>
+  </g>
+<g>
+    <rect x="280" y="112" width="220" height="96" rx="12" ry="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="390" y="142" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Comet 启动</text>
+    <text x="390" y="165" text-anchor="middle" fill="#6a6a6a" font-size="13">检测 active change</text>
+<text x="390" y="184" text-anchor="middle" fill="#6a6a6a" font-size="13">创建 OpenSpec change</text>
+<text x="390" y="203" text-anchor="middle" fill="#6a6a6a" font-size="13">写入 .comet.yaml</text>
+  </g>
+<g>
+    <rect x="555" y="112" width="220" height="96" rx="12" ry="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="665" y="142" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">需求规格化</text>
+    <text x="665" y="165" text-anchor="middle" fill="#6a6a6a" font-size="13">OpenSSL 热点</text>
+<text x="665" y="184" text-anchor="middle" fill="#6a6a6a" font-size="13">RVV 平台/约束</text>
+<text x="665" y="203" text-anchor="middle" fill="#6a6a6a" font-size="13">验收指标</text>
+  </g>
+<g>
+    <rect x="830" y="112" width="220" height="96" rx="12" ry="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="940" y="142" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">深度设计</text>
+    <text x="940" y="165" text-anchor="middle" fill="#6a6a6a" font-size="13">Superpowers brainstorming</text>
+<text x="940" y="184" text-anchor="middle" fill="#6a6a6a" font-size="13">确认实现策略</text>
+<text x="940" y="203" text-anchor="middle" fill="#6a6a6a" font-size="13">Design Doc</text>
+  </g>
+<g>
+    <rect x="1105" y="112" width="140" height="96" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1175" y="142" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">计划门禁</text>
+    <text x="1175" y="165" text-anchor="middle" fill="#6a6a6a" font-size="13">先计划</text>
+<text x="1175" y="184" text-anchor="middle" fill="#6a6a6a" font-size="13">后改代码</text>
+  </g>
+<g>
+    <rect x="300" y="360" width="230" height="130" rx="12" ry="12" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="415" y="390" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">根因蓝图门禁</text>
+    <text x="415" y="413" text-anchor="middle" fill="#6a6a6a" font-size="13">RootCauseBlueprint</text>
+<text x="415" y="432" text-anchor="middle" fill="#6a6a6a" font-size="13">候选文件: OpenSSL 代码</text>
+<text x="415" y="451" text-anchor="middle" fill="#6a6a6a" font-size="13">requiredTests / bench</text>
+  </g>
+<g>
+    <rect x="575" y="360" width="230" height="130" rx="12" ry="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="690" y="390" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">构建最小补丁</text>
+    <text x="690" y="413" text-anchor="middle" fill="#6a6a6a" font-size="13">PatchPlan 范围内修改</text>
+<text x="690" y="432" text-anchor="middle" fill="#6a6a6a" font-size="13">RVV intrinsics/asm 路径</text>
+<text x="690" y="451" text-anchor="middle" fill="#6a6a6a" font-size="13">保留非 RVV fallback</text>
+  </g>
+<g>
+    <rect x="850" y="360" width="230" height="130" rx="12" ry="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="965" y="390" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">捕获事实差异</text>
+    <text x="965" y="413" text-anchor="middle" fill="#6a6a6a" font-size="13">git diff → PatchCandidate</text>
+<text x="965" y="432" text-anchor="middle" fill="#6a6a6a" font-size="13">changedFiles</text>
+<text x="965" y="451" text-anchor="middle" fill="#6a6a6a" font-size="13">无无关重构</text>
+  </g>
+<g>
+    <rect x="1100" y="360" width="140" height="130" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1170" y="390" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">边界检查</text>
+    <text x="1170" y="413" text-anchor="middle" fill="#6a6a6a" font-size="13">schema</text>
+<text x="1170" y="432" text-anchor="middle" fill="#6a6a6a" font-size="13">ID 链</text>
+<text x="1170" y="451" text-anchor="middle" fill="#6a6a6a" font-size="13">命令白名单</text>
+  </g>
+<g>
+    <rect x="340" y="560" width="250" height="90" rx="12" ry="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="465" y="590" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Agent1 回归</text>
+    <text x="465" y="613" text-anchor="middle" fill="#6a6a6a" font-size="13">OpenSSL tests / bench</text>
+<text x="465" y="632" text-anchor="middle" fill="#6a6a6a" font-size="13">RVV target 或 emulator</text>
+  </g>
+<g>
+    <rect x="640" y="560" width="225" height="90" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="752.5" y="590" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">PatchRegressionResult</text>
+    <text x="752.5" y="613" text-anchor="middle" fill="#6a6a6a" font-size="13">status: pass/fail</text>
+<text x="752.5" y="632" text-anchor="middle" fill="#6a6a6a" font-size="13">artifacts + summary</text>
+  </g>
+<g>
+    <rect x="915" y="560" width="225" height="90" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1027.5" y="590" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">VerifiedPatchPackage</text>
+    <text x="1027.5" y="613" text-anchor="middle" fill="#6a6a6a" font-size="13">蓝图 + 计划 + diff</text>
+<text x="1027.5" y="632" text-anchor="middle" fill="#6a6a6a" font-size="13">回归证据完整</text>
+  </g>
+<g>
+    <rect x="1190" y="560" width="70" height="90" rx="12" ry="12" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1225" y="611" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Agent5</text>
+    
+  </g>
+<g>
+    <rect x="50" y="560" width="220" height="90" rx="12" ry="12" fill="#f2c7bd" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="160" y="590" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">失败关闭</text>
+    <text x="160" y="613" text-anchor="middle" fill="#6a6a6a" font-size="13">缺蓝图/证据缺失</text>
+<text x="160" y="632" text-anchor="middle" fill="#6a6a6a" font-size="13">不伪造补丁链</text>
+  </g>
+<g>
+    <rect x="1000" y="735" width="240" height="106" rx="10" ry="10" fill="#fffdf9" stroke="#4a4a4a" stroke-width="1.5"/>
+    <text x="1018" y="759" fill="#1a1a1a" font-size="13" font-weight="600">Legend</text>
+    <line x1="1018" y1="772" x2="1052" y2="772" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+    <text x="1064" y="777" fill="#6a6a6a" font-size="12">主工作流</text>
+<line x1="1018" y1="796" x2="1052" y2="796" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow-claude)"/>
+    <text x="1064" y="801" fill="#6a6a6a" font-size="12">失败回退</text>
+<line x1="1018" y1="820" x2="1052" y2="820" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-claude)"/>
+    <text x="1064" y="825" fill="#6a6a6a" font-size="12">边界检查</text>
+  </g>
+</svg>

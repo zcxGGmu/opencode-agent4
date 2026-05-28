@@ -258,8 +258,46 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - [ ] 确认新仓库默认分支名，默认推送为 `main`。
 - [ ] 确认是否包含 `assets/design.pptx`。默认不包含，因为它当前未跟踪且像源设计材料。
 - [ ] 确认是否把 `tasks/` 纳入新仓库。默认不包含，因为它是过程记录；如需保留项目记忆，可单独追加一个 `chore: add project task notes` 提交。
-
 - [ ] 确认排除 `.DS_Store` 和 `assets/.DS_Store`。
+
+## Claude Official 架构图与 README 集成计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮继续保持结构化产物链、失败关闭和真实验证要求。
+- [x] 读取 `fireworks-tech-graph` 技能说明、Style 1 基础规范和 Style 6 Claude Official 规范。
+- [x] 读取 README、OpenCode 插件入口、命令、Comet skill、Agent4 skill、schemas 和本地工具。
+
+### 实现前计划
+
+- [x] 生成 `assets/imgs/claude/agent4-claude-system-architecture.svg/png`：展示 Agent3、OpenCode 插件包、Comet/OpenSpec/Superpowers、Agent1 回归和 Agent5 交接。
+- [x] 生成 `assets/imgs/claude/agent4-claude-lifecycle-flow.svg/png`：展示 `/ysclaw-agent4` 到 `open/design/build/verify/archive` 的流程。
+- [x] 生成 `assets/imgs/claude/agent4-claude-contract-framework.svg/png`：展示 `RootCauseBlueprint -> PatchPlan -> PatchCandidate -> PatchRegressionResult -> VerifiedPatchPackage` 的结构约束框架。
+- [x] 生成 `assets/imgs/claude/ysclaw-rvv-openssl-workflow.svg/png`：围绕 `/ysclaw-agent4 使用RVV优化openssl性能` 示例，展示从用户目标到 Agent5 交接的完整工作流。
+- [x] 将图片插入 README 的“整体定位”和“主入口：/ysclaw-agent4”附近。
+- [x] 使用 XML 解析、PNG 导出、图片尺寸/非空检查和 README 链接检查验证产物。
+
+### 实现前确认
+
+本轮用户已明确要求深入分析、绘制图组并加入 README。实现范围限定为文档、图片资产和任务记录，不修改 Agent4 运行逻辑。
+
+### 本轮复盘
+
+本轮已完成 Claude Official 风格图谱并集成到 README：
+
+- 新增 `assets/imgs/claude/agent4-claude-system-architecture.svg/png`。
+- 新增 `assets/imgs/claude/agent4-claude-contract-framework.svg/png`。
+- 新增 `assets/imgs/claude/agent4-claude-lifecycle-flow.svg/png`。
+- 新增 `assets/imgs/claude/ysclaw-rvv-openssl-workflow.svg/png`。
+- README 新增“架构图谱”章节，并在 `/ysclaw-agent4` 主入口章节补充生命周期图和 RVV/OpenSSL 示例流程图。
+- RVV/OpenSSL 示例已明确：自然语言目标可开启 open/design，但 build 前必须取得 Agent3 的合法 `RootCauseBlueprint`，不能伪造补丁链。
+
+最终验证：
+
+- 4 个 SVG 使用 `xml.etree.ElementTree` 解析通过。
+- 4 个 PNG 使用 `sips` 导出成功，尺寸分别为 1280x900、1280x760、1280x780、1280x860，文件均非空。
+- README 中 4 个图片链接均指向已存在文件。
+- `npm test` 通过。
 
 ### 提交拆分计划
 

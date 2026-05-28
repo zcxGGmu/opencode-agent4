@@ -9,6 +9,16 @@
 Comet 内容来源于 `rpamis/comet`，上游许可见 [docs/LICENSE.comet](/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/LICENSE.comet)。
 Superpowers 内容来源于 `/Users/zq/Desktop/ai-projs/posp/template/superpowers`，上游许可见 [docs/LICENSE.superpowers](/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/LICENSE.superpowers)。
 
+## 架构图谱
+
+下图展示 `opencode-agent4` 在 OpenCode 中的运行结构：插件入口注册命令、智能体和共享 `skills/`，Comet 负责生命周期编排，Agent4 的 schemas、tools 和 tests 共同约束补丁产物链。
+
+![opencode-agent4 系统架构](assets/imgs/claude/agent4-claude-system-architecture.png)
+
+Agent4 的核心交付不是普通文本，而是一组有结构约束和 ID 链约束的 JSON 产物。任何 schema 失败、回归命令不安全、ID 不一致或证据缺失都会失败关闭。
+
+![Agent4 结构化契约框架](assets/imgs/claude/agent4-claude-contract-framework.png)
+
 ## 整体定位
 
 Agent4 位于 Agent3 和 Agent5 之间：
@@ -208,6 +218,20 @@ opencode plugin /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4 --glo
   -> verify：运行或归一化 Agent1 patch_regression，形成 PatchRegressionResult
   -> archive：归档规格、设计和 VerifiedPatchPackage 交接材料
 ```
+
+![Agent4 生命周期流程](assets/imgs/claude/agent4-claude-lifecycle-flow.png)
+
+### 示例：使用 RVV 优化 OpenSSL 性能
+
+下面的输入代表一个新的变更意图：
+
+```text
+/ysclaw-agent4 使用RVV优化openssl性能
+```
+
+这个输入可以开启 OpenSpec change 并进入 design 阶段，把 OpenSSL 热点、RVV 平台约束和验收指标规格化。但生产路径仍必须从 Agent3 的合法 `RootCauseBlueprint` 进入：到 build 阶段如果没有蓝图，必须停止要求补齐，不能凭自然语言目标伪造 `PatchPlan`、`PatchCandidate` 或回归证据。
+
+![ysclaw-agent4 RVV OpenSSL 工作流程](assets/imgs/claude/ysclaw-rvv-openssl-workflow.png)
 
 `/comet` 仍可直接使用，作为同一生命周期编排能力的兼容入口。
 

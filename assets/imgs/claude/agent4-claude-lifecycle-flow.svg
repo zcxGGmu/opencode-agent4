@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 780" width="1280" height="780" role="img">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', 'SimHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow-claude" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <polygon points="0 0, 8 4, 0 8" fill="#5a5a5a"/>
+    </marker>
+    <filter id="shadow-soft" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000000" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="780" fill="#f8f6f3"/>
+  <text x="640" y="42" text-anchor="middle" fill="#1a1a1a" font-size="24" font-weight="700">Agent4 生命周期流程</text>
+<text x="640" y="68" text-anchor="middle" fill="#6a6a6a" font-size="14">Comet 将 OpenSpec 的 WHAT 与 Superpowers 的 HOW 串成可验证补丁交付</text>
+<path d="M 240 150 L 310 150" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="244" y="120" width="62" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="275" y="135" text-anchor="middle" fill="#5a5a5a" font-size="12.5">启动</text>
+  </g>
+<path d="M 470 150 L 530 150" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="454" y="120" width="92" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="500" y="135" text-anchor="middle" fill="#5a5a5a" font-size="12.5">创建/恢复</text>
+  </g>
+<path d="M 690 150 L 750 150" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="674" y="120" width="92" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="720" y="135" text-anchor="middle" fill="#5a5a5a" font-size="12.5">设计确认</text>
+  </g>
+<path d="M 910 150 L 970 150" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="894" y="120" width="92" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="940" y="135" text-anchor="middle" fill="#5a5a5a" font-size="12.5">完成任务</text>
+  </g>
+<path d="M 1130 150 L 1190 150" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1114" y="120" width="92" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1160" y="135" text-anchor="middle" fill="#5a5a5a" font-size="12.5">验证通过</text>
+  </g>
+<path d="M 860 210 L 860 275 L 650 275 L 650 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="711" y="250" width="88" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="755" y="265" text-anchor="middle" fill="#5a5a5a" font-size="12.5">PatchPlan</text>
+  </g>
+<path d="M 1080 210 L 1080 275 L 650 275 L 650 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="915" y="271" width="120" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="975" y="286" text-anchor="middle" fill="#5a5a5a" font-size="12.5">PatchCandidate</text>
+  </g>
+<path d="M 1080 210 L 1080 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1066" y="255" width="88" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1110" y="270" text-anchor="middle" fill="#5a5a5a" font-size="12.5">回归证据</text>
+  </g>
+<path d="M 860 475 L 860 540 L 1080 540 L 1080 475" fill="none" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="899" y="515" width="142" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="970" y="530" text-anchor="middle" fill="#5a5a5a" font-size="12.5">verify fail → rebuild</text>
+  </g>
+<path d="M 420 210 L 420 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="394" y="255" width="112" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="450" y="270" text-anchor="middle" fill="#5a5a5a" font-size="12.5">proposal/tasks</text>
+  </g>
+<path d="M 640 210 L 640 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="622" y="255" width="96" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="670" y="270" text-anchor="middle" fill="#5a5a5a" font-size="12.5">Design Doc</text>
+  </g>
+<path d="M 1205 210 L 1205 330" fill="none" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+<g>
+    <rect x="1195" y="255" width="74" height="22" rx="7" ry="7" fill="#f8f6f3" fill-opacity="0.95"/>
+    <text x="1232" y="270" text-anchor="middle" fill="#5a5a5a" font-size="12.5">handoff</text>
+  </g>
+<g>
+    <rect x="60" y="108" width="180" height="84" rx="12" ry="12" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="150" y="138" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">入口</text>
+    <text x="150" y="161" text-anchor="middle" fill="#6a6a6a" font-size="13">/ysclaw-agent4</text>
+<text x="150" y="180" text-anchor="middle" fill="#6a6a6a" font-size="13">或 /comet</text>
+  </g>
+<g>
+    <rect x="310" y="108" width="160" height="84" rx="12" ry="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="390" y="138" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">open</text>
+    <text x="390" y="161" text-anchor="middle" fill="#6a6a6a" font-size="13">OpenSpec change</text>
+<text x="390" y="180" text-anchor="middle" fill="#6a6a6a" font-size="13">proposal/tasks</text>
+  </g>
+<g>
+    <rect x="530" y="108" width="160" height="84" rx="12" ry="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="610" y="138" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">design</text>
+    <text x="610" y="161" text-anchor="middle" fill="#6a6a6a" font-size="13">brainstorming</text>
+<text x="610" y="180" text-anchor="middle" fill="#6a6a6a" font-size="13">Design Doc</text>
+  </g>
+<g>
+    <rect x="750" y="108" width="160" height="84" rx="12" ry="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="830" y="138" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">build</text>
+    <text x="830" y="161" text-anchor="middle" fill="#6a6a6a" font-size="13">PatchPlan</text>
+<text x="830" y="180" text-anchor="middle" fill="#6a6a6a" font-size="13">git diff</text>
+  </g>
+<g>
+    <rect x="970" y="108" width="160" height="84" rx="12" ry="12" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1050" y="138" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">verify</text>
+    <text x="1050" y="161" text-anchor="middle" fill="#6a6a6a" font-size="13">Agent1 回归</text>
+<text x="1050" y="180" text-anchor="middle" fill="#6a6a6a" font-size="13">finish branch</text>
+  </g>
+<g>
+    <rect x="1190" y="108" width="70" height="84" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1225" y="156" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">archive</text>
+    
+  </g>
+<g>
+    <rect x="315" y="330" width="210" height="98" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="420" y="360" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">OpenSpec 产物</text>
+    <text x="420" y="383" text-anchor="middle" fill="#6a6a6a" font-size="13">proposal.md / design.md</text>
+<text x="420" y="402" text-anchor="middle" fill="#6a6a6a" font-size="13">tasks.md / delta spec</text>
+  </g>
+<g>
+    <rect x="545" y="330" width="210" height="98" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="650" y="360" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">结构化补丁链</text>
+    <text x="650" y="383" text-anchor="middle" fill="#6a6a6a" font-size="13">PatchPlan</text>
+<text x="650" y="402" text-anchor="middle" fill="#6a6a6a" font-size="13">PatchCandidate</text>
+  </g>
+<g>
+    <rect x="775" y="330" width="210" height="98" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="880" y="360" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">实现证据</text>
+    <text x="880" y="383" text-anchor="middle" fill="#6a6a6a" font-size="13">真实 git diff</text>
+<text x="880" y="402" text-anchor="middle" fill="#6a6a6a" font-size="13">最小范围修改</text>
+  </g>
+<g>
+    <rect x="1005" y="330" width="210" height="98" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="1110" y="360" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">验证证据</text>
+    <text x="1110" y="383" text-anchor="middle" fill="#6a6a6a" font-size="13">PatchRegressionResult</text>
+<text x="1110" y="402" text-anchor="middle" fill="#6a6a6a" font-size="13">命令白名单</text>
+  </g>
+<g>
+    <rect x="505" y="555" width="270" height="92" rx="12" ry="12" fill="#f2c7bd" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="640" y="585" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">暂停点</text>
+    <text x="640" y="608" text-anchor="middle" fill="#6a6a6a" font-size="13">设计确认 / 执行方式</text>
+<text x="640" y="627" text-anchor="middle" fill="#6a6a6a" font-size="13">验证失败是否修复</text>
+  </g>
+<g>
+    <rect x="845" y="555" width="270" height="92" rx="12" ry="12" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2.5" filter="url(#shadow-soft)"/>
+    <text x="980" y="585" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">完成门禁</text>
+    <text x="980" y="608" text-anchor="middle" fill="#6a6a6a" font-size="13">VerifiedPatchPackage</text>
+<text x="980" y="627" text-anchor="middle" fill="#6a6a6a" font-size="13">结构合法 + 证据完整</text>
+  </g>
+<g>
+    <rect x="996" y="655" width="240" height="82" rx="10" ry="10" fill="#fffdf9" stroke="#4a4a4a" stroke-width="1.5"/>
+    <text x="1014" y="679" fill="#1a1a1a" font-size="13" font-weight="600">Legend</text>
+    <line x1="1014" y1="692" x2="1048" y2="692" stroke="#5a5a5a" stroke-width="2" marker-end="url(#arrow-claude)"/>
+    <text x="1060" y="697" fill="#6a6a6a" font-size="12">阶段推进</text>
+<line x1="1014" y1="716" x2="1048" y2="716" stroke="#5a5a5a" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow-claude)"/>
+    <text x="1060" y="721" fill="#6a6a6a" font-size="12">失败回退/门禁</text>
+  </g>
+</svg>
