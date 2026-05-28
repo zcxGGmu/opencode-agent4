@@ -1,6 +1,14 @@
 # 为 OpenCode 安装源生 Claw Agent4
 
-在全局或项目级 `opencode.json` 的 `plugin` 数组中加入本包。
+推荐用 OpenCode 自带插件安装命令启用本包：
+
+```bash
+opencode plugin /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4 --global --force
+```
+
+这会把插件写入全局 `opencode.json` 的 `plugin` 数组。更新配置后必须重启 OpenCode。
+
+也可以手动在全局或项目级 `opencode.json` 的 `plugin` 数组中加入本包。
 
 本地检出示例：
 
@@ -18,9 +26,19 @@
 }
 ```
 
-更新配置后重启 OpenCode。
+不要只复制 `.opencode/commands/*.md`。命令 markdown 只能提供斜杠命令说明，不能注册本包 `skills/`；如果插件没有真正启用，`/ysclaw-agent4` 会看不到 `comet` skill。
 
 ## 验证
+
+先确认 `opencode.json` 中包含插件条目，例如：
+
+```json
+{
+  "plugin": [
+    "/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4"
+  ]
+}
+```
 
 让 OpenCode 列出技能，并确认以下名称存在：
 

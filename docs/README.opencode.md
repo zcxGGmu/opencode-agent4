@@ -11,6 +11,14 @@
 
 ## 安装
 
+推荐使用 OpenCode 插件安装命令：
+
+```bash
+opencode plugin /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4 --global --force
+```
+
+命令成功后，确认全局 `opencode.json` 的 `plugin` 数组包含本包路径，并重启 OpenCode。
+
 本地检出：
 
 ```json
@@ -28,6 +36,8 @@
 ```
 
 修改 `opencode.json` 后重启 OpenCode。
+
+不要只复制 `.opencode/commands/*.md`。这些 markdown 只提供命令说明，不能注册 `skills/`；插件没有真正启用时，`/ysclaw-agent4` 会看不到 `comet` skill。
 
 OpenSpec CLI 由本包的 `@fission-ai/openspec` 运行时依赖提供。使用本地源码路径时，如果 OpenCode 找不到 `openspec`，在插件仓库运行：
 
@@ -110,5 +120,7 @@ Markdown 形式的命令说明也保存在 `.opencode/commands/`。
 
 1. 确认 `opencode.json` 中的插件路径。
 2. 重启 OpenCode。
-3. 在本仓库运行 `npm test`。
-4. 检查 OpenCode 日志中的插件加载错误。
+3. 确认不是只复制了 `.opencode/commands/*.md`。
+4. 让 OpenCode 列出 skills，确认存在 `comet`。
+5. 在本仓库运行 `npm test`。
+6. 检查 OpenCode 日志中的插件加载错误。

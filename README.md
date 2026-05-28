@@ -88,6 +88,14 @@ Agent5 拉取请求 / 提交材料生成
 
 ## OpenCode 安装
 
+推荐使用 OpenCode 插件安装命令：
+
+```bash
+opencode plugin /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4 --global --force
+```
+
+命令成功后重启 OpenCode。
+
 在全局或项目级 `opencode.json` 中添加本地插件路径：
 
 ```json
@@ -97,6 +105,8 @@ Agent5 拉取请求 / 提交材料生成
 ```
 
 然后重启 OpenCode。
+
+不要只复制 `.opencode/commands/*.md`。命令 markdown 不能注册 `skills/`，插件未启用时 `/ysclaw-agent4` 会看不到 `comet` skill。
 
 OpenSpec CLI 作为运行时依赖随本包安装，包名为 `@fission-ai/openspec`。如果使用本地源码路径且 OpenCode 找不到 `openspec`，在本仓库运行：
 
@@ -162,6 +172,23 @@ ysclaw-agent4-patch
 - `/comet-hotfix`、`/comet-tweak`
 - `/ysclaw-patch-plan`
 - `/ysclaw-build-patch`
+
+### 排障：提示没有 comet skill
+
+如果执行 `/ysclaw-agent4` 时显示“当前环境中没有 comet skill”，通常不是本包缺少 Comet 文件，而是 OpenCode 当前会话没有加载插件的 `skills/` 目录。按下面顺序检查：
+
+1. 确认 `opencode.json` 的 `plugin` 数组包含本包路径或包名。
+2. 修改插件配置后必须重启 OpenCode，旧会话不会自动重新加载 skills。
+3. 不要只复制 `.opencode/commands/*.md`。命令 markdown 只能提供斜杠命令说明，不能注册 `skills/comet/SKILL.md`。
+4. 让 OpenCode 列出 skills，确认能看到 `comet`、`comet-build` 和 `openspec-new-change`。
+
+本地源码安装推荐重新执行：
+
+```bash
+opencode plugin /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4 --global --force
+```
+
+然后重启 OpenCode。如果仍缺少 `comet`，检查 OpenCode 日志中的插件加载错误，并确认仓库内存在 `skills/comet/SKILL.md`。
 
 ### 主入口：/ysclaw-agent4
 

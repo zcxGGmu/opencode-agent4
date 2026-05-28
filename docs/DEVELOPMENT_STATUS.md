@@ -1,11 +1,11 @@
 # opencode-agent4 当前开发状态
 
-更新时间：2026-05-27
+更新时间：2026-05-28
 
 ## 当前分支
 
 ```text
-codex/port-comet-workflow
+main
 ```
 
 ## 当前结论
@@ -75,6 +75,10 @@ Comet 第一阶段迁入已完成，`/ysclaw-agent4` 已注册为 `opencode-agen
   - `.opencode/commands/ysclaw-agent4.md` 已补充命令说明。
   - README、OpenCode 文档、Agent4 文档、Comet skill、Codex 元数据和 package 描述已同步推荐主入口。
   - 回归测试已覆盖 `/ysclaw-agent4` 命令注册、模板语义和 bootstrap 文案。
+- `/ysclaw-agent4` 找不到 `comet` skill 的安装/运行时排障已补强：
+  - `.opencode/plugins/ysclaw-agent4.js` 现在在 `command.execute.before` 中为 `/ysclaw-agent4` 和 `/comet*` 注入 Comet 命令上下文，避免只依赖 native skill registry。
+  - `COMET_BOOTSTRAP` 明确要求：如果 native skill 列表暂时没有 `comet`，不能直接回答“当前环境中没有 comet skill”后停止，应先按内嵌决策核心继续，并检查插件启用与 `skills/comet/SKILL.md`。
+  - README、`.opencode/INSTALL.md`、`docs/README.opencode.md` 和 `docs/README.comet.opencode.md` 已补充 `opencode plugin <path> --global --force` 安装路径，以及“不要只复制 commands markdown”的排障说明。
 
 ## 已通过验证
 
@@ -94,6 +98,8 @@ npm run check:comet
 node tests/opencode/test-plugin-config.mjs
 bash tests/opencode/test-bootstrap-caching.sh
 ```
+
+真实 OpenCode server smoke 也已通过：临时 `opencode.json` 启用本仓库插件后，`GET /skill` 能列出 `comet`、`comet-build`、`openspec-new-change`、`using-ysclaw-agent4`。
 
 ## 当前未完成
 

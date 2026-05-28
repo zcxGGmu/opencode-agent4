@@ -71,6 +71,36 @@ export const YSClawAgent4Plugin = async () => {
       );
     },
 
+    'command.execute.before': async (input, output) => {
+      const commandName = normalizeCommandName(input.command);
+      if (!isCometEntrypointCommand(commandName)) return;
+
+      output.parts = output.parts || [];
+      if (output.parts.some((part) => part.type === 'text' && part.text.includes('COMET_BOOTSTRAP'))) {
+        return;
+      }
+
+      const cometBootstrap = getCometBootstrapContent();
+      if (!cometBootstrap) return;
+
+      output.parts.unshift({
+        type: 'text',
+        text: [
+          cometBootstrap,
+          `<YSCLAW_AGENT4_COMMAND_CONTEXT>
+当前命令：/${commandName}
+
+这是 Agent4 主流程命令。即使 OpenCode native skill 列表暂时没有显示 comet，本消息已经内嵌 comet 决策核心；不要回答“当前环境中没有 comet skill”后停止。先按内嵌决策核心继续，并在需要完整参考时读取已安装包中的 skills/comet/SKILL.md。
+
+只有在以下条件同时成立时才停止并报告安装问题：
+- OpenCode 配置中没有启用 ysclaw-agent4/opencode-agent4 插件；
+- 重启 OpenCode 后仍无法发现本包 skills/；
+- 当前项目或插件安装目录中也找不到 skills/comet/SKILL.md。
+</YSCLAW_AGENT4_COMMAND_CONTEXT>`
+        ].join('\n\n')
+      });
+    },
+
     'experimental.chat.messages.transform': async (_input, output) => {
       if (!output.messages?.length) return;
 
@@ -181,6 +211,7 @@ function getCometBootstrapContent() {
     'OpenCode 工具映射：',
     '- 使用 OpenCode 原生技能加载 `comet` 和 `comet-*` skills。',
     '- Comet 脚本位于 `skills/comet/scripts/`，从仓库根目录运行时可由 `find . -path */comet/scripts/...` 找到。',
+    '- 如果 OpenCode native skill 列表暂时没有 `comet`，但本 COMET_BOOTSTRAP 已加载，不要回答“当前环境中没有 comet skill”后停止；先按本指引继续，需要完整参考时读取已安装包中的 `skills/comet/SKILL.md`。',
     '- OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装；插件会把本包的 `node_modules/.bin` 加入 OpenCode shell PATH。',
     '- 如果本地源码路径安装后找不到 `openspec`，在 `opencode-agent4` 仓库运行 `npm install`，然后重启 OpenCode。',
     '- `/ysclaw-agent4` 是推荐的 Agent4 主入口，委托 `comet` skill 编排从需求打开、设计、计划、构建、验证到归档和交接的完整生命周期。',
@@ -228,6 +259,15 @@ function hasBootstrapMarker(message, marker) {
   return message.parts.some(
     (part) => part.type === 'text' && part.text.includes(marker)
   );
+}
+
+function normalizeCommandName(commandName) {
+  return String(commandName || '').trim().replace(/^\/+/, '');
+}
+
+function isCometEntrypointCommand(commandName) {
+  if (commandName === agent4MainCommandName) return true;
+  return cometCommandDefaults.some(([name]) => name === commandName);
 }
 
 function defaultAgentConfig() {

@@ -4,6 +4,7 @@ import { YSClawAgent4Plugin } from '../../.opencode/plugins/ysclaw-agent4.js';
 
 const plugin = await YSClawAgent4Plugin({});
 assert.equal(typeof plugin['shell.env'], 'function');
+assert.equal(typeof plugin['command.execute.before'], 'function');
 
 const config = {
   skills: { paths: [] },
@@ -141,5 +142,29 @@ assert.match(defaultConfig.command.comet.description, /核心研发工作流入�
 assert.match(defaultConfig.command.comet.template, /不?是与 `\/comet` 平级竞争的主流程/);
 assert.match(defaultConfig.command.comet.template, /OpenSpec CLI 和 OpenSpec skills 随插件安装/);
 assert.doesNotMatch(defaultConfig.command.comet.template, /外部前置能力/);
+
+const agent4CommandOutput = { parts: [{ type: 'text', text: '原始命令内容' }] };
+await plugin['command.execute.before']({ command: '/ysclaw-agent4' }, agent4CommandOutput);
+assert.equal(agent4CommandOutput.parts.length, 2);
+assert.match(agent4CommandOutput.parts[0].text, /COMET_BOOTSTRAP/);
+assert.match(agent4CommandOutput.parts[0].text, /YSCLAW_AGENT4_COMMAND_CONTEXT/);
+assert.match(agent4CommandOutput.parts[0].text, /当前环境中没有 comet skill/);
+assert.match(agent4CommandOutput.parts[0].text, /skills\/comet\/SKILL\.md/);
+assert.equal(agent4CommandOutput.parts[1].text, '原始命令内容');
+
+await plugin['command.execute.before']({ command: 'ysclaw-agent4' }, agent4CommandOutput);
+assert.equal(
+  agent4CommandOutput.parts.filter((part) => part.type === 'text' && part.text.includes('COMET_BOOTSTRAP')).length,
+  1,
+);
+
+const cometCommandOutput = { parts: [] };
+await plugin['command.execute.before']({ command: 'comet-build' }, cometCommandOutput);
+assert.equal(cometCommandOutput.parts.length, 1);
+assert.match(cometCommandOutput.parts[0].text, /当前命令：\/comet-build/);
+
+const unrelatedCommandOutput = { parts: [{ type: 'text', text: '普通命令' }] };
+await plugin['command.execute.before']({ command: 'help' }, unrelatedCommandOutput);
+assert.deepEqual(unrelatedCommandOutput.parts, [{ type: 'text', text: '普通命令' }]);
 
 console.log('插件配置合并测试通过。');

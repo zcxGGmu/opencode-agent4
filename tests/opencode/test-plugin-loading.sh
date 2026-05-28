@@ -27,6 +27,8 @@ test -f "$REPO_ROOT/.opencode/agents/ysclaw-agent4-patch.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-agent4.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-patch-plan.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-build-patch.md"
+grep -q "当前环境中没有 comet skill" "$REPO_ROOT/.opencode/commands/ysclaw-agent4.md"
+grep -q "不要只复制" "$REPO_ROOT/.opencode/INSTALL.md"
 
 echo "检查内置技能..."
 for skill in \

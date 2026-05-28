@@ -11,3 +11,8 @@
 
 - `/comet` 不是仅用于维护 `opencode-agent4` 插件自身的辅助开发流程；它应成为 `opencode-agent4` 的核心研发工作流，驱动 Agent4 的完整开发过程。
 - 解释 Agent4 使用方式时，不要把 `/comet*` 与 `/ysclaw-*` 简单割裂成“项目开发 vs 补丁链路”。应按用户意图说明：Comet 负责研发生命周期编排，`/ysclaw-*` 是该生命周期中可被调用或约束的 Agent4 补丁产物能力。
+
+## 2026-05-28 OpenCode 插件安装排障
+
+- `.opencode/commands/*.md` 存在不代表插件已启用，也不代表 `skills/` 已注册。遇到“没有 comet skill”时，先检查 `opencode.json` 的 `plugin` 数组和 OpenCode 是否已重启，再判断仓库文件是否缺失。
+- 用真实 OpenCode server 的 `/skill` 列表验证插件发现能力，比只看仓库中 `skills/comet/SKILL.md` 更可靠。

@@ -65,12 +65,14 @@ if (!cometBootstrapText.includes('完整生命周期')) failures.push('期望 Co
 if (!cometBootstrapText.includes('/ysclaw-patch-plan')) failures.push('期望 Comet bootstrap 提到 /ysclaw-patch-plan 产物能力节点');
 if (!cometBootstrapText.includes('/ysclaw-build-patch')) failures.push('期望 Comet bootstrap 提到 /ysclaw-build-patch 产物能力节点');
 if (!cometBootstrapText.includes('补丁产物能力节点')) failures.push('期望 Comet bootstrap 将 /ysclaw-* 定位为补丁产物能力节点');
+if (!cometBootstrapText.includes('当前环境中没有 comet skill')) failures.push('期望 Comet bootstrap 覆盖 native skill 列表缺失时的诊断路径');
+if (!cometBootstrapText.includes('skills/comet/SKILL.md')) failures.push('期望 Comet bootstrap 提供 comet skill 文件 fallback');
 if (cometBootstrapText.includes('## 参考附录')) failures.push('Comet bootstrap 不应包含参考附录');
 if (cometBootstrapText.includes('### 脚本定位')) failures.push('Comet bootstrap 不应包含脚本定位说明');
 if (cometBootstrapText.includes('当前 Agent4 项目开发用')) failures.push('Comet bootstrap 不应把 /comet 描述为当前 Agent4 项目开发用入口');
 if (cometBootstrapText.includes('管理开发 Agent4 项目')) failures.push('Comet bootstrap 不应把 /comet 限定为管理开发 Agent4 项目');
 if (cometBootstrapText.includes('当用户要求执行 Agent4 补丁链路时，仍使用')) failures.push('Comet bootstrap 不应把 /ysclaw-* 描述为平级补丁链路入口');
-if (cometBootstrapText.length > 7000) failures.push(`Comet bootstrap 过长：${cometBootstrapText.length}`);
+if (cometBootstrapText.length > 7600) failures.push(`Comet bootstrap 过长：${cometBootstrapText.length}`);
 if (second.agent4BootstrapParts !== 1) failures.push(`期望第二次 transform 注入一个 Agent4 启动指引，实际为 ${second.agent4BootstrapParts}`);
 if (second.superpowersBootstrapParts !== 1) failures.push(`期望第二次 transform 注入一个 Superpowers 启动指引，实际为 ${second.superpowersBootstrapParts}`);
 if (second.cometBootstrapParts !== 1) failures.push(`期望第二次 transform 注入一个 Comet 启动指引，实际为 ${second.cometBootstrapParts}`);

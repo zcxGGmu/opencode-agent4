@@ -530,6 +530,39 @@ git status --short
 - `npm run check:tools` 通过。
 - `npm run check:comet` 通过。
 
+## `/ysclaw-agent4` 找不到 comet skill 排障与修复计划
+
+### 当前判断
+
+- [x] 复习 `tasks/lessons.md`，确认 `/comet` 是 Agent4 核心生命周期编排入口。
+- [x] 检查当前 OpenCode 全局配置。结果：本机 `opencode.json` 未启用 `ysclaw-agent4` 插件条目，只有既有其他插件；该状态下 OpenCode 不会注册本包 `skills/`。
+- [x] 检查仓库内容。结果：`skills/comet/SKILL.md` 存在，插件配置 hook 也会注册 `skills/`，因此“没有 comet skill”不是缺少文件，而是安装/启用路径或运行时注册未生效。
+
+### 最小改动范围
+
+- [x] 在插件 `command.execute.before` hook 中为 `/ysclaw-agent4`、`/comet*` 注入 Comet 命令启动上下文，降低对 native skill registry 的单点依赖。
+- [x] 更新静态 `.opencode/commands/ysclaw-agent4.md`，写明 native skill 缺失时的诊断和 fallback 行为。
+- [x] 更新安装/排障文档，明确需要真正启用插件并重启 OpenCode，不能只复制命令 markdown。
+- [x] 增加测试覆盖命令执行前注入、静态命令排障文案和安装文档。
+- [x] 更新 `tasks/lessons.md`，记录 OpenCode 命令 markdown 与插件 skills 注册不是同一件事。
+- [x] 运行相关验证并记录结果。
+
+### 验证结果
+
+- `node --check .opencode/plugins/ysclaw-agent4.js` 通过。
+- `node tests/opencode/test-plugin-config.mjs` 通过。
+- `bash tests/opencode/test-bootstrap-caching.sh` 通过。
+- `bash tests/opencode/test-plugin-loading.sh` 通过。
+- `npm test` 通过。
+- `npm run test:comet` 通过。
+- `npm run check:plugin` 通过。
+- `npm run check:tools && npm run check:comet` 通过。
+- 真实 OpenCode server smoke 通过：临时 `opencode.json` 启用本仓库插件后，`GET /skill` 能列出 `comet`、`comet-build`、`openspec-new-change` 和 `using-ysclaw-agent4`。
+
+### 复盘
+
+本轮确认 `skills/comet/SKILL.md` 本身存在，问题不是仓库缺文件。当前机器的全局 OpenCode 配置没有启用本包插件条目，因此该配置下 OpenCode 不会注册本包 `skills/`。修复上同时补了运行时兜底：`/ysclaw-agent4` 和 `/comet*` 命令执行前会注入 Comet 决策核心，避免 native skill registry 暂时缺失时直接停在“没有 comet skill”。
+
 ## `/ysclaw-agent4` 主入口计划
 
 ### 已复习上下文

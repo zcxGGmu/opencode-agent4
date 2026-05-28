@@ -78,6 +78,8 @@ Superpowers skills 已经随本插件迁入同一个 `skills/` 目录，因此 `
 - `openspec-verify-change`
 - `openspec-archive-change`
 
+如果 `/ysclaw-agent4` 提示“当前环境中没有 comet skill”，优先检查安装路径：确认 `opencode.json` 的 `plugin` 数组包含本包路径或包名，并确认已经重启 OpenCode。只复制 `.opencode/commands/ysclaw-agent4.md` 不会注册 Comet skills。
+
 Comet 脚本位于：
 
 ```text
