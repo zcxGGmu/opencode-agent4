@@ -60,7 +60,7 @@
 
 Superpowers 的 OpenCode 说明见 `docs/README.superpowers.opencode.md`。本包已将这些 skills 合并到同一个 `skills/` 目录，不需要额外配置 symlink。
 
-Comet 的 OpenCode 说明见 `docs/README.comet.opencode.md`。`/comet` 是 `opencode-agent4` 的核心工作流入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点。OpenSpec CLI 和 OpenSpec skills 随本包安装；如果使用本地源码路径且 OpenCode 找不到 `openspec`，在本仓库运行 `npm install` 后重启 OpenCode。
+Comet 的 OpenCode 说明见 `docs/README.comet.opencode.md`。`/ysclaw-agent4` 是 `opencode-agent4` 的推荐主入口，委托 Comet 工作流；`/comet` 保留为兼容入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点。OpenSpec CLI 和 OpenSpec skills 随本包安装；如果使用本地源码路径且 OpenCode 找不到 `openspec`，在本仓库运行 `npm install` 后重启 OpenCode。
 
 运行本地检查：
 

@@ -77,15 +77,16 @@ OpenCode 应能发现这些技能：
 
 完整 Superpowers OpenCode 说明见 `docs/README.superpowers.opencode.md`。
 
-## Comet 主入口
+## Agent4 主入口
 
-`/comet` 是 `opencode-agent4` 的主工作流入口，驱动 Agent4 的完整研发生命周期。`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点，用于约束 `PatchPlan`、`PatchCandidate`、`PatchRegressionResult` 和 `VerifiedPatchPackage`。
+`/ysclaw-agent4` 是 `opencode-agent4` 的推荐主工作流入口。它委托 `comet` skill 驱动 Agent4 的完整研发生命周期。`/comet` 保留为同一生命周期编排能力的兼容入口。`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中的结构化产物能力节点，用于约束 `PatchPlan`、`PatchCandidate`、`PatchRegressionResult` 和 `VerifiedPatchPackage`。
 
 ## 命令
 
 插件会注册以下命令模板：
 
-- `comet`：主入口，负责按 OpenSpec + Superpowers 编排 Agent4 完整研发生命周期。
+- `ysclaw-agent4`：推荐主入口，委托 `comet` skill 编排 Agent4 完整生命周期。
+- `comet`：兼容入口，负责按 OpenSpec + Superpowers 编排 Agent4 完整研发生命周期。
 - `comet-open`、`comet-design`、`comet-build`、`comet-verify`、`comet-archive`：Comet 阶段命令。
 - `comet-hotfix`、`comet-tweak`：Comet 预设路径。
 - `ysclaw-patch-plan`：校验 RootCauseBlueprint，在不修改代码的前提下生成 PatchPlan。

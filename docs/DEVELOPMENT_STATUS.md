@@ -1,6 +1,6 @@
 # opencode-agent4 当前开发状态
 
-更新时间：2026-05-26
+更新时间：2026-05-27
 
 ## 当前分支
 
@@ -10,12 +10,12 @@ codex/port-comet-workflow
 
 ## 当前结论
 
-Comet 第一阶段迁入已完成，`/comet` 也已重定位为 `opencode-agent4` 的核心工作流入口。
+Comet 第一阶段迁入已完成，`/ysclaw-agent4` 已注册为 `opencode-agent4` 的推荐主入口，委托 Comet 工作流驱动完整 Agent4 生命周期；`/comet` 保留为兼容入口。
 
 当前正确模型：
 
 ```text
-/comet
+/ysclaw-agent4
   -> /comet-open
   -> /comet-design
   -> /comet-build
@@ -29,7 +29,7 @@ Comet 第一阶段迁入已完成，`/comet` 也已重定位为 `opencode-agent4
        -> 交接 Agent5
 ```
 
-`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内的结构化产物能力节点，不是与 `/comet` 平级竞争的主流程。
+`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/ysclaw-agent4` / `/comet` 生命周期内的结构化产物能力节点，不是平级竞争的主流程。
 
 ## 已完成
 
@@ -50,7 +50,7 @@ Comet 第一阶段迁入已完成，`/comet` 也已重定位为 `opencode-agent4
   - `skills/comet/scripts/comet-handoff.sh`
   - `skills/comet/scripts/comet-archive.sh`
   - `skills/comet/scripts/comet-yaml-validate.sh`
-- OpenCode 插件入口已注册 `/comet*` 命令，并注入 `COMET_BOOTSTRAP`，带缓存和去重。
+- OpenCode 插件入口已注册 `/ysclaw-agent4`、`/comet*` 和 Agent4 产物节点命令，并注入 `COMET_BOOTSTRAP`，带缓存和去重。
 - OpenSpec CLI / OpenSpec skills 已改为随包安装：
   - `package.json` 和 `.opencode/package.json` 声明 `@fission-ai/openspec@1.3.1`。
   - `.opencode/plugins/ysclaw-agent4.js` 通过 `shell.env` 注入本包 `node_modules/.bin` 和 `.opencode/node_modules/.bin`。
@@ -63,13 +63,18 @@ Comet 第一阶段迁入已完成，`/comet` 也已重定位为 `opencode-agent4
   - Comet skill 文本中的 Superpowers 引用已改为当前 OpenCode 本地 skill 名称。
 - `/comet` 核心流程重定位已完成：
   - `.opencode/plugins/ysclaw-agent4.js` 的 bootstrap、默认 agent prompt 和 Comet command template 已更新。
-  - `skills/comet/SKILL.md` 已明确 `/comet` 是 Agent4 主入口。
+  - `skills/comet/SKILL.md` 已明确 Comet 是 Agent4 生命周期编排层。
   - `skills/comet-build/SKILL.md` 已要求校验 `RootCauseBlueprint`、生成/确认 `PatchPlan`、生成 `PatchCandidate`。
   - `skills/comet-verify/SKILL.md` 已要求生成并校验 `PatchRegressionResult`。
   - `skills/comet-archive/SKILL.md` 已要求生成并校验 `VerifiedPatchPackage`，作为 Agent5 handoff。
   - `skills/comet-hotfix/SKILL.md` 和 `skills/comet-tweak/SKILL.md` 已明确轻量路径也不能绕过 Agent4 产物链。
   - README、`docs/README.comet.opencode.md`、`docs/README.opencode.md`、`.opencode/INSTALL.md`、`.codex-plugin/plugin.json`、`package.json` 已同步新定位。
   - 语义回归测试已覆盖 bootstrap、命令模板和 Comet skills。
+- `/ysclaw-agent4` 主入口已完成：
+  - `.opencode/plugins/ysclaw-agent4.js` 已注册 `/ysclaw-agent4` 默认命令，模板委托 `comet` skill。
+  - `.opencode/commands/ysclaw-agent4.md` 已补充命令说明。
+  - README、OpenCode 文档、Agent4 文档、Comet skill、Codex 元数据和 package 描述已同步推荐主入口。
+  - 回归测试已覆盖 `/ysclaw-agent4` 命令注册、模板语义和 bootstrap 文案。
 
 ## 已通过验证
 
@@ -133,7 +138,7 @@ bash tests/opencode/test-bootstrap-caching.sh
 
 ### 可选后续增强
 
-这些是 backlog，不阻塞当前 `/comet` 主流程：
+这些是 backlog，不阻塞当前 `/ysclaw-agent4` 主流程：
 
 - Agent4 语义的 `status` / `doctor` 命令：检查 plugin、skills、schemas、tools、Agent1 回归命令、安全权限和当前补丁证据。
 - 资产 manifest：统一列出 skills、schemas、commands、tools 和文档，由测试读取校验完整性。
@@ -148,7 +153,7 @@ bash tests/opencode/test-bootstrap-caching.sh
    - `docs/DEVELOPMENT_STATUS.md`
 2. 运行 `git status --short`，确认当前 dirty worktree。
 3. 若继续提交/迁移工作，先确认是否纳入 `tasks/`，并排除 `.DS_Store`、`assets/.DS_Store`、`assets/design.pptx`。
-4. 若继续开发功能，保持 `/comet` 为 Agent4 主入口，把 `/ysclaw-*` 仅作为生命周期内结构化产物能力节点。
+4. 若继续开发功能，保持 `/ysclaw-agent4` 为 Agent4 推荐主入口，`/comet` 为兼容入口，把 `/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 仅作为生命周期内结构化产物能力节点。
 5. 改动后至少运行相关语义回归测试；交付前运行完整验证：
 
 ```bash
@@ -166,7 +171,7 @@ npm run check:comet
 /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/tasks/todo.md 和
 /Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/DEVELOPMENT_STATUS.md。
 
-当前状态：Comet 第一阶段迁入和 /comet 核心流程重定位都已完成；/comet 是 opencode-agent4 的 Agent4 主入口，/ysclaw-patch-plan 与 /ysclaw-build-patch 只是 /comet 生命周期内的结构化产物能力节点。
+当前状态：Comet 第一阶段迁入、/comet 核心流程重定位和 /ysclaw-agent4 主入口注册都已完成；/ysclaw-agent4 是 opencode-agent4 的推荐 Agent4 主入口，/comet 是兼容入口，/ysclaw-patch-plan 与 /ysclaw-build-patch 只是生命周期内的结构化产物能力节点。
 
 请先用 git status --short 确认工作区。不要纳入 .DS_Store、assets/.DS_Store、assets/design.pptx。接下来请在当前进度上继续开发：优先处理未完成的交付/版本控制事项，或根据我新的指令推进 backlog。任何改动后都要更新 tasks/todo.md 和 docs/DEVELOPMENT_STATUS.md，并在完成前运行相关验证；交付前运行 npm test、npm run test:comet、npm run check:plugin、npm run check:tools、npm run check:comet。
 ```

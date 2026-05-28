@@ -31,6 +31,12 @@ Agent5 提交流程
 
 ## 主要命令
 
+`/ysclaw-agent4`:
+
+- 输入：`RootCauseBlueprint` 或当前 active change
+- 输出：完整 Agent4 生命周期产物，最终为 `VerifiedPatchPackage`
+- 行为：推荐主入口，委托 Comet / OpenSpec + Superpowers 完成设计、计划、构建、验证和交接
+
 `/ysclaw-patch-plan`:
 
 - 输入：`RootCauseBlueprint`

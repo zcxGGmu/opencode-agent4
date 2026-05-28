@@ -10,6 +10,7 @@ const opencodePackageBinDir = path.join(packageRoot, '.opencode', 'node_modules'
 const agent4BootstrapSkillPath = path.join(skillsDir, 'using-ysclaw-agent4', 'SKILL.md');
 const superpowersBootstrapSkillPath = path.join(skillsDir, 'using-superpowers', 'SKILL.md');
 const cometBootstrapSkillPath = path.join(skillsDir, 'comet', 'SKILL.md');
+const agent4MainCommandName = 'ysclaw-agent4';
 
 let agent4BootstrapCache = undefined;
 let superpowersBootstrapCache = undefined;
@@ -49,6 +50,10 @@ export const YSClawAgent4Plugin = async () => {
       config.command['ysclaw-build-patch'] = mergeCommandConfig(
         defaultBuildPatchCommand(),
         config.command['ysclaw-build-patch']
+      );
+      config.command[agent4MainCommandName] = mergeCommandConfig(
+        defaultAgent4MainCommand(),
+        config.command[agent4MainCommandName]
       );
       for (const [commandName, description] of cometCommandDefaults) {
         config.command[commandName] = mergeCommandConfig(
@@ -178,10 +183,11 @@ function getCometBootstrapContent() {
     '- Comet 脚本位于 `skills/comet/scripts/`，从仓库根目录运行时可由 `find . -path */comet/scripts/...` 找到。',
     '- OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装；插件会把本包的 `node_modules/.bin` 加入 OpenCode shell PATH。',
     '- 如果本地源码路径安装后找不到 `openspec`，在 `opencode-agent4` 仓库运行 `npm install`，然后重启 OpenCode。',
-    '- `/comet` 是 Agent4 的核心研发工作流入口，负责编排从需求打开、设计、计划、构建、验证到归档和交接的完整生命周期。',
+    '- `/ysclaw-agent4` 是推荐的 Agent4 主入口，委托 `comet` skill 编排从需求打开、设计、计划、构建、验证到归档和交接的完整生命周期。',
+    '- `/comet` 保留为 Comet 工作流入口和兼容入口，语义与 `/ysclaw-agent4` 的生命周期编排一致。',
     '- `/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内可调用的补丁产物能力节点，用于约束 PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage。',
     '',
-    '生产路径默认从 `/comet` 进入；只有调试单个结构化产物能力时，才单独调用 `/ysclaw-patch-plan` 或 `/ysclaw-build-patch`。'
+    '生产路径默认从 `/ysclaw-agent4` 进入；只有调试单个结构化产物能力时，才单独调用 `/ysclaw-patch-plan` 或 `/ysclaw-build-patch`。'
   ].join('\n');
 
   cometBootstrapCache = `<COMET_BOOTSTRAP>
@@ -232,7 +238,7 @@ function defaultAgentConfig() {
     prompt: [
       '你是源生 Claw Agent4。',
       '你的职责是将 RootCauseBlueprint 输入转换为 PatchPlan 输出，协调候选补丁，要求回归证据，并为 Agent5 产出 VerifiedPatchPackage 产物。',
-      '`/comet` 是你的核心研发工作流入口，使用 OpenSpec + Superpowers 编排 Agent4 的完整生命周期。',
+      '`/ysclaw-agent4` 是推荐主入口，委托 `comet` skill 使用 OpenSpec + Superpowers 编排 Agent4 的完整生命周期；`/comet` 保留为兼容入口。',
       '始终分离计划生成和代码修改；在 `/comet-build` 中需要 PatchPlan 时调用或约束 `/ysclaw-patch-plan`，需要候选补丁和补丁包时调用或约束 `/ysclaw-build-patch`。',
       '优先使用内置的 ysclaw-agent4 技能和工具。保持结构化输出。',
     ].join('\n'),
@@ -280,13 +286,27 @@ function defaultBuildPatchCommand() {
   };
 }
 
+function defaultAgent4MainCommand() {
+  return {
+    description: 'Agent4 推荐主入口，委托 Comet 编排完整研发、验证和交接生命周期。',
+    agent: 'ysclaw-agent4-patch',
+    template: [
+      '使用 comet skill。',
+      '`/ysclaw-agent4` 是 Agent4 推荐主入口；它委托 Comet / OpenSpec + Superpowers 工作流驱动完整生命周期。',
+      '从 RootCauseBlueprint 开始，依次约束 PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage。',
+      '`/comet` 保留为相同生命周期编排能力的兼容入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 仍只是结构化产物能力节点。',
+      'OpenSpec CLI 和 OpenSpec skills 随插件安装；若不可用，应停止并提示执行 npm install / 重启 OpenCode，不要用普通对话伪造 OpenSpec 产物。'
+    ].join('\n')
+  };
+}
+
 function defaultCometCommand(commandName, description) {
   return {
     description,
     agent: 'ysclaw-agent4-patch',
     template: [
       `使用 ${commandName} skill。`,
-      '这是 Agent4 的 Comet / OpenSpec + Superpowers 核心研发工作流入口，负责驱动完整生命周期。',
+      '这是 Agent4 的 Comet / OpenSpec + Superpowers 核心研发工作流入口，负责驱动完整生命周期；推荐对外主入口是 `/ysclaw-agent4`。',
       '在 build、verify、archive 阶段保持 Agent4 产物链：RootCauseBlueprint、PatchPlan、PatchCandidate、PatchRegressionResult 和 VerifiedPatchPackage。',
       '`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是该生命周期内的结构化产物能力节点，不是与 `/comet` 平级竞争的主流程。',
       'OpenSpec CLI 和 OpenSpec skills 随插件安装；若不可用，应停止并提示执行 npm install / 重启 OpenCode，不要用普通对话伪造 OpenSpec 产物。'

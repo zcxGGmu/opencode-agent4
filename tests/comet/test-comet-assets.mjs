@@ -46,6 +46,7 @@ for (const skill of openspecSkills) {
 }
 
 assert.match(readSkill('comet'), /RootCauseBlueprint[\s\S]*PatchPlan[\s\S]*PatchCandidate[\s\S]*PatchRegressionResult[\s\S]*VerifiedPatchPackage/);
+assert.match(readSkill('comet'), /\/ysclaw-agent4[\s\S]*推荐的 Agent4 主入口/);
 assert.match(readSkill('comet'), /OpenSpec CLI 和 OpenSpec skills 随 `opencode-agent4` 一起安装/);
 assert.match(readSkill('comet-build'), /RootCauseBlueprint[\s\S]*PatchPlan[\s\S]*PatchCandidate/);
 assert.match(readSkill('comet-verify'), /PatchRegressionResult/);

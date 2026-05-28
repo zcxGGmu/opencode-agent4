@@ -2,7 +2,7 @@
 
 `opencode-agent4` 是源生 Claw 一阶段中的 Agent4 OpenCode 扩展包。它负责把 Agent3 的根因诊断结果转化为可验证的候选补丁，并把补丁差异和回归测试证据打包成 `VerifiedPatchPackage` 交给 Agent5。
 
-本包同时迁入了 Comet、OpenSpec 与 Superpowers 方法论 skills。`/comet` 是 `opencode-agent4` 的核心工作流入口，用 OpenSpec + Superpowers 驱动 Agent4 的完整研发生命周期；Superpowers 提供规划、TDD、系统化调试、代码审查、并行协作和分支收尾工作流。Comet、OpenSpec、Superpowers 与 Agent4 的 skills 共用同一个 `skills/` 目录，由现有 OpenCode 插件入口统一注册。
+本包同时迁入了 Comet、OpenSpec 与 Superpowers 方法论 skills。`/ysclaw-agent4` 是 `opencode-agent4` 的推荐主入口，委托 Comet 用 OpenSpec + Superpowers 驱动 Agent4 的完整研发生命周期；`/comet` 保留为同一工作流的兼容入口。Superpowers 提供规划、TDD、系统化调试、代码审查、并行协作和分支收尾工作流。Comet、OpenSpec、Superpowers 与 Agent4 的 skills 共用同一个 `skills/` 目录，由现有 OpenCode 插件入口统一注册。
 
 当前开发状态见 [docs/DEVELOPMENT_STATUS.md](/Users/zq/Desktop/ai-projs/posp/yuan-sheng/opencode-agent4/docs/DEVELOPMENT_STATUS.md)。
 
@@ -41,7 +41,7 @@ Agent5 拉取请求 / 提交材料生成
 
 - 诊断和修改分离：Agent3 负责根因，Agent4 才负责补丁。
 - 计划和构建分离：生成 `PatchPlan` 时不写代码，构建候选补丁前必须先确认计划。
-- Comet 核心入口：`/comet` 是 Agent4 的完整研发生命周期编排入口，`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中可调用的结构化产物能力。
+- Agent4 主入口：`/ysclaw-agent4` 是推荐的完整研发生命周期编排入口，委托 Comet 工作流；`/comet` 保留为兼容入口，`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是其中可调用的结构化产物能力。
 - 结构约束驱动交付：所有跨 Agent 的对象都用 JSON 结构约束来限定。
 - 补丁差异是事实来源：`PatchCandidate` 必须包含真实 Git 差异（`git diff` 输出）。
 - 回归证据不可省略：没有 Agent1 回归证据，不应声明补丁已验证。
@@ -57,6 +57,7 @@ Agent5 拉取请求 / 提交材料生成
 │   ├── INSTALL.md
 │   ├── agents/ysclaw-agent4-patch.md
 │   ├── commands/
+│   │   ├── ysclaw-agent4.md
 │   │   ├── ysclaw-build-patch.md
 │   │   └── ysclaw-patch-plan.md
 │   └── plugins/ysclaw-agent4.js
@@ -154,24 +155,34 @@ npm install
 ysclaw-agent4-patch
 ```
 
-### 主入口：/comet
+安装后，OpenCode 会注册以下主要命令：
 
-生产路径从 `/comet` 进入：
+- `/ysclaw-agent4`
+- `/comet`、`/comet-open`、`/comet-design`、`/comet-build`、`/comet-verify`、`/comet-archive`
+- `/comet-hotfix`、`/comet-tweak`
+- `/ysclaw-patch-plan`
+- `/ysclaw-build-patch`
+
+### 主入口：/ysclaw-agent4
+
+生产路径从 `/ysclaw-agent4` 进入：
 
 ```text
-/comet "根据这个 RootCauseBlueprint 完成 Agent4 补丁研发、验证和交接"
+/ysclaw-agent4 "根据这个 RootCauseBlueprint 完成 Agent4 补丁研发、验证和交接"
 ```
 
-`/comet` 驱动完整生命周期：
+`/ysclaw-agent4` 委托 `comet` skill 驱动完整生命周期：
 
 ```text
-/comet
+/ysclaw-agent4
   -> open：建立 OpenSpec change
   -> design：澄清设计和产物契约
   -> build：生成/确认 PatchPlan，构建 PatchCandidate
   -> verify：运行或归一化 Agent1 patch_regression，形成 PatchRegressionResult
   -> archive：归档规格、设计和 VerifiedPatchPackage 交接材料
 ```
+
+`/comet` 仍可直接使用，作为同一生命周期编排能力的兼容入口。
 
 ### 结构化能力：生成 PatchPlan
 

@@ -9,6 +9,8 @@ Agent4 将 Agent3 的诊断结果转换为已验证的补丁交付物：
 
 `RootCauseBlueprint -> PatchPlan -> PatchCandidate / git 差异 -> PatchRegressionResult -> VerifiedPatchPackage`
 
+推荐从 `/ysclaw-agent4` 启动完整生命周期。该命令委托 `comet` skill 执行 OpenSpec + Superpowers 编排；`/comet` 保留为兼容入口。
+
 ## 操作规则
 
 1. 先计划，后编辑。先生成 `PatchPlan`，并且在 `/ysclaw-patch-plan` 中不得修改代码。

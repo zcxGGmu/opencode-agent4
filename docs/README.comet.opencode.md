@@ -1,6 +1,6 @@
 # opencode-agent4 中的 Comet 工作流
 
-本仓库把 Comet 的中文 skills 和确定性脚本嵌入到 `opencode-agent4` OpenCode 插件中。`/comet` 是 `opencode-agent4` 的核心工作流入口，驱动 Agent4 的完整研发生命周期。
+本仓库把 Comet 的中文 skills 和确定性脚本嵌入到 `opencode-agent4` OpenCode 插件中。`/ysclaw-agent4` 是 `opencode-agent4` 的推荐主入口，委托 Comet 驱动 Agent4 的完整研发生命周期；`/comet` 保留为兼容入口。
 
 Comet 内容迁移自 `rpamis/comet`；上游 MIT 许可保存在 `docs/LICENSE.comet`。
 
@@ -9,7 +9,7 @@ Comet 内容迁移自 `rpamis/comet`；上游 MIT 许可保存在 `docs/LICENSE.
 Comet 管理完整研发生命周期：
 
 ```text
-/comet
+/ysclaw-agent4
   -> /comet-open
   -> /comet-design
   -> /comet-build
@@ -29,14 +29,14 @@ RootCauseBlueprint
   -> VerifiedPatchPackage
 ```
 
-这两层不是平级竞争关系。`/comet` 是生命周期编排层，`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是生命周期中可调用的结构化产物能力节点。
+这两层不是平级竞争关系。`/ysclaw-agent4` 是推荐的 Agent4 主入口，委托 `/comet` 生命周期编排层；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是生命周期中可调用的结构化产物能力节点。
 
 ## 当前实现状态
 
-截至 2026-05-26：
+截至 2026-05-27：
 
 - 已完成：Comet skills、scripts、命令注册、bootstrap 注入、smoke 测试和第一轮安全审查修复。
-- `/comet` 是安装后的主入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内的结构化产物能力节点。
+- `/ysclaw-agent4` 是安装后的推荐主入口；`/comet` 保留为兼容入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 `/comet` 生命周期内的结构化产物能力节点。
 - 开发恢复细节保存在 `docs/DEVELOPMENT_STATUS.md` 和 `tasks/todo.md`，不作为用户使用路径。
 
 ## OpenSpec 依赖
@@ -89,7 +89,7 @@ skills/comet/scripts/
 启动完整工作流：
 
 ```text
-/comet "根据这个 RootCauseBlueprint 完成 Agent4 补丁研发、验证和交接"
+/ysclaw-agent4 "根据这个 RootCauseBlueprint 完成 Agent4 补丁研发、验证和交接"
 ```
 
 生产路径下，`/comet-build` 生成并确认 `PatchPlan`，构建后形成 `PatchCandidate`；`/comet-verify` 运行或导入 Agent1 `patch_regression` 并形成 `PatchRegressionResult`；`/comet-archive` 生成 `VerifiedPatchPackage` 并完成 Agent5 handoff。
@@ -97,8 +97,10 @@ skills/comet/scripts/
 继续当前 active change：
 
 ```text
-/comet
+/ysclaw-agent4
 ```
+
+需要直接调试 Comet 编排时，也可以继续使用兼容入口 `/comet`。
 
 小范围 bug fix：
 

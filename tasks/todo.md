@@ -258,6 +258,7 @@ Agent4 是受控的补丁生产与回归验证桥梁：
 - [ ] 确认新仓库默认分支名，默认推送为 `main`。
 - [ ] 确认是否包含 `assets/design.pptx`。默认不包含，因为它当前未跟踪且像源设计材料。
 - [ ] 确认是否把 `tasks/` 纳入新仓库。默认不包含，因为它是过程记录；如需保留项目记忆，可单独追加一个 `chore: add project task notes` 提交。
+
 - [ ] 确认排除 `.DS_Store` 和 `assets/.DS_Store`。
 
 ### 提交拆分计划
@@ -528,6 +529,44 @@ git status --short
 - `npm run check:plugin` 通过。
 - `npm run check:tools` 通过。
 - `npm run check:comet` 通过。
+
+## `/ysclaw-agent4` 主入口计划
+
+### 已复习上下文
+
+- [x] 复习 `tasks/lessons.md`。本轮需保持 `/comet` 与 `/ysclaw-*` 的层级关系：Comet 是生命周期编排，`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 是 Agent4 结构化产物能力。
+- [x] 检查 OpenCode 插件入口、命令注册测试、安装文档和主 README。
+
+### 实现范围
+
+- [x] 在插件默认配置中注册 `/ysclaw-agent4`，作为推荐 Agent4 主入口，并委托现有 `comet` skill。
+- [x] 保留 `/comet` 兼容入口和 `/ysclaw-patch-plan`、`/ysclaw-build-patch` 产物节点，不改变补丁链路语义。
+- [x] 更新 README、OpenCode 文档、安装说明、agent 描述和 bootstrap 文案。
+- [x] 补充插件配置/加载/bootstrap 测试，验证 `/ysclaw-agent4` 已注册且描述正确。
+- [x] 运行 `npm test` 和语法检查。
+
+### 本轮复盘
+
+`/ysclaw-agent4` 已成为推荐主入口。它的命令模板委托 `comet` skill 执行完整 Agent4 生命周期；`/comet` 保留为兼容入口；`/ysclaw-patch-plan` 和 `/ysclaw-build-patch` 仍是结构化产物能力节点，不承担主流程闭环。
+
+最终验证：
+
+- `npm test` 通过。
+- `npm run check:plugin` 通过。
+- `npm run check:tools` 通过。
+- `npm run check:comet` 通过。
+
+## 本轮提交与同步
+
+### 计划
+
+- [x] 仅暂存 `/ysclaw-agent4` 主入口相关变更，不纳入 `assets/imgs` 的删除或未跟踪目录。
+- [x] 创建提交并保留当前分支历史。
+- [x] 推送 `main` 到 `origin`。
+
+### 复盘
+
+本轮提交范围限定为 `/ysclaw-agent4` 推荐主入口、相关文档、测试和任务记录；不纳入工作区已有的 `assets/imgs` 删除或 `assets/imgs/v0/` 未跟踪内容。提交后推送当前 `main` 分支到 `origin`。
 
 ## OpenSpec 依赖内置安装计划
 

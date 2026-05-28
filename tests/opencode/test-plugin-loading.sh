@@ -24,6 +24,7 @@ node --check "$PLUGIN_FILE"
 echo "检查 Agent4 包文件..."
 test -f "$REPO_ROOT/.opencode/INSTALL.md"
 test -f "$REPO_ROOT/.opencode/agents/ysclaw-agent4-patch.md"
+test -f "$REPO_ROOT/.opencode/commands/ysclaw-agent4.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-patch-plan.md"
 test -f "$REPO_ROOT/.opencode/commands/ysclaw-build-patch.md"
 
